@@ -10,65 +10,38 @@ import {
   Alert,
   Button,
   ImageBackground,
+  Image,
 } from "react-native";
+import { RegistrationScreen } from "./assets/Screens";
+
+const image = require("./assets/images/bg-img.png");
 
 export default function App() {
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-
-  const nameHandler = (text) => setName(text);
-  const passwordHandler = (text) => setPassword(text);
-
-  const onLogin = () => {
-    Alert.alert("Credentials", `${name} + ${password}`);
-  };
-
-  const image = require("./assets/bg-img.png");
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ImageBackground
-        source={image}
-        resizeMode="cover"
-        style={styles.container}
-      >
+      <View style={styles.container}>
+        <Image source={image} style={styles.bgImg} />
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
-          <TextInput
-            value={name}
-            onChangeText={nameHandler}
-            placeholder="Username"
-            style={styles.input}
-          />
-          <TextInput
-            value={password}
-            onChangeText={passwordHandler}
-            placeholder="не пасворд"
-            secureTextEntry={true}
-            style={styles.input}
-          />
-          <Button title={"Login"} style={styles.input} onPress={onLogin} />
+          <RegistrationScreen />
         </KeyboardAvoidingView>
-      </ImageBackground>
+      </View>
     </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    position: "relative",
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    resizeMode: "cover",
+    // alignItems: "center",
+    // justifyContent: "flex-end",
   },
-  input: {
-    width: 200,
-    height: 44,
-    padding: 10,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: "#ccc",
-    marginBottom: 10,
-    backgroundColor: "#fff",
+  bgImg: {
+    position: "absolute",
+    width: "100%",
+    top: 0,
   },
 });
