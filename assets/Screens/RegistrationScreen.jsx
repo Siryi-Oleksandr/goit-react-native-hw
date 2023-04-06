@@ -43,7 +43,7 @@ export function RegistrationScreen() {
   const passwordHandler = (text) => setPassword(text);
 
   const onRegister = () => {
-    Alert.alert("Credentials", `Hello ${name} + ${email} + ${password}`);
+    Alert.alert("Credentials", `Hello ${name} + ${email} + ${password} 😎`);
   };
 
   return (

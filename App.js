@@ -19,15 +19,16 @@ const image = require("./assets/images/bg-img.png");
 export default function App() {
   return (
     <>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
-      >
-        <Image source={image} style={styles.bgImg} />
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        >
+          <Image source={image} style={styles.bgImg} />
+
           <RegistrationScreen />
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </>
   );
 }
@@ -43,8 +44,5 @@ const styles = StyleSheet.create({
     width: "100%",
     top: 0,
     resizeMode: "cover",
-  },
-  avoidWrapper: {
-    // justifyContent: "flex-end",
   },
 });
