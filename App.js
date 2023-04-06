@@ -22,6 +22,7 @@ export default function App() {
       <View style={styles.container}>
         <Image source={image} style={styles.bgImg} />
         <KeyboardAvoidingView
+          style={styles.avoidWrapper}
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
           <RegistrationScreen />
@@ -35,13 +36,15 @@ const styles = StyleSheet.create({
   container: {
     position: "relative",
     flex: 1,
-    resizeMode: "cover",
-    // alignItems: "center",
-    // justifyContent: "flex-end",
+    justifyContent: "flex-end",
   },
   bgImg: {
     position: "absolute",
     width: "100%",
     top: 0,
+    resizeMode: "cover",
+  },
+  avoidWrapper: {
+    // justifyContent: "flex-end",
   },
 });

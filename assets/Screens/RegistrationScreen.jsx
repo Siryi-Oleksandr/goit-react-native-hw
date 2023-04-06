@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     paddingBottom: 78,
 
     justifyContent: "flex-end",
-    backgroundColor: "#ae4141",
+    backgroundColor: "#fff",
   },
   title: {
     marginBottom: 33,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     lineHeight: 35,
     textAlign: "center",
-    color: "#212121",
+    color: "#000",
   },
   input: {
     height: 50,
