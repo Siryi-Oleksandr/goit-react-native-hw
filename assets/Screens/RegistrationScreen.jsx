@@ -42,8 +42,8 @@ export function RegistrationScreen() {
   const emailHandler = (text) => setEmail(text);
   const passwordHandler = (text) => setPassword(text);
 
-  const onLogin = () => {
-    Alert.alert("Credentials", `${name} + ${password} + Hello`);
+  const onRegister = () => {
+    Alert.alert("Credentials", `Hello ${name} + ${email} + ${password}`);
   };
 
   return (
@@ -78,7 +78,7 @@ export function RegistrationScreen() {
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.btnRegister}
-            onPress={onLogin}
+            onPress={onRegister}
           >
             <Text style={styles.btnTitle}>Register</Text>
           </TouchableOpacity>
@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingTop: 92,
-    // paddingBottom: 45,
 
     justifyContent: "flex-end",
     backgroundColor: "#fff",
