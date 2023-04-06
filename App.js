@@ -18,17 +18,17 @@ const image = require("./assets/images/bg-img.png");
 
 export default function App() {
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+    <>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+      >
         <Image source={image} style={styles.bgImg} />
-        <KeyboardAvoidingView
-          style={styles.avoidWrapper}
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
-        >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <RegistrationScreen />
-        </KeyboardAvoidingView>
-      </View>
-    </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </>
   );
 }
 

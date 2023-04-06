@@ -48,7 +48,12 @@ export function RegistrationScreen() {
 
   return (
     <View>
-      <View style={styles.form}>
+      <View
+        style={{
+          ...styles.form,
+          paddingBottom: isKeyboardOpen ? 32 : 45,
+        }}
+      >
         <Text style={styles.title}>Registration</Text>
         <TextInput
           value={name}
@@ -69,16 +74,15 @@ export function RegistrationScreen() {
           secureTextEntry={true}
           style={styles.input}
         />
-        <TouchableOpacity
-          activeOpacity={0.8}
-          style={{
-            ...styles.btnRegister,
-            display: isKeyboardOpen ? "none" : "flex",
-          }}
-          onPress={onLogin}
-        >
-          <Text style={styles.btnTitle}>Register</Text>
-        </TouchableOpacity>
+        <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.btnRegister}
+            onPress={onLogin}
+          >
+            <Text style={styles.btnTitle}>Register</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -92,7 +96,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingTop: 92,
-    paddingBottom: 78,
+    // paddingBottom: 45,
 
     justifyContent: "flex-end",
     backgroundColor: "#fff",
