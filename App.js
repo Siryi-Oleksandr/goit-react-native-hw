@@ -66,8 +66,8 @@ export default function App() {
         >
           <Image source={image} style={styles.bgImg} />
 
-          <RegistrationScreen orientation={orientation} />
-          {/* <LoginScreen /> */}
+          {/* <RegistrationScreen orientation={orientation} /> */}
+          <LoginScreen />
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </>

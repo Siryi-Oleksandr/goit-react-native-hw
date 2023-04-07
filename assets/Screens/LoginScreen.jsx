@@ -51,10 +51,10 @@ export function LoginScreen() {
 
   const onLogin = () => {
     const userCredentials = { email, password };
-    Alert.alert("Credentials", `${email}, ${password}`);
+    Alert.alert("Credentials", `${email} + ${password}`);
     resetLoginForm();
   };
- 
+
   const toggleShowPassword = () => {
     setSecurePassword((prevState) => !prevState);
   };
