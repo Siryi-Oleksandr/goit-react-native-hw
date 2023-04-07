@@ -67,8 +67,8 @@ export default function App() {
         >
           <Image source={image} style={styles.bgImg} />
 
-          {/* <RegistrationScreen /> */}
-          <LoginScreen />
+          <RegistrationScreen />
+          {/* <LoginScreen /> */}
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </>

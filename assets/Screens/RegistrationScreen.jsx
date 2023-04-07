@@ -23,6 +23,7 @@ export function RegistrationScreen() {
   const [inputLoginStyle, setInputLoginStyle] = useState(styles.input);
   const [inputEmailStyle, setInputEmailStyle] = useState(styles.input);
   const [inputPasswordStyle, setInputPasswordStyle] = useState(styles.input);
+  const [securePassword, setSecurePassword] = useState(true);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -65,6 +66,10 @@ export function RegistrationScreen() {
   };
   const onDeleteAvatar = () => {
     setShowAvatar(false);
+  };
+
+  const toggleShowPassword = () => {
+    setSecurePassword((prevState) => !prevState);
   };
 
   return (
@@ -126,17 +131,36 @@ export function RegistrationScreen() {
           onBlur={() => setInputEmailStyle(styles.input)}
         />
 
-        <TextInput
-          style={inputPasswordStyle}
-          value={password}
-          onChangeText={passwordHandler}
-          onFocus={() =>
-            setInputPasswordStyle({ ...styles.input, ...styles.inputFocused })
-          }
-          onBlur={() => setInputPasswordStyle(styles.input)}
-          placeholder="Password"
-          secureTextEntry={true}
-        />
+        <View style={styles.passwordWrapper}>
+          <TextInput
+            style={inputPasswordStyle}
+            value={password}
+            onChangeText={passwordHandler}
+            onFocus={() =>
+              setInputPasswordStyle({ ...styles.input, ...styles.inputFocused })
+            }
+            onBlur={() => setInputPasswordStyle(styles.input)}
+            placeholder="Password"
+            secureTextEntry={securePassword}
+          />
+          {securePassword ? (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.btnShowPassword}
+              onPress={toggleShowPassword}
+            >
+              <Icon name="eye" size={20} />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.btnShowPassword}
+              onPress={toggleShowPassword}
+            >
+              <Icon name="eye-slash" size={20} />
+            </TouchableOpacity>
+          )}
+        </View>
 
         <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
           <TouchableOpacity
@@ -247,5 +271,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     textAlign: "center",
+  },
+  passwordWrapper: { position: "relative" },
+  btnShowPassword: {
+    position: "absolute",
+    top: 14,
+    right: 15,
   },
 });
