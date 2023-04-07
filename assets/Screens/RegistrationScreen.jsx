@@ -25,8 +25,6 @@ export function RegistrationScreen({ orientation }) {
   const [inputPasswordStyle, setInputPasswordStyle] = useState(styles.input);
   const [securePassword, setSecurePassword] = useState(true);
 
-  console.log(orientation);
-
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -59,7 +57,7 @@ export function RegistrationScreen({ orientation }) {
 
   const onRegister = () => {
     const userCredentials = { name, email, password };
-    Alert.alert("Credentials", `${name}, ${email}, ${password}`);
+    Alert.alert("Credentials", `${name} + ${email} + ${password}`);
     resetRegisterForm();
   };
 
@@ -76,7 +74,11 @@ export function RegistrationScreen({ orientation }) {
       <View
         style={{
           ...styles.form,
-          paddingBottom: isKeyboardOpen ? 12 : 45, // TODO 32 instead 12
+          paddingBottom: isKeyboardOpen
+            ? 12
+            : orientation === "portrait"
+            ? 45
+            : 10, // TODO 32 instead 12
         }}
       >
         <View style={styles.imgWrapper}>
@@ -106,7 +108,14 @@ export function RegistrationScreen({ orientation }) {
           )}
         </View>
 
-        <Text style={styles.title}>Registration</Text>
+        <Text
+          style={{
+            ...styles.title,
+            marginBottom: orientation === "portrait" ? 33 : 10,
+          }}
+        >
+          Registration
+        </Text>
 
         <TextInput
           style={inputLoginStyle}
@@ -164,7 +173,10 @@ export function RegistrationScreen({ orientation }) {
         <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
           <TouchableOpacity
             activeOpacity={0.8}
-            style={styles.btnRegister}
+            style={{
+              ...styles.btnRegister,
+              marginTop: orientation === "portrait" ? 43 : 10,
+            }}
             onPress={onRegister}
           >
             <Text style={styles.btnTitle}>Register</Text>
@@ -191,11 +203,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingTop: 92,
+
     justifyContent: "flex-end",
     backgroundColor: pallete.white,
   },
   title: {
-    marginBottom: 33,
+    // marginBottom: 33,
     fontFamily: "Roboto-Medium",
     fontWeight: "500",
     fontSize: 30,
@@ -219,7 +232,7 @@ const styles = StyleSheet.create({
     borderColor: pallete.accent,
   },
   btnRegister: {
-    marginTop: 43,
+    // marginTop: 43,
     padding: 12,
     height: 50,
     justifyContent: "center",

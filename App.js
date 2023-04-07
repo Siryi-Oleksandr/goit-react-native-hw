@@ -26,22 +26,23 @@ export default function App() {
   });
   const [orientation, setOrientation] = useState("portrait");
 
-  const getOrientation = () => {
+  const getOrientation = useCallback(() => {
     const { width, height } = Dimensions.get("window");
     if (width > height) {
       setOrientation("landscape");
     } else {
       setOrientation("portrait");
     }
-  };
+  }, []);
 
   useEffect(() => {
     getOrientation();
     Dimensions.addEventListener("change", getOrientation);
+
     return () => {
       Dimensions.removeEventListener("change", getOrientation);
     };
-  }, []);
+  }, [getOrientation]);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
