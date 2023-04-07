@@ -4,15 +4,10 @@ import * as SplashScreen from "expo-splash-screen";
 import {
   Dimensions,
   StyleSheet,
-  View,
-  TextInput,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Alert,
-  Button,
-  ImageBackground,
   Image,
 } from "react-native";
 import { RegistrationScreen, LoginScreen } from "./assets/Screens";
@@ -29,19 +24,22 @@ export default function App() {
     "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
     Lora: require("./assets/fonts/Lora-VariableFont.ttf"),
   });
-  const [dimensions, setDimensions] = useState(
-    Dimensions.get("window").width - 20 * 2
-  );
+  const [orientation, setOrientation] = useState("portrait");
+
+  const getOrientation = () => {
+    const { width, height } = Dimensions.get("window");
+    if (width > height) {
+      setOrientation("landscape");
+    } else {
+      setOrientation("portrait");
+    }
+  };
 
   useEffect(() => {
-    const onChange = () => {
-      const windowWidth = Dimensions.get("window").width;
-      setDimensions(windowWidth);
-    };
-    Dimensions.addEventListener("change", onChange);
-
+    getOrientation();
+    Dimensions.addEventListener("change", getOrientation);
     return () => {
-      Dimensions.removeEventListener("change", onChange);
+      Dimensions.removeEventListener("change", getOrientation);
     };
   }, []);
 
@@ -67,7 +65,7 @@ export default function App() {
         >
           <Image source={image} style={styles.bgImg} />
 
-          <RegistrationScreen />
+          <RegistrationScreen orientation={orientation} />
           {/* <LoginScreen /> */}
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
