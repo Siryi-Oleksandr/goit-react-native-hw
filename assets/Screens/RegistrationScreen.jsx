@@ -14,7 +14,7 @@ import { pallete } from "../helpers/variables";
 
 // ! Main CODE
 
-export function RegistrationScreen() {
+export function RegistrationScreen({ orientation }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +24,8 @@ export function RegistrationScreen() {
   const [inputEmailStyle, setInputEmailStyle] = useState(styles.input);
   const [inputPasswordStyle, setInputPasswordStyle] = useState(styles.input);
   const [securePassword, setSecurePassword] = useState(true);
+
+  console.log(orientation);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -61,11 +63,8 @@ export function RegistrationScreen() {
     resetRegisterForm();
   };
 
-  const onAddAvatar = () => {
-    setShowAvatar(true);
-  };
-  const onDeleteAvatar = () => {
-    setShowAvatar(false);
+  const toggleShowAvatar = () => {
+    setShowAvatar((prevState) => !prevState);
   };
 
   const toggleShowPassword = () => {
@@ -85,7 +84,7 @@ export function RegistrationScreen() {
             <TouchableOpacity
               activeOpacity={0.8}
               style={{ ...styles.btnAddAvatar, borderColor: pallete.accent }}
-              onPress={onAddAvatar}
+              onPress={toggleShowAvatar}
             >
               <Icon name="plus" size={15} color={pallete.accent} />
             </TouchableOpacity>
@@ -99,7 +98,7 @@ export function RegistrationScreen() {
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={{ ...styles.btnAddAvatar, borderColor: pallete.grey }}
-                onPress={onDeleteAvatar}
+                onPress={toggleShowAvatar}
               >
                 <Icon name="times" size={15} color={pallete.grey} />
               </TouchableOpacity>
