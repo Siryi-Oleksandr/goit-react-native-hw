@@ -37,11 +37,9 @@ export default function App() {
 
   useEffect(() => {
     getOrientation();
-    Dimensions.addEventListener("change", getOrientation);
+    const subscription = Dimensions.addEventListener("change", getOrientation);
 
-    return () => {
-      Dimensions.removeEventListener("change", getOrientation);
-    };
+    return () => subscription?.remove();
   }, [getOrientation]);
 
   const onLayoutRootView = useCallback(async () => {
@@ -66,8 +64,8 @@ export default function App() {
         >
           <Image source={image} style={styles.bgImg} />
 
-          {/* <RegistrationScreen orientation={orientation} /> */}
-          <LoginScreen />
+          <RegistrationScreen orientation={orientation} />
+          {/* <LoginScreen /> */}
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </>
