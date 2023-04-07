@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
-import * as Font from "expo-font";
-import { useFonts } from "expo-font";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -11,24 +9,20 @@ import {
   Text,
   Image,
 } from "react-native";
-// import * as SplashScreen from "expo-splash-screen";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { pallete } from "../helpers/variables";
 
-// SplashScreen.preventAutoHideAsync();
+// ! Main CODE
 
 export function RegistrationScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showAvatar, setShowAvatar] = useState(false);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [inputLoginStyle, setInputLoginStyle] = useState(styles.input);
   const [inputEmailStyle, setInputEmailStyle] = useState(styles.input);
   const [inputPasswordStyle, setInputPasswordStyle] = useState(styles.input);
-  // const [fontsLoaded] = useFonts({
-  //   "Roboto-Regular": require("../fonts/Roboto-Regular.ttf"),
-  //   "Roboto-Medium": require("../fonts/Roboto-Medium.ttf"),
-  //   "Roboto-Bold": require("../fonts/Roboto-Bold.ttf"),
-  //   Lora: require("../fonts/Lora-VariableFont.ttf"),
-  // });
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -66,15 +60,12 @@ export function RegistrationScreen() {
     resetRegisterForm();
   };
 
-  // const onLayoutRootView = useCallback(async () => {
-  //   if (fontsLoaded) {
-  //     await SplashScreen.hideAsync();
-  //   }
-  // }, [fontsLoaded]);
-
-  // if (!fontsLoaded) {
-  //   return null;
-  // }
+  const onAddAvatar = () => {
+    setShowAvatar(true);
+  };
+  const onDeleteAvatar = () => {
+    setShowAvatar(false);
+  };
 
   return (
     <View>
@@ -85,12 +76,34 @@ export function RegistrationScreen() {
         }}
       >
         <View style={styles.imgWrapper}>
-          <Image
-            style={styles.avatar}
-            source={require("../images/avatar.jpg")}
-          />
+          {!showAvatar ? (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={{ ...styles.btnAddAvatar, borderColor: pallete.accent }}
+              onPress={onAddAvatar}
+            >
+              <Icon name="plus" size={15} color={pallete.accent} />
+            </TouchableOpacity>
+          ) : (
+            <>
+              <Image
+                style={styles.avatar}
+                source={require("../images/avatar.jpg")}
+                alt="user avatar"
+              />
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={{ ...styles.btnAddAvatar, borderColor: pallete.grey }}
+                onPress={onDeleteAvatar}
+              >
+                <Icon name="times" size={15} color={pallete.grey} />
+              </TouchableOpacity>
+            </>
+          )}
         </View>
+
         <Text style={styles.title}>Registration</Text>
+
         <TextInput
           style={inputLoginStyle}
           value={name}
@@ -101,6 +114,7 @@ export function RegistrationScreen() {
           }
           onBlur={() => setInputLoginStyle(styles.input)}
         />
+
         <TextInput
           style={inputEmailStyle}
           value={email}
@@ -111,6 +125,7 @@ export function RegistrationScreen() {
           }
           onBlur={() => setInputEmailStyle(styles.input)}
         />
+
         <TextInput
           style={inputPasswordStyle}
           value={password}
@@ -122,6 +137,7 @@ export function RegistrationScreen() {
           placeholder="Password"
           secureTextEntry={true}
         />
+
         <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
           <TouchableOpacity
             activeOpacity={0.8}
@@ -130,6 +146,8 @@ export function RegistrationScreen() {
           >
             <Text style={styles.btnTitle}>Register</Text>
           </TouchableOpacity>
+
+          <Text style={styles.linkToForm}>If you have accout? Login</Text>
         </View>
       </View>
     </View>
@@ -137,6 +155,12 @@ export function RegistrationScreen() {
 }
 
 const styles = StyleSheet.create({
+  avatar: {
+    width: 120,
+    height: 120,
+    borderRadius: 16,
+    overflow: "hidden",
+  },
   form: {
     position: "relative",
     paddingLeft: 40,
@@ -144,9 +168,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingTop: 92,
-
     justifyContent: "flex-end",
-    backgroundColor: "#fff",
+    backgroundColor: pallete.white,
   },
   title: {
     marginBottom: 33,
@@ -155,14 +178,14 @@ const styles = StyleSheet.create({
     fontSize: 30,
     lineHeight: 35,
     textAlign: "center",
-    color: "#000",
+    color: pallete.black,
   },
   input: {
     height: 50,
     padding: 12,
     borderWidth: 1,
     borderRadius: 8,
-    borderColor: "rgba(232, 232, 232, 1)",
+    borderColor: pallete.grey,
     marginBottom: 10,
     backgroundColor: "#F6F6F6",
     fontFamily: "Roboto-Regular",
@@ -170,7 +193,7 @@ const styles = StyleSheet.create({
     lineHeight: 19,
   },
   inputFocused: {
-    borderColor: "rgba(255, 108, 0, 1)",
+    borderColor: pallete.accent,
   },
   btnRegister: {
     marginTop: 43,
@@ -178,12 +201,12 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(255, 108, 0, 1)",
+    backgroundColor: pallete.accent,
     borderRadius: 100,
   },
   btnTitle: {
     fontFamily: "Roboto-Regular",
-    color: "#fff",
+    color: pallete.white,
     fontSize: 16,
     lineHeight: 19,
     textAlign: "center",
@@ -194,12 +217,35 @@ const styles = StyleSheet.create({
     left: "50%",
     width: 120,
     height: 120,
+    backgroundColor: "#fafafa",
     transform: [{ translateX: -30 }, { translateY: -60 }],
     borderRadius: 16,
-    overflow: "hidden",
+  },
+  btnAddAvatar: {
+    position: "absolute",
+    top: "70%",
+    right: -12,
+    zIndex: 10,
+    justifyContent: "center",
+    alignItems: "center",
+
+    width: 25,
+    height: 25,
+    borderRadius: 12,
+    borderWidth: 1,
+
+    backgroundColor: pallete.white,
   },
   bgImg: {
     width: "100%",
     resizeMode: "cover",
+  },
+  linkToForm: {
+    marginTop: 16,
+    fontFamily: "Roboto-Regular",
+    color: pallete.link,
+    fontSize: 16,
+    lineHeight: 19,
+    textAlign: "center",
   },
 });

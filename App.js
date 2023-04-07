@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import {
+  Dimensions,
   StyleSheet,
   View,
   TextInput,
@@ -14,7 +15,7 @@ import {
   ImageBackground,
   Image,
 } from "react-native";
-import { RegistrationScreen } from "./assets/Screens";
+import { RegistrationScreen, LoginScreen } from "./assets/Screens";
 
 // ! Main logic
 
@@ -28,6 +29,21 @@ export default function App() {
     "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
     Lora: require("./assets/fonts/Lora-VariableFont.ttf"),
   });
+  const [dimensions, setDimensions] = useState(
+    Dimensions.get("window").width - 20 * 2
+  );
+
+  useEffect(() => {
+    const onChange = () => {
+      const windowWidth = Dimensions.get("window").width;
+      setDimensions(windowWidth);
+    };
+    Dimensions.addEventListener("change", onChange);
+
+    return () => {
+      Dimensions.removeEventListener("change", onChange);
+    };
+  }, []);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -39,18 +55,20 @@ export default function App() {
     return null;
   }
 
-  // onLayout={onLayoutRootView}
-
   return (
     <>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback
+        onLayout={onLayoutRootView}
+        onPress={Keyboard.dismiss}
+      >
         <KeyboardAvoidingView
           style={styles.container}
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
           <Image source={image} style={styles.bgImg} />
 
-          <RegistrationScreen />
+          {/* <RegistrationScreen /> */}
+          <LoginScreen />
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </>
