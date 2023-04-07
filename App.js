@@ -10,19 +10,19 @@ import {
   Platform,
   Image,
 } from "react-native";
-import { RegistrationScreen, LoginScreen } from "./assets/Screens";
+import { RegistrationScreen, LoginScreen } from "./src/Screens";
 
 // ! Main logic
 
-const image = require("./assets/images/bg-img.png");
+const image = require("./src/images/bg-img.png");
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
-    "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
-    "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
-    Lora: require("./assets/fonts/Lora-VariableFont.ttf"),
+    "Roboto-Regular": require("./src/fonts/Roboto-Regular.ttf"),
+    "Roboto-Medium": require("./src/fonts/Roboto-Medium.ttf"),
+    "Roboto-Bold": require("./src/fonts/Roboto-Bold.ttf"),
+    Lora: require("./src/fonts/Lora-VariableFont.ttf"),
   });
   const [orientation, setOrientation] = useState("portrait");
 
@@ -64,8 +64,8 @@ export default function App() {
         >
           <Image source={image} style={styles.bgImg} />
 
-          <RegistrationScreen orientation={orientation} />
-          {/* <LoginScreen /> */}
+          {/* <RegistrationScreen orientation={orientation} /> */}
+          <LoginScreen />
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </>
