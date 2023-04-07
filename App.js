@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 import {
   StyleSheet,
   View,
@@ -14,9 +16,31 @@ import {
 } from "react-native";
 import { RegistrationScreen } from "./assets/Screens";
 
+// ! Main logic
+
 const image = require("./assets/images/bg-img.png");
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
+    "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
+    "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
+    Lora: require("./assets/fonts/Lora-VariableFont.ttf"),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  // onLayout={onLayoutRootView}
+
   return (
     <>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

@@ -11,21 +11,24 @@ import {
   Text,
   Image,
 } from "react-native";
-import * as SplashScreen from "expo-splash-screen";
+// import * as SplashScreen from "expo-splash-screen";
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 export function RegistrationScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-  const [fontsLoaded] = useFonts({
-    "Roboto-Regular": require("../fonts/Roboto-Regular.ttf"),
-    "Roboto-Medium": require("../fonts/Roboto-Medium.ttf"),
-    "Roboto-Bold": require("../fonts/Roboto-Bold.ttf"),
-    Lora: require("../fonts/Lora-VariableFont.ttf"),
-  });
+  const [inputLoginStyle, setInputLoginStyle] = useState(styles.input);
+  const [inputEmailStyle, setInputEmailStyle] = useState(styles.input);
+  const [inputPasswordStyle, setInputPasswordStyle] = useState(styles.input);
+  // const [fontsLoaded] = useFonts({
+  //   "Roboto-Regular": require("../fonts/Roboto-Regular.ttf"),
+  //   "Roboto-Medium": require("../fonts/Roboto-Medium.ttf"),
+  //   "Roboto-Bold": require("../fonts/Roboto-Bold.ttf"),
+  //   Lora: require("../fonts/Lora-VariableFont.ttf"),
+  // });
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -63,21 +66,18 @@ export function RegistrationScreen() {
     resetRegisterForm();
   };
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (fontsLoaded) {
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
-    console.log("first", fontsLoaded);
-    return null;
-  }
-
-  console.log("second", fontsLoaded);
+  // if (!fontsLoaded) {
+  //   return null;
+  // }
 
   return (
-    <View onLayout={onLayoutRootView}>
+    <View>
       <View
         style={{
           ...styles.form,
@@ -92,23 +92,35 @@ export function RegistrationScreen() {
         </View>
         <Text style={styles.title}>Registration</Text>
         <TextInput
+          style={inputLoginStyle}
           value={name}
-          onChangeText={nameHandler}
           placeholder="Login"
-          style={styles.input}
+          onChangeText={nameHandler}
+          onFocus={() =>
+            setInputLoginStyle({ ...styles.input, ...styles.inputFocused })
+          }
+          onBlur={() => setInputLoginStyle(styles.input)}
         />
         <TextInput
+          style={inputEmailStyle}
           value={email}
           onChangeText={emailHandler}
           placeholder="Email"
-          style={styles.input}
+          onFocus={() =>
+            setInputEmailStyle({ ...styles.input, ...styles.inputFocused })
+          }
+          onBlur={() => setInputEmailStyle(styles.input)}
         />
         <TextInput
+          style={inputPasswordStyle}
           value={password}
           onChangeText={passwordHandler}
+          onFocus={() =>
+            setInputPasswordStyle({ ...styles.input, ...styles.inputFocused })
+          }
+          onBlur={() => setInputPasswordStyle(styles.input)}
           placeholder="Password"
           secureTextEntry={true}
-          style={styles.input}
         />
         <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
           <TouchableOpacity
@@ -153,6 +165,12 @@ const styles = StyleSheet.create({
     borderColor: "rgba(232, 232, 232, 1)",
     marginBottom: 10,
     backgroundColor: "#F6F6F6",
+    fontFamily: "Roboto-Regular",
+    fontSize: 16,
+    lineHeight: 19,
+  },
+  inputFocused: {
+    borderColor: "rgba(255, 108, 0, 1)",
   },
   btnRegister: {
     marginTop: 43,
@@ -164,6 +182,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   btnTitle: {
+    fontFamily: "Roboto-Regular",
     color: "#fff",
     fontSize: 16,
     lineHeight: 19,
