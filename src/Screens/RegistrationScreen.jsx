@@ -14,7 +14,7 @@ import { pallete } from "../helpers/variables";
 
 // ! Main CODE
 
-export function RegistrationScreen({ orientation }) {
+export function RegistrationScreen({ orientation = "portrait" }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -78,7 +78,7 @@ export function RegistrationScreen({ orientation }) {
             ? 12
             : orientation === "portrait"
             ? 45
-            : 10, // TODO 32 instead 12
+            : 10,
         }}
       >
         <View style={styles.imgWrapper}>

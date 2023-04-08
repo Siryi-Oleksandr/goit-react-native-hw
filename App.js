@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import {
@@ -10,12 +12,13 @@ import {
   Platform,
   Image,
 } from "react-native";
-import { RegistrationScreen, LoginScreen } from "./src/Screens";
+import { RegistrationScreen, LoginScreen, Home } from "./src/Screens";
 
 // ! Main logic
 
 const image = require("./src/images/bg-img.png");
 SplashScreen.preventAutoHideAsync();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -63,9 +66,13 @@ export default function App() {
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
           <Image source={image} style={styles.bgImg} />
-
-          {/* <RegistrationScreen orientation={orientation} /> */}
-          <LoginScreen />
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="Register">
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="Register" component={RegistrationScreen} />
+              <Stack.Screen name="Login" component={LoginScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </>
