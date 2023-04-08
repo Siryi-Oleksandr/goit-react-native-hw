@@ -1,14 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-export const Home = () => {
+export function CreatePostsScreen() {
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
+      <Text>CreatePostsScreen Screen</Text>
     </View>
   );
-};
-
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -16,6 +15,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
-
-

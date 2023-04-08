@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-export const Home = () => {
+export function CommentsScreen() {
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
+      <Text>CommentsScreen Screen</Text>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -16,6 +16,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
-
-

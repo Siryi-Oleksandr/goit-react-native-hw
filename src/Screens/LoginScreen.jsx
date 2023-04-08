@@ -13,7 +13,7 @@ import { pallete } from "../helpers/variables";
 
 // ! Main CODE
 
-export function LoginScreen() {
+export function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
@@ -120,7 +120,13 @@ export function LoginScreen() {
             <Text style={styles.btnTitle}>Log In</Text>
           </TouchableOpacity>
 
-          <Text style={styles.linkToForm}>Don't have accout? Register</Text>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.linkNavigate}
+            onPress={() => navigation.navigate("Register")}
+          >
+            <Text style={styles.linkTitle}>Don't have accout? Register</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -183,8 +189,13 @@ const styles = StyleSheet.create({
     width: "100%",
     resizeMode: "cover",
   },
-  linkToForm: {
+  linkNavigate: {
+    padding: 10,
     marginTop: 16,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  linkTitle: {
     fontFamily: "Roboto-Regular",
     color: pallete.link,
     fontSize: 16,

@@ -8,13 +8,14 @@ import {
   TouchableOpacity,
   Text,
   Image,
+  Button,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../helpers/variables";
 
 // ! Main CODE
 
-export function RegistrationScreen({ orientation = "portrait" }) {
+export function RegistrationScreen({ navigation, orientation = "portrait" }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -182,7 +183,13 @@ export function RegistrationScreen({ orientation = "portrait" }) {
             <Text style={styles.btnTitle}>Register</Text>
           </TouchableOpacity>
 
-          <Text style={styles.linkToForm}>If you have accout? Login</Text>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.linkNavigate}
+            onPress={() => navigation.navigate("Login")}
+          >
+            <Text style={styles.linkTitle}>If you have accout? Login</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -276,8 +283,13 @@ const styles = StyleSheet.create({
     width: "100%",
     resizeMode: "cover",
   },
-  linkToForm: {
+  linkNavigate: {
+    padding: 10,
     marginTop: 16,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  linkTitle: {
     fontFamily: "Roboto-Regular",
     color: pallete.link,
     fontSize: 16,
