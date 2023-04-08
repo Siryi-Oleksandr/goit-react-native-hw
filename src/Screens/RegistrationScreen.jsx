@@ -15,7 +15,11 @@ import { pallete } from "../helpers/variables";
 
 // ! Main CODE
 
-export function RegistrationScreen({ navigation, orientation = "portrait" }) {
+export function RegistrationScreen({
+  route,
+  navigation,
+  orientation = "portrait",
+}) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +29,9 @@ export function RegistrationScreen({ navigation, orientation = "portrait" }) {
   const [inputEmailStyle, setInputEmailStyle] = useState(styles.input);
   const [inputPasswordStyle, setInputPasswordStyle] = useState(styles.input);
   const [securePassword, setSecurePassword] = useState(true);
+
+  // const { orientation = "portrait" } = route.params;
+  // console.log("orientation", orientation);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(

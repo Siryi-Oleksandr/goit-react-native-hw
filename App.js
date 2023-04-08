@@ -13,6 +13,7 @@ import {
   Image,
 } from "react-native";
 import { RegistrationScreen, LoginScreen, Home } from "./src/Screens";
+// import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // ! Main logic
 
@@ -67,9 +68,13 @@ export default function App() {
         >
           <Image source={image} style={styles.bgImg} />
           <NavigationContainer>
-            <Stack.Navigator initialRouteName="Register">
+            <Stack.Navigator initialRouteName="Home">
               <Stack.Screen name="Home" component={Home} />
-              <Stack.Screen name="Register" component={RegistrationScreen} />
+              <Stack.Screen
+                name="Register"
+                component={RegistrationScreen}
+                initialParams={{ orientation }}
+              />
               <Stack.Screen name="Login" component={LoginScreen} />
             </Stack.Navigator>
           </NavigationContainer>
