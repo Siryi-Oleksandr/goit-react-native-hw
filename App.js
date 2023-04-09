@@ -59,29 +59,29 @@ export default function App() {
 
   return (
     <>
-      {/* <TouchableWithoutFeedback
+      <TouchableWithoutFeedback
         onLayout={onLayoutRootView}
         onPress={Keyboard.dismiss}
-      > */}
-      <View
-        style={styles.container}
-        // behavior={Platform.OS == "ios" ? "padding" : "height"}
       >
-        {/* <Image source={image} style={styles.bgImg} /> */}
+        <View
+          style={styles.container}
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        >
+          {/* <Image source={image} style={styles.bgImg} /> */}
 
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Register">
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen
-              name="Register"
-              component={RegistrationScreen}
-              initialParams={{ orientation }}
-            />
-            <Stack.Screen name="Login" component={LoginScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </View>
-      {/* </TouchableWithoutFeedback> */}
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="Register">
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen
+                name="Register"
+                component={RegistrationScreen}
+                initialParams={{ orientation }}
+              />
+              <Stack.Screen name="Login" component={LoginScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
+      </TouchableWithoutFeedback>
     </>
   );
 }

@@ -234,17 +234,8 @@ export function RegistrationScreen({
 
 const styles = StyleSheet.create({
   container: {
-    // position: "relative",
     flex: 1,
-    // justifyContent: "flex-end",
-    // backgroundColor: "#b25757",
   },
-  // bgImg: {
-  //   position: "absolute",
-  //   width: "100%",
-  //   top: 0,
-  //   resizeMode: "cover",
-  // },
   image: {
     flex: 1,
     justifyContent: "flex-end",
