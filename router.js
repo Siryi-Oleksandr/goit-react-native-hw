@@ -1,7 +1,7 @@
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
+import { StyleSheet } from "react-native";
 import { RegistrationScreen, LoginScreen } from "./src/Screens/auth";
 import { ProfileScreen } from "./src/Screens/ProfileScreen";
 import { CommentsScreen } from "./src/Screens/CommentsScreen";
@@ -32,9 +32,10 @@ export const useRoutes = (isAuth) => {
     return (
       <Tab.Navigator
         initialRouteName="Comment"
-        barStyle={{ backgroundColor: "tomato", paddingBottom: 16 }}
-        activeColor={pallete.white}
+        barStyle={styles.tabBar}
+        activeColor={pallete.accent}
         labeled={false}
+        shifting={true}
       >
         <Tab.Screen
           name="Comment"
@@ -45,7 +46,7 @@ export const useRoutes = (isAuth) => {
               <MaterialCommunityIcons
                 name="view-grid-outline"
                 color={color}
-                size={36}
+                size={24}
               />
             ),
           }}
@@ -55,7 +56,7 @@ export const useRoutes = (isAuth) => {
           component={CreatePostsScreen}
           options={{
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="plus" color={color} size={36} />
+              <MaterialCommunityIcons name="plus" color={color} size={24} />
             ),
           }}
         />
@@ -67,7 +68,7 @@ export const useRoutes = (isAuth) => {
               <MaterialCommunityIcons
                 name="account-outline"
                 color={color}
-                size={36}
+                size={24}
               />
             ),
           }}
@@ -76,3 +77,12 @@ export const useRoutes = (isAuth) => {
     );
   }
 };
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: pallete.white,
+    paddingBottom: 16,
+    borderTopWidth: 1,
+    borderTopColor: pallete.grey,
+  },
+});

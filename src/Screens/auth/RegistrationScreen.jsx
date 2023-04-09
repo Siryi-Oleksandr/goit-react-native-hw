@@ -69,6 +69,7 @@ export function RegistrationScreen({
   const onRegister = () => {
     const userCredentials = { name, email, password };
     Alert.alert("Credentials", `${name} + ${email} + ${password}`);
+    // navigation.navigate("Comment");
     resetRegisterForm();
   };
 
