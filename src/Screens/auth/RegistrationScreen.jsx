@@ -11,7 +11,7 @@ import {
   Button,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { pallete } from "../helpers/variables";
+import { pallete } from "../../helpers/variables";
 
 // ! Main CODE
 
@@ -102,7 +102,7 @@ export function RegistrationScreen({
             <>
               <Image
                 style={styles.avatar}
-                source={require("../images/avatar.jpg")}
+                source={require("../../images/avatar.jpg")}
                 alt="user avatar"
               />
               <TouchableOpacity
@@ -219,7 +219,8 @@ const styles = StyleSheet.create({
     paddingTop: 92,
 
     justifyContent: "flex-end",
-    backgroundColor: pallete.white,
+    // backgroundColor: pallete.white,
+    backgroundColor: "#b25757",
   },
   title: {
     // marginBottom: 33,

@@ -11,9 +11,10 @@ import {
   KeyboardAvoidingView,
   Platform,
   Image,
+  View,
 } from "react-native";
-import { RegistrationScreen, LoginScreen, Home } from "./src/Screens";
-// import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { RegistrationScreen, LoginScreen } from "./src/Screens/auth";
+import { Home } from "./src/Screens/Home";
 
 // ! Main logic
 
@@ -67,8 +68,9 @@ export default function App() {
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
           <Image source={image} style={styles.bgImg} />
+
           <NavigationContainer>
-            <Stack.Navigator initialRouteName="Home">
+            <Stack.Navigator initialRouteName="Register">
               <Stack.Screen name="Home" component={Home} />
               <Stack.Screen
                 name="Register"
@@ -89,6 +91,7 @@ const styles = StyleSheet.create({
     position: "relative",
     flex: 1,
     justifyContent: "flex-end",
+    backgroundColor: "#b25757",
   },
   bgImg: {
     position: "absolute",

@@ -9,7 +9,7 @@ import {
   Text,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { pallete } from "../helpers/variables";
+import { pallete } from "../../helpers/variables";
 
 // ! Main CODE
 
