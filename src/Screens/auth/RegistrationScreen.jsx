@@ -22,7 +22,7 @@ const image = require("../../images/bg-img.png");
 export function RegistrationScreen({
   route,
   navigation,
-  orientation = "portrait",
+  // orientation = "portrait",
 }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -34,8 +34,7 @@ export function RegistrationScreen({
   const [inputPasswordStyle, setInputPasswordStyle] = useState(styles.input);
   const [securePassword, setSecurePassword] = useState(true);
 
-  // const { orientation = "portrait" } = route.params;
-  // console.log("orientation", orientation);
+  const orientation = "portrait"; // TODO
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
