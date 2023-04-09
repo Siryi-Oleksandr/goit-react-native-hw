@@ -9,9 +9,14 @@ import {
   Text,
   Image,
   Button,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  ImageBackground,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../../helpers/variables";
+
+const image = require("../../images/bg-img.png");
 
 // ! Main CODE
 
@@ -78,132 +83,175 @@ export function RegistrationScreen({
   };
 
   return (
-    <View>
-      <View
-        style={{
-          ...styles.form,
-          paddingBottom: isKeyboardOpen
-            ? 12
-            : orientation === "portrait"
-            ? 45
-            : 10,
-        }}
-      >
-        <View style={styles.imgWrapper}>
-          {!showAvatar ? (
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={{ ...styles.btnAddAvatar, borderColor: pallete.accent }}
-              onPress={toggleShowAvatar}
-            >
-              <Icon name="plus" size={15} color={pallete.accent} />
-            </TouchableOpacity>
-          ) : (
-            <>
-              <Image
-                style={styles.avatar}
-                source={require("../../images/avatar.jpg")}
-                alt="user avatar"
-              />
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={{ ...styles.btnAddAvatar, borderColor: pallete.grey }}
-                onPress={toggleShowAvatar}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+          >
+            <View>
+              <View
+                style={{
+                  ...styles.form,
+                  paddingBottom: isKeyboardOpen
+                    ? 12
+                    : orientation === "portrait"
+                    ? 45
+                    : 10,
+                }}
               >
-                <Icon name="times" size={15} color={pallete.grey} />
-              </TouchableOpacity>
-            </>
-          )}
-        </View>
+                <View style={styles.imgWrapper}>
+                  {!showAvatar ? (
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      style={{
+                        ...styles.btnAddAvatar,
+                        borderColor: pallete.accent,
+                      }}
+                      onPress={toggleShowAvatar}
+                    >
+                      <Icon name="plus" size={15} color={pallete.accent} />
+                    </TouchableOpacity>
+                  ) : (
+                    <>
+                      <Image
+                        style={styles.avatar}
+                        source={require("../../images/avatar.jpg")}
+                        alt="user avatar"
+                      />
+                      <TouchableOpacity
+                        activeOpacity={0.8}
+                        style={{
+                          ...styles.btnAddAvatar,
+                          borderColor: pallete.grey,
+                        }}
+                        onPress={toggleShowAvatar}
+                      >
+                        <Icon name="times" size={15} color={pallete.grey} />
+                      </TouchableOpacity>
+                    </>
+                  )}
+                </View>
 
-        <Text
-          style={{
-            ...styles.title,
-            marginBottom: orientation === "portrait" ? 33 : 10,
-          }}
-        >
-          Registration
-        </Text>
+                <Text
+                  style={{
+                    ...styles.title,
+                    marginBottom: orientation === "portrait" ? 33 : 10,
+                  }}
+                >
+                  Registration
+                </Text>
 
-        <TextInput
-          style={inputLoginStyle}
-          value={name}
-          placeholder="Login"
-          onChangeText={nameHandler}
-          onFocus={() =>
-            setInputLoginStyle({ ...styles.input, ...styles.inputFocused })
-          }
-          onBlur={() => setInputLoginStyle(styles.input)}
-        />
+                <TextInput
+                  style={inputLoginStyle}
+                  value={name}
+                  placeholder="Login"
+                  onChangeText={nameHandler}
+                  onFocus={() =>
+                    setInputLoginStyle({
+                      ...styles.input,
+                      ...styles.inputFocused,
+                    })
+                  }
+                  onBlur={() => setInputLoginStyle(styles.input)}
+                />
 
-        <TextInput
-          style={inputEmailStyle}
-          value={email}
-          onChangeText={emailHandler}
-          placeholder="Email"
-          onFocus={() =>
-            setInputEmailStyle({ ...styles.input, ...styles.inputFocused })
-          }
-          onBlur={() => setInputEmailStyle(styles.input)}
-        />
+                <TextInput
+                  style={inputEmailStyle}
+                  value={email}
+                  onChangeText={emailHandler}
+                  placeholder="Email"
+                  onFocus={() =>
+                    setInputEmailStyle({
+                      ...styles.input,
+                      ...styles.inputFocused,
+                    })
+                  }
+                  onBlur={() => setInputEmailStyle(styles.input)}
+                />
 
-        <View style={styles.passwordWrapper}>
-          <TextInput
-            style={inputPasswordStyle}
-            value={password}
-            onChangeText={passwordHandler}
-            onFocus={() =>
-              setInputPasswordStyle({ ...styles.input, ...styles.inputFocused })
-            }
-            onBlur={() => setInputPasswordStyle(styles.input)}
-            placeholder="Password"
-            secureTextEntry={securePassword}
-          />
-          {securePassword ? (
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={styles.btnShowPassword}
-              onPress={toggleShowPassword}
-            >
-              <Icon name="eye" size={20} />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={styles.btnShowPassword}
-              onPress={toggleShowPassword}
-            >
-              <Icon name="eye-slash" size={20} />
-            </TouchableOpacity>
-          )}
-        </View>
+                <View style={styles.passwordWrapper}>
+                  <TextInput
+                    style={inputPasswordStyle}
+                    value={password}
+                    onChangeText={passwordHandler}
+                    onFocus={() =>
+                      setInputPasswordStyle({
+                        ...styles.input,
+                        ...styles.inputFocused,
+                      })
+                    }
+                    onBlur={() => setInputPasswordStyle(styles.input)}
+                    placeholder="Password"
+                    secureTextEntry={securePassword}
+                  />
+                  {securePassword ? (
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      style={styles.btnShowPassword}
+                      onPress={toggleShowPassword}
+                    >
+                      <Icon name="eye" size={20} />
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      style={styles.btnShowPassword}
+                      onPress={toggleShowPassword}
+                    >
+                      <Icon name="eye-slash" size={20} />
+                    </TouchableOpacity>
+                  )}
+                </View>
 
-        <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={{
-              ...styles.btnRegister,
-              marginTop: orientation === "portrait" ? 43 : 10,
-            }}
-            onPress={onRegister}
-          >
-            <Text style={styles.btnTitle}>Register</Text>
-          </TouchableOpacity>
+                <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={{
+                      ...styles.btnRegister,
+                      marginTop: orientation === "portrait" ? 43 : 10,
+                    }}
+                    onPress={onRegister}
+                  >
+                    <Text style={styles.btnTitle}>Register</Text>
+                  </TouchableOpacity>
 
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={styles.linkNavigate}
-            onPress={() => navigation.navigate("Login")}
-          >
-            <Text style={styles.linkTitle}>If you have accout? Login</Text>
-          </TouchableOpacity>
-        </View>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.linkNavigate}
+                    onPress={() => navigation.navigate("Login")}
+                  >
+                    <Text style={styles.linkTitle}>
+                      If you have accout? Login
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+        </ImageBackground>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    // position: "relative",
+    flex: 1,
+    // justifyContent: "flex-end",
+    // backgroundColor: "#b25757",
+  },
+  // bgImg: {
+  //   position: "absolute",
+  //   width: "100%",
+  //   top: 0,
+  //   resizeMode: "cover",
+  // },
+  image: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
   avatar: {
     width: 120,
     height: 120,
@@ -219,8 +267,8 @@ const styles = StyleSheet.create({
     paddingTop: 92,
 
     justifyContent: "flex-end",
-    // backgroundColor: pallete.white,
-    backgroundColor: "#b25757",
+    backgroundColor: pallete.white,
+    // backgroundColor: "#b25757",
   },
   title: {
     // marginBottom: 33,

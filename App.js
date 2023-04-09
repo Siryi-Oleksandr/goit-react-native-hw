@@ -18,7 +18,7 @@ import { Home } from "./src/Screens/Home";
 
 // ! Main logic
 
-const image = require("./src/images/bg-img.png");
+// const image = require("./src/images/bg-img.png");
 SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
 
@@ -59,7 +59,7 @@ export default function App() {
 
   return (
     <>
-      <TouchableWithoutFeedback
+      {/* <TouchableWithoutFeedback
         onLayout={onLayoutRootView}
         onPress={Keyboard.dismiss}
       >
@@ -67,21 +67,21 @@ export default function App() {
           style={styles.container}
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
-          <Image source={image} style={styles.bgImg} />
+          <Image source={image} style={styles.bgImg} /> */}
 
-          <NavigationContainer>
-            <Stack.Navigator initialRouteName="Register">
-              <Stack.Screen name="Home" component={Home} />
-              <Stack.Screen
-                name="Register"
-                component={RegistrationScreen}
-                initialParams={{ orientation }}
-              />
-              <Stack.Screen name="Login" component={LoginScreen} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Register">
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen
+            name="Register"
+            component={RegistrationScreen}
+            initialParams={{ orientation }}
+          />
+          <Stack.Screen name="Login" component={LoginScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+      {/* </KeyboardAvoidingView>
+      </TouchableWithoutFeedback> */}
     </>
   );
 }
