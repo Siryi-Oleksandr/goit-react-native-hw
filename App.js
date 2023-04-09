@@ -18,9 +18,8 @@ import { Home } from "./src/Screens/Home";
 
 // ! Main logic
 
-// const image = require("./src/images/bg-img.png");
 SplashScreen.preventAutoHideAsync();
-const Stack = createNativeStackNavigator();
+const AuthStack = createNativeStackNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -63,22 +62,17 @@ export default function App() {
         onLayout={onLayoutRootView}
         onPress={Keyboard.dismiss}
       >
-        <View
-          style={styles.container}
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
-        >
-          {/* <Image source={image} style={styles.bgImg} /> */}
-
+        <View style={styles.container}>
           <NavigationContainer>
-            <Stack.Navigator initialRouteName="Register">
-              <Stack.Screen name="Home" component={Home} />
-              <Stack.Screen
+            <AuthStack.Navigator initialRouteName="Login">
+              {/* <AuthStack.Screen name="Home" component={Home} /> */}
+              <AuthStack.Screen
                 name="Register"
                 component={RegistrationScreen}
                 initialParams={{ orientation }}
               />
-              <Stack.Screen name="Login" component={LoginScreen} />
-            </Stack.Navigator>
+              <AuthStack.Screen name="Login" component={LoginScreen} />
+            </AuthStack.Navigator>
           </NavigationContainer>
         </View>
       </TouchableWithoutFeedback>
@@ -88,15 +82,6 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    // position: "relative",
     flex: 1,
-    // justifyContent: "flex-end",
-    // backgroundColor: "#b25757",
   },
-  // bgImg: {
-  //   position: "absolute",
-  //   width: "100%",
-  //   top: 0,
-  //   resizeMode: "cover",
-  // },
 });
