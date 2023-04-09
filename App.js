@@ -62,41 +62,41 @@ export default function App() {
       {/* <TouchableWithoutFeedback
         onLayout={onLayoutRootView}
         onPress={Keyboard.dismiss}
+      > */}
+      <View
+        style={styles.container}
+        // behavior={Platform.OS == "ios" ? "padding" : "height"}
       >
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
-        >
-          <Image source={image} style={styles.bgImg} /> */}
+        {/* <Image source={image} style={styles.bgImg} /> */}
 
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Register">
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen
-            name="Register"
-            component={RegistrationScreen}
-            initialParams={{ orientation }}
-          />
-          <Stack.Screen name="Login" component={LoginScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-      {/* </KeyboardAvoidingView>
-      </TouchableWithoutFeedback> */}
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Register">
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen
+              name="Register"
+              component={RegistrationScreen}
+              initialParams={{ orientation }}
+            />
+            <Stack.Screen name="Login" component={LoginScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </View>
+      {/* </TouchableWithoutFeedback> */}
     </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    position: "relative",
+    // position: "relative",
     flex: 1,
-    justifyContent: "flex-end",
-    backgroundColor: "#b25757",
+    // justifyContent: "flex-end",
+    // backgroundColor: "#b25757",
   },
-  bgImg: {
-    position: "absolute",
-    width: "100%",
-    top: 0,
-    resizeMode: "cover",
-  },
+  // bgImg: {
+  //   position: "absolute",
+  //   width: "100%",
+  //   top: 0,
+  //   resizeMode: "cover",
+  // },
 });
