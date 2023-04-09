@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Text,
   Image,
-  Button,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   ImageBackground,
@@ -89,143 +88,141 @@ export function RegistrationScreen({
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
-            <View>
-              <View
-                style={{
-                  ...styles.form,
-                  paddingBottom: isKeyboardOpen
-                    ? 12
-                    : orientation === "portrait"
-                    ? 45
-                    : 10,
-                }}
-              >
-                <View style={styles.imgWrapper}>
-                  {!showAvatar ? (
+            <View
+              style={{
+                ...styles.form,
+                paddingBottom: isKeyboardOpen
+                  ? 12
+                  : orientation === "portrait"
+                  ? 45
+                  : 10,
+              }}
+            >
+              <View style={styles.imgWrapper}>
+                {!showAvatar ? (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={{
+                      ...styles.btnAddAvatar,
+                      borderColor: pallete.accent,
+                    }}
+                    onPress={toggleShowAvatar}
+                  >
+                    <Icon name="plus" size={15} color={pallete.accent} />
+                  </TouchableOpacity>
+                ) : (
+                  <>
+                    <Image
+                      style={styles.avatar}
+                      source={require("../../images/avatar.jpg")}
+                      alt="user avatar"
+                    />
                     <TouchableOpacity
                       activeOpacity={0.8}
                       style={{
                         ...styles.btnAddAvatar,
-                        borderColor: pallete.accent,
+                        borderColor: pallete.grey,
                       }}
                       onPress={toggleShowAvatar}
                     >
-                      <Icon name="plus" size={15} color={pallete.accent} />
+                      <Icon name="times" size={15} color={pallete.grey} />
                     </TouchableOpacity>
-                  ) : (
-                    <>
-                      <Image
-                        style={styles.avatar}
-                        source={require("../../images/avatar.jpg")}
-                        alt="user avatar"
-                      />
-                      <TouchableOpacity
-                        activeOpacity={0.8}
-                        style={{
-                          ...styles.btnAddAvatar,
-                          borderColor: pallete.grey,
-                        }}
-                        onPress={toggleShowAvatar}
-                      >
-                        <Icon name="times" size={15} color={pallete.grey} />
-                      </TouchableOpacity>
-                    </>
-                  )}
-                </View>
+                  </>
+                )}
+              </View>
 
-                <Text
+              <Text
+                style={{
+                  ...styles.title,
+                  marginBottom: orientation === "portrait" ? 33 : 10,
+                }}
+              >
+                Registration
+              </Text>
+
+              <TextInput
+                style={inputLoginStyle}
+                value={name}
+                placeholder="Login"
+                onChangeText={nameHandler}
+                onFocus={() =>
+                  setInputLoginStyle({
+                    ...styles.input,
+                    ...styles.inputFocused,
+                  })
+                }
+                onBlur={() => setInputLoginStyle(styles.input)}
+              />
+
+              <TextInput
+                style={inputEmailStyle}
+                value={email}
+                onChangeText={emailHandler}
+                placeholder="Email"
+                onFocus={() =>
+                  setInputEmailStyle({
+                    ...styles.input,
+                    ...styles.inputFocused,
+                  })
+                }
+                onBlur={() => setInputEmailStyle(styles.input)}
+              />
+
+              <View style={styles.passwordWrapper}>
+                <TextInput
+                  style={inputPasswordStyle}
+                  value={password}
+                  onChangeText={passwordHandler}
+                  onFocus={() =>
+                    setInputPasswordStyle({
+                      ...styles.input,
+                      ...styles.inputFocused,
+                    })
+                  }
+                  onBlur={() => setInputPasswordStyle(styles.input)}
+                  placeholder="Password"
+                  secureTextEntry={securePassword}
+                />
+                {securePassword ? (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.btnShowPassword}
+                    onPress={toggleShowPassword}
+                  >
+                    <Icon name="eye" size={20} />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.btnShowPassword}
+                    onPress={toggleShowPassword}
+                  >
+                    <Icon name="eye-slash" size={20} />
+                  </TouchableOpacity>
+                )}
+              </View>
+
+              <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
                   style={{
-                    ...styles.title,
-                    marginBottom: orientation === "portrait" ? 33 : 10,
+                    ...styles.btnRegister,
+                    marginTop: orientation === "portrait" ? 43 : 10,
                   }}
+                  onPress={onRegister}
                 >
-                  Registration
-                </Text>
+                  <Text style={styles.btnTitle}>Register</Text>
+                </TouchableOpacity>
 
-                <TextInput
-                  style={inputLoginStyle}
-                  value={name}
-                  placeholder="Login"
-                  onChangeText={nameHandler}
-                  onFocus={() =>
-                    setInputLoginStyle({
-                      ...styles.input,
-                      ...styles.inputFocused,
-                    })
-                  }
-                  onBlur={() => setInputLoginStyle(styles.input)}
-                />
-
-                <TextInput
-                  style={inputEmailStyle}
-                  value={email}
-                  onChangeText={emailHandler}
-                  placeholder="Email"
-                  onFocus={() =>
-                    setInputEmailStyle({
-                      ...styles.input,
-                      ...styles.inputFocused,
-                    })
-                  }
-                  onBlur={() => setInputEmailStyle(styles.input)}
-                />
-
-                <View style={styles.passwordWrapper}>
-                  <TextInput
-                    style={inputPasswordStyle}
-                    value={password}
-                    onChangeText={passwordHandler}
-                    onFocus={() =>
-                      setInputPasswordStyle({
-                        ...styles.input,
-                        ...styles.inputFocused,
-                      })
-                    }
-                    onBlur={() => setInputPasswordStyle(styles.input)}
-                    placeholder="Password"
-                    secureTextEntry={securePassword}
-                  />
-                  {securePassword ? (
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      style={styles.btnShowPassword}
-                      onPress={toggleShowPassword}
-                    >
-                      <Icon name="eye" size={20} />
-                    </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      style={styles.btnShowPassword}
-                      onPress={toggleShowPassword}
-                    >
-                      <Icon name="eye-slash" size={20} />
-                    </TouchableOpacity>
-                  )}
-                </View>
-
-                <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={{
-                      ...styles.btnRegister,
-                      marginTop: orientation === "portrait" ? 43 : 10,
-                    }}
-                    onPress={onRegister}
-                  >
-                    <Text style={styles.btnTitle}>Register</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={styles.linkNavigate}
-                    onPress={() => navigation.navigate("Login")}
-                  >
-                    <Text style={styles.linkTitle}>
-                      If you have accout? Login
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.linkNavigate}
+                  onPress={() => navigation.navigate("Login")}
+                >
+                  <Text style={styles.linkTitle}>
+                    If you have accout? Login
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           </KeyboardAvoidingView>
