@@ -8,20 +8,61 @@ import {
   TouchableWithoutFeedback,
   Button,
 } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { RegistrationScreen } from "./auth/RegistrationScreen";
-import { LoginScreen } from "./auth/LoginScreen";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { ProfileScreen } from "./ProfileScreen";
 import { CommentsScreen } from "./CommentsScreen";
+import { CreatePostsScreen } from "./CreatePostsScreen";
+import { pallete } from "../helpers/variables";
 
-const Tabs = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
+// const Tabs = createBottomTabNavigator();
 
 export const Home = () => {
   return (
-    <Tabs.Navigator>
-      <Tabs.Screen name="Profile" component={ProfileScreen} />
-      <Tabs.Screen name="Comment" component={CommentsScreen} />
-    </Tabs.Navigator>
+    <Tab.Navigator
+      initialRouteName="Comment"
+      barStyle={{ backgroundColor: "tomato", paddingBottom: 16 }}
+      activeColor={pallete.white}
+      labeled={false}
+    >
+      <Tab.Screen
+        name="Comment"
+        component={CommentsScreen}
+        labeled={false}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="view-grid-outline"
+              color={color}
+              size={36}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Create"
+        component={CreatePostsScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="plus" color={color} size={36} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="account-outline"
+              color={color}
+              size={36}
+            />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 

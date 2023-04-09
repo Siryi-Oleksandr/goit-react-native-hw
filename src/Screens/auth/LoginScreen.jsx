@@ -26,6 +26,8 @@ export function LoginScreen({ navigation }) {
   const [inputPasswordStyle, setInputPasswordStyle] = useState(styles.input);
   const [securePassword, setSecurePassword] = useState(true);
 
+  console.log(navigation);
+
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -138,7 +140,7 @@ export function LoginScreen({ navigation }) {
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    activeOpacity={0.8}
+                    activeOpacity={0.6}
                     style={styles.linkNavigate}
                     onPress={() => navigation.navigate("Register")}
                   >

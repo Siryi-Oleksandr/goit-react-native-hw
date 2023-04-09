@@ -193,7 +193,7 @@ export function RegistrationScreen({
                   </TouchableOpacity>
                 ) : (
                   <TouchableOpacity
-                    activeOpacity={0.8}
+                    activeOpacity={0.6}
                     style={styles.btnShowPassword}
                     onPress={toggleShowPassword}
                   >

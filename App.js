@@ -52,6 +52,8 @@ export default function App() {
     }
   }, [fontsLoaded]);
 
+  const useRoute = (isAuth) => {};
+
   if (!fontsLoaded) {
     return null;
   }
@@ -64,14 +66,19 @@ export default function App() {
       >
         <View style={styles.container}>
           <NavigationContainer>
-            <AuthStack.Navigator initialRouteName="Login">
-              {/* <AuthStack.Screen name="Home" component={Home} /> */}
+            <AuthStack.Navigator initialRouteName="Home">
+              <AuthStack.Screen name="Home" component={Home} />
               <AuthStack.Screen
                 name="Register"
                 component={RegistrationScreen}
+                options={{ headerShown: false }}
                 initialParams={{ orientation }}
               />
-              <AuthStack.Screen name="Login" component={LoginScreen} />
+              <AuthStack.Screen
+                name="Login"
+                component={LoginScreen}
+                options={{ headerShown: false }}
+              />
             </AuthStack.Navigator>
           </NavigationContainer>
         </View>
