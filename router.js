@@ -3,9 +3,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { StyleSheet } from "react-native";
 import { RegistrationScreen, LoginScreen } from "./src/Screens/auth";
-import { ProfileScreen } from "./src/Screens/ProfileScreen";
-import { CommentsScreen } from "./src/Screens/CommentsScreen";
-import { CreatePostsScreen } from "./src/Screens/CreatePostsScreen";
+import {
+  CreatePostsScreen,
+  PostsScreen,
+  CommentsScreen,
+  ProfileScreen,
+  Home,
+  MapScreen,
+} from "./src/Screens/main";
 import { pallete } from "./src/helpers/variables";
 
 const AuthStack = createNativeStackNavigator();
@@ -31,15 +36,15 @@ export const useRoutes = (isAuth) => {
   } else {
     return (
       <Tab.Navigator
-        initialRouteName="Comment"
+        initialRouteName="Home"
         barStyle={styles.tabBar}
         activeColor={pallete.accent}
         labeled={false}
         shifting={true}
       >
         <Tab.Screen
-          name="Comment"
-          component={CommentsScreen}
+          name="Home"
+          component={Home}
           labeled={false}
           options={{
             tabBarIcon: ({ color }) => (
