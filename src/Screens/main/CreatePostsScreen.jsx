@@ -86,6 +86,13 @@ export function CreatePostsScreen() {
                   alt="user post picture"
                 />
               ) : null}
+              <TouchableOpacity
+                style={styles.cameraBtn}
+                activeOpacity={0.8}
+                onPress={() => Alert.alert("add photo from camera")}
+              >
+                <Icon name="camera" size={25} color={pallete.gray} />
+              </TouchableOpacity>
             </View>
 
             {loadedPhoto ? (
@@ -117,20 +124,27 @@ export function CreatePostsScreen() {
               }
               onBlur={() => setInputNameStyle(styles.input)}
             />
-            <TextInput
-              style={inputLocationStyle}
-              value={location}
-              onChangeText={locationHandler}
-              placeholder="Location"
-              onFocus={() =>
-                setInputLocationStyle({
-                  ...styles.input,
-                  ...styles.inputFocused,
-                })
-              }
-              onBlur={() => setInputLocationStyle(styles.input)}
-            />
-            <Icon name="map-marker" size={20} color={pallete.gray} />
+            <View style={styles.inputLocation}>
+              <Icon
+                style={styles.iconLocation}
+                name="map-marker"
+                size={20}
+                color={pallete.gray}
+              />
+              <TextInput
+                style={inputLocationStyle}
+                value={location}
+                onChangeText={locationHandler}
+                placeholder="Location"
+                onFocus={() =>
+                  setInputLocationStyle({
+                    ...styles.input,
+                    ...styles.inputFocused,
+                  })
+                }
+                onBlur={() => setInputLocationStyle(styles.input)}
+              />
+            </View>
 
             <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
               <TouchableOpacity
@@ -176,11 +190,24 @@ const styles = StyleSheet.create({
     fontWeight: "400",
   },
   imgWrapper: {
+    position: "relative",
     marginTop: 32,
     marginBottom: 4,
     borderRadius: 16,
     overflow: "hidden",
     backgroundColor: pallete.gray,
+  },
+  cameraBtn: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    width: 55,
+    height: 55,
+    borderRadius: "50%",
+    backgroundColor: "#ffffff85",
+    justifyContent: "center",
+    alignItems: "center",
+    transform: [{ translateX: -27 }, { translateY: -27 }],
   },
   input: {
     marginTop: 16,
@@ -192,6 +219,14 @@ const styles = StyleSheet.create({
   },
   inputFocused: {
     borderBottomColor: pallete.accent,
+  },
+  inputLocation: {
+    position: "relative",
+  },
+  iconLocation: {
+    position: "absolute",
+    top: "50%",
+    left: 0,
   },
   btnPublishDisabled: {
     marginTop: 32,
