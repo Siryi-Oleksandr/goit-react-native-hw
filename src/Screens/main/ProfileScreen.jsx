@@ -1,22 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
-  TextInput,
-  Keyboard,
-  Alert,
   TouchableOpacity,
   Text,
   Image,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
   ImageBackground,
   ScrollView,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../../helpers/variables";
+import { PostItem } from "../../components/PostItem";
 
 const image = require("../../images/bg-img.png");
+
+const postData = {
+  img: require("../../images/nature-1.jpg"),
+  title: "Forest in mounting",
+  comments: 18,
+  likes: 203,
+  location: "Ukraine",
+};
+const postData2 = {
+  img: require("../../images/nature-2.jpg"),
+  title: "Sunset near sea",
+  comments: 9,
+  likes: 155,
+  location: "Egypt",
+};
 
 // ! Main CODE
 
@@ -27,10 +38,6 @@ export function ProfileScreen({ navigation }) {
 
   const toggleShowAvatar = () => {
     setShowAvatar((prevState) => !prevState);
-  };
-
-  const toggleShowPassword = () => {
-    setSecurePassword((prevState) => !prevState);
   };
 
   return (
@@ -61,11 +68,11 @@ export function ProfileScreen({ navigation }) {
                     activeOpacity={0.8}
                     style={{
                       ...styles.btnAddAvatar,
-                      borderColor: pallete.grey,
+                      borderColor: pallete.gray,
                     }}
                     onPress={toggleShowAvatar}
                   >
-                    <Icon name="times" size={15} color={pallete.grey} />
+                    <Icon name="times" size={15} color={pallete.gray} />
                   </TouchableOpacity>
                 </>
               )}
@@ -76,7 +83,7 @@ export function ProfileScreen({ navigation }) {
               style={styles.logOutBtn}
               onPress={() => alert("Log out from your acount NEW")}
             >
-              <Icon name="sign-out" size={24} color={pallete.grey} />
+              <Icon name="sign-out" size={24} color={pallete.gray} />
             </TouchableOpacity>
 
             <Text
@@ -88,73 +95,8 @@ export function ProfileScreen({ navigation }) {
               Natali Romanova
             </Text>
 
-            <View style={styles.postWrapper}>
-              <Image
-                style={styles.img}
-                source={require("../../images/nature-1.jpg")}
-                alt="user post picture"
-              />
-              <Text style={styles.postTitle}>Forest</Text>
-              <View style={styles.postInfo}>
-                <View style={styles.postValuesWrapper}>
-                  <View style={styles.postValues}>
-                    <Icon name="comment" size={18} color={pallete.accent} />
-                    <Text style={styles.postValuesText}>8</Text>
-                  </View>
-
-                  <View style={{ ...styles.postValues, marginLeft: 24 }}>
-                    <Icon name="thumbs-o-up" size={18} color={pallete.accent} />
-                    <Text style={styles.postValuesText}>200</Text>
-                  </View>
-                </View>
-
-                <View style={styles.postValues}>
-                  <Icon name="map-marker" size={20} color={pallete.grey} />
-                  <Text
-                    style={{
-                      ...styles.postValuesText,
-                      textDecorationLine: "underline",
-                    }}
-                  >
-                    Ukraine
-                  </Text>
-                </View>
-              </View>
-            </View>
-
-            <View style={styles.postWrapper}>
-              <Image
-                style={styles.img}
-                source={require("../../images/nature-2.jpg")}
-                alt="user post picture"
-              />
-              <Text style={styles.postTitle}>Forest</Text>
-              <View style={styles.postInfo}>
-                <View style={styles.postValuesWrapper}>
-                  <View style={styles.postValues}>
-                    <Icon name="comment" size={18} color={pallete.accent} />
-                    <Text style={styles.postValuesText}>16</Text>
-                  </View>
-
-                  <View style={{ ...styles.postValues, marginLeft: 24 }}>
-                    <Icon name="thumbs-o-up" size={18} color={pallete.accent} />
-                    <Text style={styles.postValuesText}>53</Text>
-                  </View>
-                </View>
-
-                <View style={styles.postValues}>
-                  <Icon name="map-marker" size={20} color={pallete.grey} />
-                  <Text
-                    style={{
-                      ...styles.postValuesText,
-                      textDecorationLine: "underline",
-                    }}
-                  >
-                    Ukraine
-                  </Text>
-                </View>
-              </View>
-            </View>
+            <PostItem postData={postData} />
+            <PostItem postData={postData2} />
           </View>
         </ImageBackground>
       </ScrollView>
@@ -179,15 +121,14 @@ const styles = StyleSheet.create({
   form: {
     position: "relative",
     marginTop: 100,
-    paddingLeft: 40,
-    paddingRight: 40,
+    paddingLeft: 24,
+    paddingRight: 24,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingTop: 92,
 
     justifyContent: "flex-end",
     backgroundColor: pallete.white,
-    // backgroundColor: "#b25757",
   },
   logOutBtn: {
     position: "absolute",
@@ -202,36 +143,6 @@ const styles = StyleSheet.create({
     lineHeight: 35,
     textAlign: "center",
     color: pallete.black,
-  },
-  postWrapper: {
-    marginBottom: 32,
-  },
-  postTitle: {
-    marginTop: 8,
-    fontFamily: "Roboto-Medium",
-    fontWeight: "500",
-    fontSize: 16,
-    lineHeight: 19,
-    color: pallete.black,
-  },
-  postInfo: {
-    marginTop: 8,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  postValues: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  postValuesText: {
-    marginLeft: 8,
-    fontSize: 16,
-    lineHeight: 19,
-    color: pallete.black,
-  },
-  postValuesWrapper: {
-    flexDirection: "row",
   },
 
   imgWrapper: {

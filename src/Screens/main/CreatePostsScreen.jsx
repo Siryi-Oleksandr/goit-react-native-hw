@@ -11,11 +11,13 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Alert,
+  ScrollView,
 } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../../helpers/variables";
 
 export function CreatePostsScreen() {
-  const [isLoadedPhoto, setIsLoadedPhoto] = useState(null);
+  const [loadedPhoto, setLoadedPhoto] = useState(null);
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [inputNameStyle, setInputNameStyle] = useState(styles.input);
@@ -54,11 +56,14 @@ export function CreatePostsScreen() {
   };
 
   const onPublish = () => {
-    const userCredentials = { name, location };
+    const userCredentials = { name, location, loadedPhoto };
     Alert.alert("User post", `${name} + ${location}`);
     // navigation.navigate("somewhere");
     resetPublishForm();
+    setLoadedPhoto(null);
   };
+
+  const isPostData = loadedPhoto && name;
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -66,7 +71,7 @@ export function CreatePostsScreen() {
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
-          <View>
+          <ScrollView>
             <View
               style={{
                 ...styles.imgWrapper,
@@ -74,7 +79,7 @@ export function CreatePostsScreen() {
                 minHeight: width * 0.5,
               }}
             >
-              {isLoadedPhoto ? (
+              {loadedPhoto ? (
                 <Image
                   style={styles.img}
                   source={require("../../images/nature-1.jpg")}
@@ -83,26 +88,27 @@ export function CreatePostsScreen() {
               ) : null}
             </View>
 
-            {isLoadedPhoto ? (
+            {loadedPhoto ? (
               <TouchableOpacity
                 activeOpacity={0.6}
-                onPress={() => setIsLoadedPhoto(false)}
+                onPress={() => setLoadedPhoto(false)}
               >
                 <Text style={styles.editBtn}>Edit photo</Text>
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
                 activeOpacity={0.6}
-                onPress={() => setIsLoadedPhoto(true)}
+                onPress={() => setLoadedPhoto(true)}
               >
                 <Text style={styles.editBtn}>Add photo</Text>
               </TouchableOpacity>
             )}
             <TextInput
               style={inputNameStyle}
+              require
               value={name}
               onChangeText={nameHandler}
-              placeholder="Description"
+              placeholder="Description *"
               onFocus={() =>
                 setInputNameStyle({
                   ...styles.input,
@@ -124,20 +130,26 @@ export function CreatePostsScreen() {
               }
               onBlur={() => setInputLocationStyle(styles.input)}
             />
+            <Icon name="map-marker" size={20} color={pallete.gray} />
 
             <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
               <TouchableOpacity
+                style={
+                  !isPostData
+                    ? styles.btnPublishDisabled
+                    : {
+                        ...styles.btnPublishDisabled,
+                        backgroundColor: pallete.accent,
+                      }
+                }
+                disabled={!isPostData}
                 activeOpacity={0.8}
-                style={{
-                  ...styles.btnPublish,
-                  marginTop: orientation === "portrait" ? 32 : 10,
-                }}
                 onPress={onPublish}
               >
                 <Text style={styles.btnTitle}>Publish</Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </ScrollView>
         </KeyboardAvoidingView>
       </View>
     </TouchableWithoutFeedback>
@@ -158,7 +170,7 @@ const styles = StyleSheet.create({
   },
   editBtn: {
     fontFamily: "Roboto-Regular",
-    color: pallete.grey,
+    color: pallete.gray,
     fontSize: 16,
     lineHeight: 19,
     fontWeight: "400",
@@ -168,26 +180,29 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     borderRadius: 16,
     overflow: "hidden",
-    backgroundColor: pallete.grey,
+    backgroundColor: pallete.gray,
   },
   input: {
     marginTop: 16,
+    paddingLeft: 26,
     width: "100%",
     height: 50,
     borderBottomWidth: 1,
-    borderBottomColor: pallete.grey,
+    borderBottomColor: pallete.gray,
   },
   inputFocused: {
     borderBottomColor: pallete.accent,
   },
-  btnPublish: {
+  btnPublishDisabled: {
+    marginTop: 32,
     padding: 12,
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: pallete.accent,
+    backgroundColor: pallete.gray,
     borderRadius: 100,
   },
+
   btnTitle: {
     fontFamily: "Roboto-Regular",
     color: pallete.white,

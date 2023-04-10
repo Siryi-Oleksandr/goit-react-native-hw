@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     backgroundColor: pallete.white,
     paddingBottom: 16,
     borderTopWidth: 1,
-    borderTopColor: pallete.grey,
+    borderTopColor: pallete.gray,
   },
 });
 

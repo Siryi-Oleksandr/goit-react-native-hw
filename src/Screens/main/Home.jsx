@@ -52,7 +52,7 @@ function LogOut() {
       }}
       onPress={() => alert("Log out from your acount NEW")}
     >
-      <Icon name="sign-out" size={24} color={pallete.grey} />
+      <Icon name="sign-out" size={24} color={pallete.gray} />
     </TouchableOpacity>
   );
 }

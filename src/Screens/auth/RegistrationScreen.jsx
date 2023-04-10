@@ -121,11 +121,11 @@ export function RegistrationScreen({
                       activeOpacity={0.8}
                       style={{
                         ...styles.btnAddAvatar,
-                        borderColor: pallete.grey,
+                        borderColor: pallete.gray,
                       }}
                       onPress={toggleShowAvatar}
                     >
-                      <Icon name="times" size={15} color={pallete.grey} />
+                      <Icon name="times" size={15} color={pallete.gray} />
                     </TouchableOpacity>
                   </>
                 )}
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
     padding: 12,
     borderWidth: 1,
     borderRadius: 8,
-    borderColor: pallete.grey,
+    borderColor: pallete.gray,
     marginBottom: 10,
     backgroundColor: "#F6F6F6",
     fontFamily: "Roboto-Regular",
