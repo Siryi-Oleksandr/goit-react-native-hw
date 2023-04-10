@@ -1,10 +1,22 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { pallete } from "../../helpers/variables";
 
 export function PostsScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>PostsScreen Screen</Text>
+      <View style={styles.userWrapper}>
+        <Image
+          style={styles.avatar}
+          source={require("../../images/avatar.jpg")}
+          alt="user avatar"
+        />
+        <View>
+          <Text style={styles.userName}>Natali Romanova</Text>
+          <Text style={styles.userEmail}>example@mail.com</Text>
+        </View>
+      </View>
+
       <TouchableOpacity
         activeOpacity={0.6}
         onPress={() => navigation.navigate("Comments")}
@@ -24,11 +36,33 @@ export function PostsScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    paddingTop: 32,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
-  title: {
-    fontSize: 48,
-    color: "#ca3131",
+  avatar: {
+    marginRight: 8,
+    width: 60,
+    height: 60,
+    borderRadius: 16,
+    overflow: "hidden",
+  },
+  userWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  userName: {
+    fontFamily: "Roboto-Bolt",
+    color: pallete.black,
+    fontSize: 13,
+    lineHeight: 15,
+    fontWeight: "700",
+  },
+  userEmail: {
+    fontFamily: "Roboto-Regular",
+    color: "rgba(33, 33, 33, 0.8)",
+    fontSize: 11,
+    lineHeight: 13,
+    fontWeight: "400",
   },
 });

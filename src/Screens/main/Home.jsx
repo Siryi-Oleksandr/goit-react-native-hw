@@ -17,10 +17,19 @@ export const Home = () => {
         component={PostsScreen}
         options={{
           headerRight: () => LogOut(),
+          headerTitleAlign: "center",
         }}
       />
-      <HomeStack.Screen name="Comments" component={CommentsScreen} />
-      <HomeStack.Screen name="Map" component={MapScreen} />
+      <HomeStack.Screen
+        name="Comments"
+        component={CommentsScreen}
+        options={{ headerTitleAlign: "center" }}
+      />
+      <HomeStack.Screen
+        name="Map"
+        component={MapScreen}
+        options={{ headerTitleAlign: "center" }}
+      />
     </HomeStack.Navigator>
   );
 };
@@ -28,7 +37,7 @@ export const Home = () => {
 function LogOut() {
   return (
     <TouchableOpacity
-      activeOpacity={0.8}
+      activeOpacity={0.7}
       style={{
         marginRight: 16,
       }}
