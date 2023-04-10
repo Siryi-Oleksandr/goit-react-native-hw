@@ -129,7 +129,7 @@ export function CreatePostsScreen() {
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={{
-                  ...styles.btnRegister,
+                  ...styles.btnPublish,
                   marginTop: orientation === "portrait" ? 32 : 10,
                 }}
                 onPress={onPublish}
@@ -180,8 +180,7 @@ const styles = StyleSheet.create({
   inputFocused: {
     borderBottomColor: pallete.accent,
   },
-  btnRegister: {
-    // marginTop: 43,
+  btnPublish: {
     padding: 12,
     height: 50,
     justifyContent: "center",
