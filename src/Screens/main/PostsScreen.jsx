@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   userName: {
-    fontFamily: "Roboto-Bolt",
+    fontFamily: "Roboto-Bold",
     color: pallete.black,
     fontSize: 13,
     lineHeight: 15,

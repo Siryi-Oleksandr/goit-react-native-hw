@@ -6,6 +6,7 @@ import { MapScreen } from "./MapScreen";
 import { PostsScreen } from "./PostsScreen";
 import { TouchableOpacity } from "react-native";
 import { pallete } from "../../helpers/variables";
+import { CreatePostsScreen } from "./CreatePostsScreen";
 
 const HomeStack = createNativeStackNavigator();
 
@@ -30,6 +31,14 @@ export const Home = () => {
         component={MapScreen}
         options={{ headerTitleAlign: "center" }}
       />
+      {/* <HomeStack.Screen
+        name="Create"
+        component={CreatePostsScreen}
+        options={{
+          headerTitleAlign: "center",
+          headerTitle: "Create publication",
+        }}
+      /> */}
     </HomeStack.Navigator>
   );
 };
