@@ -163,6 +163,13 @@ export function CreatePostsScreen() {
                 <Text style={styles.btnTitle}>Publish</Text>
               </TouchableOpacity>
             </View>
+            <TouchableOpacity
+              style={styles.deleteBtn}
+              activeOpacity={0.8}
+              onPress={() => Alert.alert("delete post")}
+            >
+              <Icon name="trash" size={25} color={pallete.gray} />
+            </TouchableOpacity>
           </ScrollView>
         </KeyboardAvoidingView>
       </View>
@@ -209,6 +216,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     transform: [{ translateX: -27 }, { translateY: -27 }],
   },
+  deleteBtn: {},
   input: {
     marginTop: 16,
     paddingLeft: 26,

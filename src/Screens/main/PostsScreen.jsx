@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { pallete } from "../../helpers/variables";
+import { testDB } from "../../helpers/testDB";
+import { PostItemAddFeatures } from "../../components/PostItemAddFeatures";
 
 export function PostsScreen({ navigation }) {
   return (
@@ -39,6 +41,12 @@ export function PostsScreen({ navigation }) {
       >
         <MaterialCommunityIcons name="plus" color={pallete.white} size={24} />
       </TouchableOpacity>
+
+      <View>
+        {testDB.map((data, index) => (
+          <PostItemAddFeatures key={index} postData={data} />
+        ))}
+      </View>
     </View>
   );
 }

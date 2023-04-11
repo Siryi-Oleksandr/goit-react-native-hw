@@ -12,6 +12,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../../helpers/variables";
 import { PostItem } from "../../components/PostItem";
 import { useScrollToTop } from "@react-navigation/native";
+import { testDB } from "../../helpers/testDB";
 
 const image = require("../../images/bg-img.png");
 
@@ -99,10 +100,9 @@ export function ProfileScreen({ navigation }) {
               Natali Romanova
             </Text>
 
-            <PostItem postData={postData} />
-            <PostItem postData={postData2} />
-            <PostItem postData={postData} />
-            <PostItem postData={postData2} />
+            {testDB.map((data, index) => (
+              <PostItem key={index} postData={data} />
+            ))}
           </View>
         </ImageBackground>
       </ScrollView>
