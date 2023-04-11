@@ -89,7 +89,7 @@ export function CreatePostsScreen() {
               <TouchableOpacity
                 style={styles.cameraBtn}
                 activeOpacity={0.8}
-                onPress={() => Alert.alert("add photo from camera")}
+                onPress={() => setLoadedPhoto(true)}
               >
                 <Icon name="camera" size={25} color={pallete.gray} />
               </TouchableOpacity>
@@ -167,9 +167,15 @@ export function CreatePostsScreen() {
         </KeyboardAvoidingView>
 
         <TouchableOpacity
-          style={styles.deleteBtn}
+          style={{
+            ...styles.deleteBtn,
+            display: isKeyboardOpen ? "none" : "flex",
+          }}
           activeOpacity={0.8}
-          onPress={() => Alert.alert("delete post")}
+          onPress={() => {
+            setLoadedPhoto(false);
+            Alert.alert("delete post");
+          }}
         >
           <Icon name="trash" size={30} color={pallete.gray} />
         </TouchableOpacity>
