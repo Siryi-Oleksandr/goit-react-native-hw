@@ -66,92 +66,93 @@ export function LoginScreen({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
+      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+        {/* <View style={styles.container}> */}
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        >
+          {/* <View> */}
+          <View
+            style={{
+              ...styles.form,
+              paddingBottom: isKeyboardOpen ? 12 : 45, // TODO 32 instead 12
+            }}
           >
-            <View>
-              <View
-                style={{
-                  ...styles.form,
-                  paddingBottom: isKeyboardOpen ? 12 : 45, // TODO 32 instead 12
-                }}
-              >
-                <Text style={styles.title}>Log In</Text>
+            <Text style={styles.title}>Log In</Text>
 
-                <TextInput
-                  style={inputEmailStyle}
-                  value={email}
-                  onChangeText={emailHandler}
-                  placeholder="Email"
-                  onFocus={() =>
-                    setInputEmailStyle({
-                      ...styles.input,
-                      ...styles.inputFocused,
-                    })
-                  }
-                  onBlur={() => setInputEmailStyle(styles.input)}
-                />
+            <TextInput
+              style={inputEmailStyle}
+              value={email}
+              onChangeText={emailHandler}
+              placeholder="Email"
+              onFocus={() =>
+                setInputEmailStyle({
+                  ...styles.input,
+                  ...styles.inputFocused,
+                })
+              }
+              onBlur={() => setInputEmailStyle(styles.input)}
+            />
 
-                <View style={styles.passwordWrapper}>
-                  <TextInput
-                    style={inputPasswordStyle}
-                    value={password}
-                    onChangeText={passwordHandler}
-                    onFocus={() =>
-                      setInputPasswordStyle({
-                        ...styles.input,
-                        ...styles.inputFocused,
-                      })
-                    }
-                    onBlur={() => setInputPasswordStyle(styles.input)}
-                    placeholder="Password"
-                    secureTextEntry={securePassword}
-                  />
-                  {securePassword ? (
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      style={styles.btnShowPassword}
-                      onPress={toggleShowPassword}
-                    >
-                      <Icon name="eye" size={20} />
-                    </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      style={styles.btnShowPassword}
-                      onPress={toggleShowPassword}
-                    >
-                      <Icon name="eye-slash" size={20} />
-                    </TouchableOpacity>
-                  )}
-                </View>
-
-                <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={styles.btnRegister}
-                    onPress={onLogin}
-                  >
-                    <Text style={styles.btnTitle}>Log In</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    activeOpacity={0.6}
-                    style={styles.linkNavigate}
-                    onPress={() => navigation.navigate("Register")}
-                  >
-                    <Text style={styles.linkTitle}>
-                      Don't have accout? Register
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
+            <View style={styles.passwordWrapper}>
+              <TextInput
+                style={inputPasswordStyle}
+                value={password}
+                onChangeText={passwordHandler}
+                onFocus={() =>
+                  setInputPasswordStyle({
+                    ...styles.input,
+                    ...styles.inputFocused,
+                  })
+                }
+                onBlur={() => setInputPasswordStyle(styles.input)}
+                placeholder="Password"
+                secureTextEntry={securePassword}
+              />
+              {securePassword ? (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.btnShowPassword}
+                  onPress={toggleShowPassword}
+                >
+                  <Icon name="eye" size={20} />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.btnShowPassword}
+                  onPress={toggleShowPassword}
+                >
+                  <Icon name="eye-slash" size={20} />
+                </TouchableOpacity>
+              )}
             </View>
-          </KeyboardAvoidingView>
-        </ImageBackground>
-      </View>
+
+            <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={styles.btnRegister}
+                onPress={onLogin}
+              >
+                <Text style={styles.btnTitle}>Log In</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                activeOpacity={0.6}
+                style={styles.linkNavigate}
+                onPress={() => navigation.navigate("Register")}
+              >
+                <Text style={styles.linkTitle}>
+                  Don't have accout? Register
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          {/* </View> */}
+        </KeyboardAvoidingView>
+        {/* </View> */}
+      </ImageBackground>
     </TouchableWithoutFeedback>
   );
 }
@@ -159,10 +160,10 @@ export function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "flex-end",
   },
   image: {
     flex: 1,
-    justifyContent: "flex-end",
   },
   form: {
     position: "relative",
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingTop: 32,
-    justifyContent: "flex-end",
+    // justifyContent: "flex-end",
     backgroundColor: pallete.white,
   },
   title: {

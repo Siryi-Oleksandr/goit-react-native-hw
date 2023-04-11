@@ -41,15 +41,12 @@ export const useRoutes = (isAuth) => {
         activeColor={pallete.accent}
         labeled={false}
         shifting={true}
-        tabBar={(props) => <MyTabBar {...props} />}
       >
         <Tab.Screen
           name="Home"
           component={Home}
           labeled={false}
           options={{
-            // tabBarBadgeStyle: { backgroundColor: pallete.accent },
-            // tabBarActiveTintColor: pallete.accent,
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons
                 name="view-grid-outline"
@@ -59,7 +56,7 @@ export const useRoutes = (isAuth) => {
             ),
           }}
         />
-        {/* <Tab.Screen
+        <Tab.Screen
           name="Create"
           component={CreatePostsScreen}
           options={{
@@ -67,7 +64,7 @@ export const useRoutes = (isAuth) => {
               <MaterialCommunityIcons name="plus" color={color} size={24} />
             ),
           }}
-        /> */}
+        />
         <Tab.Screen
           name="Profile"
           component={ProfileScreen}
@@ -89,60 +86,8 @@ export const useRoutes = (isAuth) => {
 const styles = StyleSheet.create({
   tabBar: {
     backgroundColor: pallete.white,
-    paddingBottom: 16,
+    // paddingBottom: 16,
     borderTopWidth: 1,
     borderTopColor: pallete.gray,
   },
 });
-
-function MyTabBar({ state, descriptors, navigation }) {
-  return (
-    <View style={{ flexDirection: "row" }}>
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
-
-        const isFocused = state.index === index;
-
-        const onPress = () => {
-          const event = navigation.emit({
-            type: "tabPress",
-            target: route.key,
-          });
-
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
-          }
-        };
-
-        const onLongPress = () => {
-          navigation.emit({
-            type: "tabLongPress",
-            target: route.key,
-          });
-        };
-
-        return (
-          <TouchableOpacity
-            accessibilityRole="button"
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={{ flex: 1 }}
-          >
-            <Text style={{ color: isFocused ? "#673ab7" : "#222" }}>
-              {label}
-            </Text>
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-  );
-}
