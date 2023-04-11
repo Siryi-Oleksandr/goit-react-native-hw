@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../../helpers/variables";
+import { useNavigation } from "@react-navigation/native";
 
 const image = require("../../images/bg-img.png");
 
@@ -21,7 +22,7 @@ const image = require("../../images/bg-img.png");
 
 export function RegistrationScreen({
   route,
-  navigation,
+  // navigation,
   // orientation = "portrait",
 }) {
   const [name, setName] = useState("");
@@ -33,6 +34,8 @@ export function RegistrationScreen({
   const [inputEmailStyle, setInputEmailStyle] = useState(styles.input);
   const [inputPasswordStyle, setInputPasswordStyle] = useState(styles.input);
   const [securePassword, setSecurePassword] = useState(true);
+
+  const navigation = useNavigation();
 
   const orientation = "portrait"; // TODO
 
@@ -71,6 +74,7 @@ export function RegistrationScreen({
     Alert.alert("Credentials", `${name} + ${email} + ${password}`);
     // navigation.navigate("Comment");
     resetRegisterForm();
+    navigation.navigate("Home");
   };
 
   const toggleShowAvatar = () => {

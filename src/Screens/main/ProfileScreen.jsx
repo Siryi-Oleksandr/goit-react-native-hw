@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -11,6 +11,7 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../../helpers/variables";
 import { PostItem } from "../../components/PostItem";
+import { useScrollToTop } from "@react-navigation/native";
 
 const image = require("../../images/bg-img.png");
 
@@ -33,6 +34,9 @@ const postData2 = {
 
 export function ProfileScreen({ navigation }) {
   const [showAvatar, setShowAvatar] = useState(true);
+  const ref = useRef(null);
+
+  useScrollToTop(ref);
 
   const orientation = "portrait"; // TODO
 
@@ -42,7 +46,7 @@ export function ProfileScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView ref={ref}>
         <ImageBackground source={image} resizeMode="cover" style={styles.image}>
           <View style={styles.form}>
             <View style={styles.imgWrapper}>
@@ -95,6 +99,8 @@ export function ProfileScreen({ navigation }) {
               Natali Romanova
             </Text>
 
+            <PostItem postData={postData} />
+            <PostItem postData={postData2} />
             <PostItem postData={postData} />
             <PostItem postData={postData2} />
           </View>

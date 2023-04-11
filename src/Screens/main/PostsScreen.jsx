@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { pallete } from "../../helpers/variables";
 
 export function PostsScreen({ navigation }) {
@@ -23,11 +24,20 @@ export function PostsScreen({ navigation }) {
       >
         <Text style={styles.linkTitle}>Go to comments</Text>
       </TouchableOpacity>
+
       <TouchableOpacity
         activeOpacity={0.6}
         onPress={() => navigation.navigate("Map")}
       >
         <Text>Go to location</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.btnAddPost}
+        activeOpacity={0.6}
+        onPress={() => navigation.navigate("Create")}
+      >
+        <MaterialCommunityIcons name="plus" color={pallete.white} size={24} />
       </TouchableOpacity>
     </View>
   );
@@ -64,5 +74,18 @@ const styles = StyleSheet.create({
     fontSize: 11,
     lineHeight: 13,
     fontWeight: "400",
+  },
+  btnAddPost: {
+    position: "absolute",
+    bottom: 0,
+    left: "47%",
+    zIndex: 1000,
+    width: 60,
+
+    height: 35,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: pallete.accent,
+    borderRadius: 20,
   },
 });

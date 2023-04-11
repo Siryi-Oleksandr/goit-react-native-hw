@@ -59,7 +59,7 @@ export const useRoutes = (isAuth) => {
             ),
           }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Create"
           component={CreatePostsScreen}
           options={{
@@ -67,7 +67,7 @@ export const useRoutes = (isAuth) => {
               <MaterialCommunityIcons name="plus" color={color} size={24} />
             ),
           }}
-        />
+        /> */}
         <Tab.Screen
           name="Profile"
           component={ProfileScreen}
