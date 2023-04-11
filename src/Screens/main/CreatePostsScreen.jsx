@@ -163,15 +163,16 @@ export function CreatePostsScreen() {
                 <Text style={styles.btnTitle}>Publish</Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              style={styles.deleteBtn}
-              activeOpacity={0.8}
-              onPress={() => Alert.alert("delete post")}
-            >
-              <Icon name="trash" size={25} color={pallete.gray} />
-            </TouchableOpacity>
           </ScrollView>
         </KeyboardAvoidingView>
+
+        <TouchableOpacity
+          style={styles.deleteBtn}
+          activeOpacity={0.8}
+          onPress={() => Alert.alert("delete post")}
+        >
+          <Icon name="trash" size={30} color={pallete.gray} />
+        </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -180,7 +181,11 @@ export function CreatePostsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "space-between",
+
+    // alignItems: "center",
     paddingTop: 32,
+    paddingBottom: 8,
     paddingLeft: 16,
     paddingRight: 16,
   },
@@ -216,7 +221,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     transform: [{ translateX: -27 }, { translateY: -27 }],
   },
-  deleteBtn: {},
+  deleteBtn: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: 70,
+    height: 40,
+    borderRadius: 25,
+    backgroundColor: "#cccccc3f",
+  },
   input: {
     marginTop: 16,
     paddingLeft: 26,

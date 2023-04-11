@@ -12,7 +12,7 @@ import { pallete } from "../helpers/variables";
 
 // ! Main CODE
 
-export function PostItemAddFeatures({ postData }) {
+export function PostItemAddFeatures({ postData, navigation }) {
   const { img, title, comments, location } = postData;
   return (
     <View style={styles.postWrapper}>
@@ -22,7 +22,7 @@ export function PostItemAddFeatures({ postData }) {
         <TouchableOpacity
           style={styles.postValues}
           activeOpacity={0.6}
-          onPress={() => Alert.alert("Comments")}
+          onPress={() => navigation.navigate("Comments")}
         >
           <Icon name="comment" size={18} color={pallete.gray} />
           <Text style={styles.postValuesText}>{comments}</Text>
@@ -31,7 +31,7 @@ export function PostItemAddFeatures({ postData }) {
         <TouchableOpacity
           style={styles.postValues}
           activeOpacity={0.6}
-          onPress={() => Alert.alert("Location")}
+          onPress={() => navigation.navigate("Map")}
         >
           <Icon name="map-marker" size={18} color={pallete.gray} />
           <Text style={styles.postValuesText}>{location}</Text>

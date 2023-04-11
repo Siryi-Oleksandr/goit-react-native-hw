@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { pallete } from "../../helpers/variables";
 import { testDB } from "../../helpers/testDB";
@@ -7,7 +14,7 @@ import { PostItemAddFeatures } from "../../components/PostItemAddFeatures";
 
 export function PostsScreen({ navigation }) {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.userWrapper}>
         <Image
           style={styles.avatar}
@@ -21,20 +28,6 @@ export function PostsScreen({ navigation }) {
       </View>
 
       <TouchableOpacity
-        activeOpacity={0.6}
-        onPress={() => navigation.navigate("Comments")}
-      >
-        <Text style={styles.linkTitle}>Go to comments</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        activeOpacity={0.6}
-        onPress={() => navigation.navigate("Map")}
-      >
-        <Text>Go to location</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
         style={styles.btnAddPost}
         activeOpacity={0.6}
         onPress={() => navigation.navigate("Create")}
@@ -44,10 +37,14 @@ export function PostsScreen({ navigation }) {
 
       <View>
         {testDB.map((data, index) => (
-          <PostItemAddFeatures key={index} postData={data} />
+          <PostItemAddFeatures
+            key={index}
+            postData={data}
+            navigation={navigation}
+          />
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -66,6 +63,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   userWrapper: {
+    marginBottom: 30,
     flexDirection: "row",
     alignItems: "center",
   },
