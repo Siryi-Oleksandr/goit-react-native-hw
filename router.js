@@ -1,7 +1,8 @@
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { StyleSheet } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { RegistrationScreen, LoginScreen } from "./src/Screens/auth";
 import {
   CreatePostsScreen,
@@ -14,6 +15,7 @@ import {
 import { pallete } from "./src/helpers/variables";
 
 const AuthStack = createNativeStackNavigator();
+const HomeStack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 export const useRoutes = (isAuth) => {
@@ -35,53 +37,89 @@ export const useRoutes = (isAuth) => {
     );
   } else {
     return (
-      <Tab.Navigator
-        initialRouteName="Home"
-        barStyle={styles.tabBar}
-        activeColor={pallete.accent}
-        labeled={false}
-        shifting={true}
-      >
-        <Tab.Screen
+      <HomeStack.Navigator initialRouteName="Home">
+        <HomeStack.Screen
           name="Home"
           component={Home}
-          labeled={false}
           options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons
-                name="view-grid-outline"
-                color={color}
-                size={24}
-              />
-            ),
+            headerRight: () => LogOut(),
+            headerTitleAlign: "center",
           }}
         />
-        <Tab.Screen
-          name="Create"
-          component={CreatePostsScreen}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="plus" color={color} size={24} />
-            ),
-          }}
+
+        <HomeStack.Screen
+          name="Comments"
+          component={CommentsScreen}
+          options={{ headerTitleAlign: "center" }}
         />
-        <Tab.Screen
-          name="Profile"
-          component={ProfileScreen}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons
-                name="account-outline"
-                color={color}
-                size={24}
-              />
-            ),
-          }}
+        <HomeStack.Screen
+          name="Map"
+          component={MapScreen}
+          options={{ headerTitleAlign: "center" }}
         />
-      </Tab.Navigator>
+      </HomeStack.Navigator>
+
+      // <Tab.Navigator
+      //   initialRouteName="Home"
+      //   barStyle={styles.tabBar}
+      //   activeColor={pallete.accent}
+      //   labeled={false}
+      //   shifting={true}
+      // >
+      //   <Tab.Screen
+      //     name="Home"
+      //     component={Home}
+      //     labeled={false}
+      //     options={{
+      //       tabBarIcon: ({ color }) => (
+      //         <MaterialCommunityIcons
+      //           name="view-grid-outline"
+      //           color={color}
+      //           size={24}
+      //         />
+      //       ),
+      //     }}
+      //   />
+      //   <Tab.Screen
+      //     name="Create"
+      //     component={CreatePostsScreen}
+      //     options={{
+      //       tabBarIcon: ({ color }) => (
+      //         <MaterialCommunityIcons name="plus" color={color} size={24} />
+      //       ),
+      //     }}
+      //   />
+      //   <Tab.Screen
+      //     name="Profile"
+      //     component={ProfileScreen}
+      //     options={{
+      //       tabBarIcon: ({ color }) => (
+      //         <MaterialCommunityIcons
+      //           name="account-outline"
+      //           color={color}
+      //           size={24}
+      //         />
+      //       ),
+      //     }}
+      //   />
+      // </Tab.Navigator>
     );
   }
 };
+
+function LogOut() {
+  return (
+    <TouchableOpacity
+      activeOpacity={0.7}
+      style={{
+        marginRight: 16,
+      }}
+      onPress={() => alert("Log out from your acount NEW")}
+    >
+      <Icon name="sign-out" size={24} color={pallete.gray} />
+    </TouchableOpacity>
+  );
+}
 
 const styles = StyleSheet.create({
   tabBar: {
