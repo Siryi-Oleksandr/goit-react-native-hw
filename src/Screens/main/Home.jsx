@@ -31,14 +31,14 @@ export const Home = () => {
         component={MapScreen}
         options={{ headerTitleAlign: "center" }}
       />
-      <HomeStack.Screen
+      {/* <HomeStack.Screen
         name="Create"
         component={CreatePostsScreen}
         options={{
           headerTitleAlign: "center",
           headerTitle: "Create publication",
         }}
-      />
+      /> */}
     </HomeStack.Navigator>
   );
 };

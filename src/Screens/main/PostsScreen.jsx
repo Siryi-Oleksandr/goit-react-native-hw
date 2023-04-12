@@ -27,14 +27,6 @@ export function PostsScreen({ navigation }) {
         </View>
       </View>
 
-      <TouchableOpacity
-        style={styles.btnAddPost}
-        activeOpacity={0.6}
-        onPress={() => navigation.navigate("Create")}
-      >
-        <MaterialCommunityIcons name="plus" color={pallete.white} size={24} />
-      </TouchableOpacity>
-
       <View>
         {testDB.map((data, index) => (
           <PostItemAddFeatures
@@ -44,6 +36,14 @@ export function PostsScreen({ navigation }) {
           />
         ))}
       </View>
+
+      {/* <TouchableOpacity
+        style={styles.btnAddPost}
+        activeOpacity={0.6}
+        onPress={() => navigation.navigate("Create")}
+      >
+        <MaterialCommunityIcons name="plus" color={pallete.white} size={24} />
+      </TouchableOpacity> */}
     </ScrollView>
   );
 }
