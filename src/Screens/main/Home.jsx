@@ -12,17 +12,10 @@ import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
 import { pallete } from "../../helpers/variables";
 import { CreatePostsScreen } from "./CreatePostsScreen";
 import { getHeaderTitle } from "@react-navigation/elements";
+import { LogOut } from "../../components/LogOut";
+import { CustomGoBack } from "../../components/CustomGoBack";
 
-function MyHeader({ title, style }) {
-  return (
-    <View style={style}>
-      <Text>Go back {title}</Text>
-      <Text>Go back {title}</Text>
-    </View>
-  );
-}
-
-const Tab = createMaterialBottomTabNavigator();
+// const Tab = createMaterialBottomTabNavigator();
 const Tabs = createBottomTabNavigator();
 
 export const Home = ({ navigation: { goBack } }) => {
@@ -30,29 +23,19 @@ export const Home = ({ navigation: { goBack } }) => {
     <Tabs.Navigator
       initialRouteName="Posts"
       barStyle={styles.tabBar}
-      activeColor={pallete.accent}
-      labeled={false}
-      // shifting={true}
-      screenOptions={
-        {
-          // header: ({ navigation, route, options }) => {
-          //   const title = getHeaderTitle(options, route.name);
-          //   return <MyHeader title={title} style={options.headerStyle} />;
-          // },
-          // headerStyle: {
-          //   height: 80, // Specify the height of your custom header
-          // },
-          // headerShown: true,
-        }
-      }
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarHideOnKeyboard: true,
+        tabBarActiveBackgroundColor: pallete.accent,
+        tabBarActiveTintColor: pallete.white,
+      }}
     >
       <Tabs.Screen
         name="Posts"
         component={PostsScreen}
         options={{
-          headerRight: () => LogOut(),
+          headerRight: () => <LogOut />,
           headerTitleAlign: "center",
-
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="view-grid-outline"
@@ -68,7 +51,7 @@ export const Home = ({ navigation: { goBack } }) => {
         options={{
           headerTitleAlign: "center",
           headerTitle: "Create publication",
-          headerLeft: () => customBack(goBack),
+          headerLeft: () => <CustomGoBack goBack={goBack} />,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="plus" color={color} size={24} />
           ),
@@ -119,34 +102,6 @@ export const Home = ({ navigation: { goBack } }) => {
     // </HomeStack.Navigator>
   );
 };
-
-function LogOut() {
-  return (
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={{
-        marginRight: 16,
-      }}
-      onPress={() => alert("Log out from your acount NEW")}
-    >
-      <Icon name="sign-out" size={24} color={pallete.gray} />
-    </TouchableOpacity>
-  );
-}
-
-function customBack(goBack) {
-  return (
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={{
-        marginLeft: 16,
-      }}
-      onPress={() => goBack()}
-    >
-      <Icon name="sign-out" size={24} color={pallete.gray} />
-    </TouchableOpacity>
-  );
-}
 
 const styles = StyleSheet.create({
   tabBar: {
