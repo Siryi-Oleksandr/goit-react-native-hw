@@ -16,7 +16,7 @@ import { pallete } from "./src/helpers/variables";
 
 const AuthStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
-const Tab = createMaterialBottomTabNavigator();
+// const Tab = createMaterialBottomTabNavigator();
 
 export const useRoutes = (isAuth) => {
   if (!isAuth) {
@@ -42,8 +42,8 @@ export const useRoutes = (isAuth) => {
           name="Home"
           component={Home}
           options={{
-            headerRight: () => LogOut(),
-            headerTitleAlign: "center",
+            // headerRight: () => LogOut(),
+            headerShown: false,
           }}
         />
 

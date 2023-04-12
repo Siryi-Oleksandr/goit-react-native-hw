@@ -1,5 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -7,27 +8,51 @@ import { CommentsScreen } from "./CommentsScreen";
 import { MapScreen } from "./MapScreen";
 import { ProfileScreen } from "./ProfileScreen";
 import { PostsScreen } from "./PostsScreen";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
 import { pallete } from "../../helpers/variables";
 import { CreatePostsScreen } from "./CreatePostsScreen";
+import { getHeaderTitle } from "@react-navigation/elements";
 
-const HomeStack = createNativeStackNavigator();
-const Tab = createMaterialBottomTabNavigator();
-
-export const Home = () => {
+function MyHeader({ title, style }) {
   return (
-    <Tab.Navigator
+    <View style={style}>
+      <Text>Go back {title}</Text>
+      <Text>Go back {title}</Text>
+    </View>
+  );
+}
+
+const Tab = createMaterialBottomTabNavigator();
+const Tabs = createBottomTabNavigator();
+
+export const Home = ({ navigation: { goBack } }) => {
+  return (
+    <Tabs.Navigator
       initialRouteName="Posts"
       barStyle={styles.tabBar}
       activeColor={pallete.accent}
       labeled={false}
-      shifting={true}
+      // shifting={true}
+      screenOptions={
+        {
+          // header: ({ navigation, route, options }) => {
+          //   const title = getHeaderTitle(options, route.name);
+          //   return <MyHeader title={title} style={options.headerStyle} />;
+          // },
+          // headerStyle: {
+          //   height: 80, // Specify the height of your custom header
+          // },
+          // headerShown: true,
+        }
+      }
     >
-      <Tab.Screen
+      <Tabs.Screen
         name="Posts"
         component={PostsScreen}
-        labeled={false}
         options={{
+          headerRight: () => LogOut(),
+          headerTitleAlign: "center",
+
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="view-grid-outline"
@@ -37,19 +62,23 @@ export const Home = () => {
           ),
         }}
       />
-      <Tab.Screen
+      <Tabs.Screen
         name="Create"
         component={CreatePostsScreen}
         options={{
+          headerTitleAlign: "center",
+          headerTitle: "Create publication",
+          headerLeft: () => customBack(goBack),
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="plus" color={color} size={24} />
           ),
         }}
       />
-      <Tab.Screen
+      <Tabs.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="account-outline"
@@ -59,7 +88,7 @@ export const Home = () => {
           ),
         }}
       />
-    </Tab.Navigator>
+    </Tabs.Navigator>
     // <HomeStack.Navigator initialRouteName="Posts">
     //   <HomeStack.Screen
     //     name="Posts"
@@ -99,6 +128,20 @@ function LogOut() {
         marginRight: 16,
       }}
       onPress={() => alert("Log out from your acount NEW")}
+    >
+      <Icon name="sign-out" size={24} color={pallete.gray} />
+    </TouchableOpacity>
+  );
+}
+
+function customBack(goBack) {
+  return (
+    <TouchableOpacity
+      activeOpacity={0.7}
+      style={{
+        marginLeft: 16,
+      }}
+      onPress={() => goBack()}
     >
       <Icon name="sign-out" size={24} color={pallete.gray} />
     </TouchableOpacity>
