@@ -146,31 +146,28 @@ export function CreatePostsScreen() {
               />
             </View>
 
-            <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
-              <TouchableOpacity
-                style={
-                  !isPostData
-                    ? styles.btnPublishDisabled
-                    : {
-                        ...styles.btnPublishDisabled,
-                        backgroundColor: pallete.accent,
-                      }
-                }
-                disabled={!isPostData}
-                activeOpacity={0.8}
-                onPress={onPublish}
-              >
-                <Text style={styles.btnTitle}>Publish</Text>
-              </TouchableOpacity>
-            </View>
+            {/* <View style={{ display: isKeyboardOpen ? "none" : "flex" }}> */}
+            <TouchableOpacity
+              style={
+                !isPostData
+                  ? styles.btnPublishDisabled
+                  : {
+                      ...styles.btnPublishDisabled,
+                      backgroundColor: pallete.accent,
+                    }
+              }
+              disabled={!isPostData}
+              activeOpacity={0.8}
+              onPress={onPublish}
+            >
+              <Text style={styles.btnTitle}>Publish</Text>
+            </TouchableOpacity>
+            {/* </View> */}
           </ScrollView>
         </KeyboardAvoidingView>
 
         <TouchableOpacity
-          style={{
-            ...styles.deleteBtn,
-            display: isKeyboardOpen ? "none" : "flex",
-          }}
+          style={styles.deleteBtn}
           activeOpacity={0.8}
           onPress={() => {
             setLoadedPhoto(false);

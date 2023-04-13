@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import { pallete } from "../../helpers/variables";
 import { testDB } from "../../helpers/testDB";
 import { PostItemAddFeatures } from "../../components/PostItemAddFeatures";
@@ -36,14 +28,6 @@ export function PostsScreen({ navigation }) {
           />
         ))}
       </View>
-
-      {/* <TouchableOpacity
-        style={styles.btnAddPost}
-        activeOpacity={0.6}
-        onPress={() => navigation.navigate("Create")}
-      >
-        <MaterialCommunityIcons name="plus" color={pallete.white} size={24} />
-      </TouchableOpacity> */}
     </ScrollView>
   );
 }

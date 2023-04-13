@@ -36,7 +36,7 @@ export const Home = ({ navigation: { goBack } }) => {
         name="Posts"
         component={PostsScreen}
         options={{
-          headerRight: () => <LogOut />,
+          headerRight: () => <LogOut styles={{ marginRight: 20 }} />,
           headerTitleAlign: "center",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
@@ -80,34 +80,6 @@ export const Home = ({ navigation: { goBack } }) => {
         }}
       />
     </Tabs.Navigator>
-    // <HomeStack.Navigator initialRouteName="Posts">
-    //   <HomeStack.Screen
-    //     name="Posts"
-    //     component={PostsScreen}
-    //     options={{
-    //       headerRight: () => LogOut(),
-    //       headerTitleAlign: "center",
-    //     }}
-    //   />
-    //   <HomeStack.Screen
-    //     name="Comments"
-    //     component={CommentsScreen}
-    //     options={{ headerTitleAlign: "center" }}
-    //   />
-    //   <HomeStack.Screen
-    //     name="Map"
-    //     component={MapScreen}
-    //     options={{ headerTitleAlign: "center" }}
-    //   />
-    //   {/* <HomeStack.Screen
-    //     name="Create"
-    //     component={CreatePostsScreen}
-    //     options={{
-    //       headerTitleAlign: "center",
-    //       headerTitle: "Create publication",
-    //     }}
-    //   /> */}
-    // </HomeStack.Navigator>
   );
 };
 

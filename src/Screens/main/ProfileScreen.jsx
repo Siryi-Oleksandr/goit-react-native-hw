@@ -13,23 +13,9 @@ import { pallete } from "../../helpers/variables";
 import { PostItem } from "../../components/PostItem";
 import { useScrollToTop } from "@react-navigation/native";
 import { testDB } from "../../helpers/testDB";
+import { LogOut } from "../../components/LogOut";
 
 const image = require("../../images/bg-img.png");
-
-const postData = {
-  img: require("../../images/nature-1.jpg"),
-  title: "Forest in mounting",
-  comments: 18,
-  likes: 203,
-  location: "Ukraine",
-};
-const postData2 = {
-  img: require("../../images/nature-2.jpg"),
-  title: "Sunset near sea",
-  comments: 9,
-  likes: 155,
-  location: "Egypt",
-};
 
 // ! Main CODE
 
@@ -83,13 +69,15 @@ export function ProfileScreen({ navigation }) {
               )}
             </View>
 
-            <TouchableOpacity
+            <LogOut styles={styles.logOutBtn} />
+
+            {/* <TouchableOpacity
               activeOpacity={0.7}
               style={styles.logOutBtn}
               onPress={() => alert("Log out from your acount NEW")}
             >
               <Icon name="sign-out" size={24} color={pallete.gray} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <Text
               style={{
