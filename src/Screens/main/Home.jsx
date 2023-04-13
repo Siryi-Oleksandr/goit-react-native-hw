@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ProfileScreen } from "./ProfileScreen";
 import { PostsScreen } from "./PostsScreen";
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { pallete } from "../../helpers/variables";
 import { CreatePostsScreen } from "./CreatePostsScreen";
 import { LogOut } from "../../components/LogOut";
@@ -12,6 +12,8 @@ import { CustomGoBack } from "../../components/CustomGoBack";
 // const Tab = createMaterialBottomTabNavigator();
 const Tabs = createBottomTabNavigator();
 const TAB_HEIGHT = 50; // висота панелі Bottom Tabs
+const { height: windowHeight } = Dimensions.get("window");
+console.log(windowHeight);
 
 export const Home = ({ navigation: { goBack } }) => {
   return (

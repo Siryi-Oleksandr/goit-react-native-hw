@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -11,7 +11,6 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../../helpers/variables";
 import { PostItem } from "../../components/PostItem";
-import { useScrollToTop } from "@react-navigation/native";
 import { testDB } from "../../helpers/testDB";
 import { LogOut } from "../../components/LogOut";
 
@@ -21,9 +20,16 @@ const image = require("../../images/bg-img.png");
 
 export function ProfileScreen({ navigation }) {
   const [showAvatar, setShowAvatar] = useState(true);
-  const ref = useRef(null);
+  const [contentHeight, setContentHeight] = useState(0);
 
-  useScrollToTop(ref);
+  const handleContentSizeChange = (contentWidth, height) => {
+    setContentHeight(height);
+  };
+
+  useLayoutEffect(() => {
+    console.log(`Content height: ${contentHeight}`);
+    // Додатковий код, який ви хочете виконати після зміни висоти контенту
+  }, [contentHeight]);
 
   const orientation = "portrait"; // TODO
 
@@ -33,7 +39,7 @@ export function ProfileScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <ScrollView ref={ref}>
+      <ScrollView onContentSizeChange={handleContentSizeChange}>
         <ImageBackground source={image} resizeMode="cover" style={styles.image}>
           <View style={styles.form}>
             <View style={styles.imgWrapper}>
