@@ -6,7 +6,7 @@ import { pallete } from "../helpers/variables";
 // ! Main CODE
 
 export function PostItem({ postData }) {
-  const { img, title, comments, likes, location } = postData;
+  const { img, title, commentsNumber, likes, location } = postData;
   return (
     <View style={styles.postWrapper}>
       <Image style={styles.img} source={img} alt="user post picture" />
@@ -15,7 +15,7 @@ export function PostItem({ postData }) {
         <View style={styles.postValuesWrapper}>
           <View style={styles.postValues}>
             <Icon name="comment" size={18} color={pallete.accent} />
-            <Text style={styles.postValuesText}>{comments}</Text>
+            <Text style={styles.postValuesText}>{commentsNumber}</Text>
           </View>
 
           <View style={{ ...styles.postValues, marginLeft: 24 }}>

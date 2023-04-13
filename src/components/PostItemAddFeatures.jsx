@@ -13,7 +13,7 @@ import { pallete } from "../helpers/variables";
 // ! Main CODE
 
 export function PostItemAddFeatures({ postData, navigation }) {
-  const { img, title, comments, location } = postData;
+  const { img, title, commentsNumber, location } = postData;
   return (
     <View style={styles.postWrapper}>
       <Image style={styles.img} source={img} alt="user post picture" />
@@ -25,7 +25,7 @@ export function PostItemAddFeatures({ postData, navigation }) {
           onPress={() => navigation.navigate("Comments")}
         >
           <Icon name="comment" size={18} color={pallete.gray} />
-          <Text style={styles.postValuesText}>{comments}</Text>
+          <Text style={styles.postValuesText}>{commentsNumber}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
