@@ -230,10 +230,10 @@ const styles = StyleSheet.create({
   deleteBtn: {
     justifyContent: "center",
     alignItems: "center",
-    width: 70,
+    width: "100%",
     height: 40,
     borderRadius: 25,
-    backgroundColor: "#cccccc3f",
+    // backgroundColor: "#cccccc3f",
   },
   input: {
     marginTop: 16,
