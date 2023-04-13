@@ -1,5 +1,14 @@
-import React from "react";
-import { View, StyleSheet, ScrollView, Image } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Image,
+  TextInput,
+  Alert,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import { testDB } from "../../helpers/testDB";
 import { UserComment } from "../../components/UserComment";
 import { OwnComment } from "../../components/OwnComment";
@@ -7,7 +16,11 @@ import { OwnComment } from "../../components/OwnComment";
 const commentInfo = testDB[0];
 
 export function CommentsScreen() {
+  const [comment, setComment] = useState("");
+
   const { img, title } = commentInfo;
+  const commentHandler = (text) => setComment(text);
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -15,6 +28,21 @@ export function CommentsScreen() {
 
         <UserComment />
         <OwnComment />
+        <View style={styles.inputWrapper}>
+          <TextInput
+            style={styles.input}
+            value={comment}
+            placeholder="Comment"
+            onChangeText={commentHandler}
+          />
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.btnSendComment}
+            onPress={() => Alert.alert(`Send comment "${comment}"`)}
+          >
+            <Text>Register</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );
@@ -33,4 +61,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     overflow: "hidden",
   },
+  inputWrapper: {},
+  btnSendComment: {},
 });
