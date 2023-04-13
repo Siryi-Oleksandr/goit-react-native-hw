@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Icon from "react-native-vector-icons/FontAwesome";
 import {
   Dimensions,
   Keyboard,
@@ -13,7 +14,6 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../../helpers/variables";
 
 export function CreatePostsScreen() {

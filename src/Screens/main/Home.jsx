@@ -1,17 +1,11 @@
 import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Icon from "react-native-vector-icons/FontAwesome";
-import { CommentsScreen } from "./CommentsScreen";
-import { MapScreen } from "./MapScreen";
 import { ProfileScreen } from "./ProfileScreen";
 import { PostsScreen } from "./PostsScreen";
-import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { pallete } from "../../helpers/variables";
 import { CreatePostsScreen } from "./CreatePostsScreen";
-import { getHeaderTitle } from "@react-navigation/elements";
 import { LogOut } from "../../components/LogOut";
 import { CustomGoBack } from "../../components/CustomGoBack";
 
@@ -26,10 +20,10 @@ export const Home = ({ navigation: { goBack } }) => {
       screenOptions={{
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
-        // tabBarActiveBackgroundColor: pallete.accent,
         tabBarActiveTintColor: pallete.accent,
         tabBarStyle: styles.tabBar,
         // tabBarItemStyle: styles.tabBarItem,
+        // tabBarActiveBackgroundColor: pallete.accent,
       }}
     >
       <Tabs.Screen
@@ -77,6 +71,7 @@ export const Home = ({ navigation: { goBack } }) => {
               size={24}
             />
           ),
+          // tabBarStyle: { position: "absolute", bottom: -TAB_HEIGHT },
         }}
       />
     </Tabs.Navigator>

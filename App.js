@@ -7,9 +7,6 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  Image,
   View,
 } from "react-native";
 import { useRoutes } from "./router";

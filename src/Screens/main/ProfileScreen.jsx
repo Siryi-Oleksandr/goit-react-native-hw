@@ -71,14 +71,6 @@ export function ProfileScreen({ navigation }) {
 
             <LogOut styles={styles.logOutBtn} />
 
-            {/* <TouchableOpacity
-              activeOpacity={0.7}
-              style={styles.logOutBtn}
-              onPress={() => alert("Log out from your acount NEW")}
-            >
-              <Icon name="sign-out" size={24} color={pallete.gray} />
-            </TouchableOpacity> */}
-
             <Text
               style={{
                 ...styles.title,
