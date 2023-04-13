@@ -9,11 +9,9 @@ import { CreatePostsScreen } from "./CreatePostsScreen";
 import { LogOut } from "../../components/LogOut";
 import { CustomGoBack } from "../../components/CustomGoBack";
 
-// const Tab = createMaterialBottomTabNavigator();
 const Tabs = createBottomTabNavigator();
-const TAB_HEIGHT = 50; // висота панелі Bottom Tabs
-const { height: windowHeight } = Dimensions.get("window");
-console.log(windowHeight);
+const TAB_HEIGHT = 70; // висота панелі Bottom Tabs
+// const { height: windowHeight } = Dimensions.get("window");
 
 export const Home = ({ navigation: { goBack } }) => {
   return (
@@ -84,7 +82,8 @@ const styles = StyleSheet.create({
   tabBar: {
     height: TAB_HEIGHT,
     backgroundColor: pallete.white,
-    // paddingBottom: 16,
+    paddingBottom: 16,
+    paddingTop: 4,
     borderTopWidth: 1,
     borderTopColor: pallete.gray,
   },

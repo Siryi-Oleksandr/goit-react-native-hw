@@ -27,7 +27,7 @@ export function ProfileScreen({ navigation }) {
   };
 
   useLayoutEffect(() => {
-    console.log(`Content height: ${contentHeight}`);
+    // console.log(`Content height: ${contentHeight}`);
     // Додатковий код, який ви хочете виконати після зміни висоти контенту
   }, [contentHeight]);
 

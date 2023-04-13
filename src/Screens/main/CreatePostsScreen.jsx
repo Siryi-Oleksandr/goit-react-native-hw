@@ -225,6 +225,7 @@ const styles = StyleSheet.create({
     transform: [{ translateX: -27 }, { translateY: -27 }],
   },
   deleteBtn: {
+    // marginBottom: 22,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
