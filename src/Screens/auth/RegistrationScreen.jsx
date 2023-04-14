@@ -253,12 +253,11 @@ const styles = StyleSheet.create({
     position: "relative",
     paddingLeft: 40,
     paddingRight: 40,
+    paddingTop: 92,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    paddingTop: 92,
-
-    // justifyContent: "flex-end",
     backgroundColor: pallete.white,
+    // justifyContent: "flex-end",
     // backgroundColor: "#b25757",
   },
   title: {

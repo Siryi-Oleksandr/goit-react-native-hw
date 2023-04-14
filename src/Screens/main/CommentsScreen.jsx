@@ -7,11 +7,16 @@ import {
   TextInput,
   Alert,
   TouchableOpacity,
+  Keyboard,
   Text,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
 } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
 import { testDB } from "../../helpers/testDB";
 import { UserComment } from "../../components/UserComment";
 import { OwnComment } from "../../components/OwnComment";
+import { pallete } from "../../helpers/variables";
 
 const commentInfo = testDB[0];
 
@@ -21,30 +26,40 @@ export function CommentsScreen() {
   const { img, title } = commentInfo;
   const commentHandler = (text) => setComment(text);
 
+  const onSendComment = () => {
+    Alert.alert(`Send comment "${comment}"`);
+    setComment("");
+  };
+
   return (
-    <View style={styles.container}>
-      <ScrollView>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ScrollView style={styles.container}>
         <Image style={styles.img} source={img} alt={title} />
 
         <UserComment />
         <OwnComment />
-        <View style={styles.inputWrapper}>
-          <TextInput
-            style={styles.input}
-            value={comment}
-            placeholder="Comment"
-            onChangeText={commentHandler}
-          />
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={styles.btnSendComment}
-            onPress={() => Alert.alert(`Send comment "${comment}"`)}
-          >
-            <Text>Register</Text>
-          </TouchableOpacity>
-        </View>
+
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        >
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.input}
+              value={comment}
+              placeholder="Comment..."
+              onChangeText={commentHandler}
+            />
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.btnSendComment}
+              onPress={onSendComment}
+            >
+              <Icon name="arrow-up" size={15} color={pallete.white} />
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
       </ScrollView>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -61,6 +76,31 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     overflow: "hidden",
   },
-  inputWrapper: {},
-  btnSendComment: {},
+  inputWrapper: {
+    position: "relative",
+  },
+  input: {
+    minHeight: 50,
+    padding: 12,
+    paddingRight: 50,
+    borderWidth: 1,
+    borderRadius: 25,
+    borderColor: pallete.gray,
+    marginBottom: 10,
+    backgroundColor: pallete.gray,
+    fontFamily: "Roboto-Regular",
+    fontSize: 16,
+    lineHeight: 19,
+  },
+  btnSendComment: {
+    position: "absolute",
+    top: 8,
+    right: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 34,
+    height: 34,
+    borderRadius: 18,
+    backgroundColor: pallete.accent,
+  },
 });
