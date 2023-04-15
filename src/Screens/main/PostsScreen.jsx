@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 import { pallete } from "../../helpers/variables";
 import { testDB } from "../../helpers/testDB";
 import { PostItemAddFeatures } from "../../components/PostItemAddFeatures";
 
-export function PostsScreen({ navigation }) {
+console.log(MapView);
+
+export function PostsScreen({ navigation, route }) {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    if (route.params?.userPost) {
+      // Post updated, do something with `route.params.post`
+      // For example, send the post to the server
+      const { userPost } = route.params;
+      setPosts((prevState) => [...prevState, userPost]);
+      console.log("userPosts ==>", posts);
+    }
+  }, [route.params?.userPost]);
+
+  // if (route.params) {
+
+  //   //
+
+  // }
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.userWrapper}>

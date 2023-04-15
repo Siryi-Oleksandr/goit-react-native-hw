@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Camera, CameraType } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {
   Dimensions,
@@ -16,13 +18,33 @@ import {
 } from "react-native";
 import { pallete } from "../../helpers/variables";
 
-export function CreatePostsScreen() {
+export function CreatePostsScreen({ navigation }) {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [cameraRef, setCameraRef] = useState(null);
+  const [type, setType] = useState(CameraType.back);
+  const [photo, setPhoto] = useState("");
   const [loadedPhoto, setLoadedPhoto] = useState(null);
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [inputNameStyle, setInputNameStyle] = useState(styles.input);
   const [inputLocationStyle, setInputLocationStyle] = useState(styles.input);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const { status } = await Camera.requestCameraPermissionsAsync();
+  //     // await MediaLibrary.requestPermissionsAsync();
+
+  //     setHasPermission(status === "granted");
+  //   })();
+  // }, []);
+
+  // if (hasPermission === null) {
+  //   return <Text>No access to camera</Text>;
+  // }
+  // if (hasPermission === false) {
+  //   return <Text>No access to camera</Text>;
+  // }
 
   const { width, height } = Dimensions.get("window");
   const orientation = "portrait"; // TODO
@@ -53,17 +75,37 @@ export function CreatePostsScreen() {
   const resetPublishForm = () => {
     setName("");
     setLocation("");
+    setPhoto("");
   };
 
   const onPublish = () => {
-    const userCredentials = { name, location, loadedPhoto };
-    Alert.alert("User post", `${name} + ${location}`);
-    // navigation.navigate("somewhere");
+    const userPost = { name, location, photo };
+    // Alert.alert("User post", `${name} + ${location}`);
+    // navigation.navigate("Posts", { userPost });
+    navigation.navigate({
+      name: "Posts",
+      params: { userPost },
+      merge: true,
+    });
     resetPublishForm();
-    setLoadedPhoto(null);
   };
 
-  const isPostData = loadedPhoto && name;
+  const isPostData = photo && name;
+
+  const takePhoto = async () => {
+    if (cameraRef) {
+      const { uri } = await cameraRef.takePictureAsync();
+      console.log("my uri", uri);
+      setPhoto(uri);
+      // await MediaLibrary.createAssetAsync(uri);
+    }
+  };
+
+  function toggleCameraType() {
+    setType((current) =>
+      current === CameraType.back ? CameraType.front : CameraType.back
+    );
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -72,6 +114,41 @@ export function CreatePostsScreen() {
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
           <ScrollView>
+            <Camera
+              style={styles.camera}
+              type={type}
+              ref={(ref) => {
+                setCameraRef(ref);
+              }}
+            >
+              {photo && (
+                <View style={styles.photoWrapper}>
+                  <Image
+                    style={styles.photo}
+                    source={{ uri: photo }}
+                    alt="user last photo"
+                  />
+                </View>
+              )}
+
+              <TouchableOpacity
+                style={styles.cameraBtn}
+                activeOpacity={0.8}
+                onPress={takePhoto}
+              >
+                <Icon name="camera" size={25} color={pallete.gray} />
+              </TouchableOpacity>
+
+              <View style={styles.btnChangeCameraContainer}>
+                <TouchableOpacity
+                  style={styles.btnChangeCamera}
+                  onPress={toggleCameraType}
+                >
+                  <Text style={styles.text}>Change Camera</Text>
+                </TouchableOpacity>
+              </View>
+            </Camera>
+
             <View
               style={{
                 ...styles.imgWrapper,
@@ -185,13 +262,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
-
-    // alignItems: "center",
     paddingTop: 32,
     paddingBottom: 8,
     paddingLeft: 16,
     paddingRight: 16,
   },
+  camera: {
+    position: "relative",
+    height: 250,
+  },
+  photoWrapper: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    width: 150,
+    height: 150,
+    borderWidth: 1,
+    borderColor: pallete.accent,
+  },
+  photo: { width: "100%", height: "100%" },
+  btnChangeCameraContainer: {
+    position: "absolute",
+    bottom: 10,
+    right: 10,
+  },
+  btnChangeCamera: {},
+  text: { color: pallete.accent },
   img: {
     width: "100%",
     borderRadius: 16,
