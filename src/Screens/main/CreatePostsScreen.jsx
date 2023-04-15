@@ -19,7 +19,7 @@ import {
 import { pallete } from "../../helpers/variables";
 
 export function CreatePostsScreen({ navigation }) {
-  const [hasPermission, setHasPermission] = useState(null);
+  // const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(CameraType.back);
   const [photo, setPhoto] = useState("");
@@ -29,6 +29,11 @@ export function CreatePostsScreen({ navigation }) {
   const [inputNameStyle, setInputNameStyle] = useState(styles.input);
   const [inputLocationStyle, setInputLocationStyle] = useState(styles.input);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  // const [permission, requestPermission] = Camera.useCameraPermissions();
+
+  // if (!permission) {
+  //   return <Text>No access to camera</Text>;
+  // }
 
   // useEffect(() => {
   //   (async () => {

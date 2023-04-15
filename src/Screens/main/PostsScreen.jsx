@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  FlatList,
+} from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { pallete } from "../../helpers/variables";
 import { testDB } from "../../helpers/testDB";
 import { PostItemAddFeatures } from "../../components/PostItemAddFeatures";
-
-console.log(MapView);
+import { PostItemAddPost } from "../../components/PostItemAddPost";
 
 export function PostsScreen({ navigation, route }) {
   const [posts, setPosts] = useState([]);
@@ -20,14 +26,8 @@ export function PostsScreen({ navigation, route }) {
     }
   }, [route.params?.userPost]);
 
-  // if (route.params) {
-
-  //   //
-
-  // }
-
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.userWrapper}>
         <Image
           style={styles.avatar}
@@ -40,16 +40,24 @@ export function PostsScreen({ navigation, route }) {
         </View>
       </View>
 
-      <View>
-        {testDB.map((data, index) => (
-          <PostItemAddFeatures
+      <FlatList
+        data={posts}
+        renderItem={({ item }) => (
+          <PostItemAddPost postData={item} navigation={navigation} />
+        )}
+        keyExtractor={(_, idx) => idx.toString()}
+      />
+
+      {/* <ScrollView>
+        {posts.map((data, index) => (
+          <PostItemAddPost
             key={index}
             postData={data}
             navigation={navigation}
           />
         ))}
-      </View>
-    </ScrollView>
+      </ScrollView> */}
+    </View>
   );
 }
 
