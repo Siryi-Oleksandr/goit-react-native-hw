@@ -30,37 +30,25 @@ export function CreatePostsScreen({ navigation }) {
   const [inputNameStyle, setInputNameStyle] = useState(styles.input);
   const [inputLocationStyle, setInputLocationStyle] = useState(styles.input);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-  // const [permission, requestPermission] = Camera.useCameraPermissions();
-
-  // if (!permission) {
-  //   return <Text>No access to camera</Text>;
-  // }
 
   useEffect(() => {
     // permission to get access to camera
 
-    // (async () => {
-    //   const { status } = await Camera.requestCameraPermissionsAsync();
-    //   // await MediaLibrary.requestPermissionsAsync();
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      // await MediaLibrary.requestPermissionsAsync();
 
-    //   setHasPermission(status === "granted");
-    // })();
+      setHasPermission(status === "granted");
+    })();
 
     // permission to get location
 
-    // (async () => {
-    //   let { status } = await Location.requestForegroundPermissionsAsync();
-    //   if (status !== "granted") {
-    //     console.log("Permission to access location was denied");
-    //   }
-
-    //   // let location = await Location.getCurrentPositionAsync({});
-    //   // const coords = {
-    //   //   latitude: location.coords.latitude,
-    //   //   longitude: location.coords.longitude,
-    //   // };
-    //   // setLocation(coords);
-    // })();
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+      }
+    })();
 
     // add keyBoard listener
 
@@ -83,12 +71,12 @@ export function CreatePostsScreen({ navigation }) {
     };
   }, []);
 
-  // if (hasPermission === null) {
-  //   return <Text>Loading access to camera</Text>;
-  // }
-  // if (hasPermission === false) {
-  //   return <Text>No access to camera</Text>;
-  // }
+  if (hasPermission === null) {
+    return <Text>Loading access to camera</Text>;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
 
   const { width, height } = Dimensions.get("window");
   const orientation = "portrait"; // TODO

@@ -15,7 +15,7 @@ export function MapScreen({ route }) {
           longitudeDelta: 0.0421,
         }}
         showsUserLocation={true}
-        // onMapReady={() => console.log("😎😍")}
+        // onMapReady={() => console.log("something")}
       >
         {location && (
           <Marker

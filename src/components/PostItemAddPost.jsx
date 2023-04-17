@@ -14,7 +14,6 @@ import { pallete } from "../helpers/variables";
 
 export function PostItemAddPost({ postData, navigation }) {
   const { photo, name, locationName, location } = postData;
-  console.log("1 item =", photo);
 
   return (
     <View style={styles.postWrapper}>
