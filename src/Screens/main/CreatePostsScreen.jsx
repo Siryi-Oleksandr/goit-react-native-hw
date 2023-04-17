@@ -31,6 +31,7 @@ export function CreatePostsScreen({ navigation }) {
   const [inputNameStyle, setInputNameStyle] = useState(styles.input);
   const [inputLocationStyle, setInputLocationStyle] = useState(styles.input);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
 
   useEffect(() => {
     // permission to get access to camera
@@ -124,6 +125,15 @@ export function CreatePostsScreen({ navigation }) {
 
   const isPostData = photo && name;
 
+  const handleOpenCamera = () => {
+    setIsCameraOpen(true);
+  };
+
+  const downloadPhoto = () => {
+    setIsCameraOpen(false);
+    setLoadedPhoto(defaultImage);
+  };
+
   const takePhoto = async () => {
     if (cameraRef) {
       const { uri } = await cameraRef.takePictureAsync();
@@ -148,47 +158,57 @@ export function CreatePostsScreen({ navigation }) {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <ScrollView>
-          <View style={styles.imgContainer}>
-            <Image
-              style={styles.photo}
-              source={loadedPhoto}
-              alt="user last photo"
-            />
-          </View>
-          <Camera
-            style={styles.camera}
-            type={type}
-            ref={(ref) => {
-              setCameraRef(ref);
-            }}
-          >
-            {photo && (
-              <View style={styles.photoWrapper}>
-                <Image
-                  style={styles.photo}
-                  source={{ uri: photo }}
-                  alt="user last photo"
-                />
-              </View>
-            )}
-
-            <TouchableOpacity
-              style={styles.cameraBtn}
-              activeOpacity={0.8}
-              onPress={takePhoto}
+          {isCameraOpen ? (
+            <Camera
+              style={styles.camera}
+              type={type}
+              ref={(ref) => {
+                setCameraRef(ref);
+              }}
             >
-              <Icon name="camera" size={25} color={pallete.gray} />
-            </TouchableOpacity>
+              {photo && (
+                <View style={styles.photoWrapper}>
+                  <Image
+                    style={styles.photo}
+                    source={{ uri: photo }}
+                    alt="user last photo"
+                  />
+                </View>
+              )}
 
-            <View style={styles.btnChangeCameraContainer}>
               <TouchableOpacity
-                style={styles.btnChangeCamera}
-                onPress={toggleCameraType}
+                style={styles.cameraBtn}
+                activeOpacity={0.8}
+                onPress={takePhoto}
               >
-                <Icon name="refresh" size={25} color={pallete.gray} />
+                <Icon name="camera" size={25} color={pallete.gray} />
+              </TouchableOpacity>
+
+              <View style={styles.btnChangeCameraContainer}>
+                <TouchableOpacity
+                  style={styles.btnChangeCamera}
+                  onPress={toggleCameraType}
+                >
+                  <Icon name="refresh" size={25} color={pallete.gray} />
+                </TouchableOpacity>
+              </View>
+            </Camera>
+          ) : (
+            <View style={styles.imgContainer}>
+              <Image
+                style={styles.photo}
+                source={loadedPhoto}
+                alt="user last photo"
+              />
+              <TouchableOpacity
+                style={styles.cameraBtn}
+                activeOpacity={0.8}
+                onPress={handleOpenCamera}
+              >
+                <Icon name="camera" size={25} color={pallete.gray} />
               </TouchableOpacity>
             </View>
-          </Camera>
+          )}
 
           {loadedPhoto ? (
             <TouchableOpacity
@@ -200,9 +220,10 @@ export function CreatePostsScreen({ navigation }) {
           ) : (
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => setLoadedPhoto(defaultImage)}
+              // onPress={() => setLoadedPhoto(defaultImage)}
+              onPress={downloadPhoto}
             >
-              <Text style={styles.editBtn}>Add photo</Text>
+              <Text style={styles.editBtn}>Download photo</Text>
             </TouchableOpacity>
           )}
 
