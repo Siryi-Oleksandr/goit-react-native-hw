@@ -182,16 +182,21 @@ export function CreatePostsScreen({ navigation }) {
             </View>
           </Camera>
 
-          <TouchableOpacity activeOpacity={0.6} onPress={() => setPhoto(null)}>
-            <Text style={styles.editBtn}>Edit photo</Text>
-          </TouchableOpacity>
-
-          {/* <TouchableOpacity
-            activeOpacity={0.6}
-            onPress={() => setPhoto(defaultImage)}
-          >
-            <Text style={styles.editBtn}>Add photo</Text>
-          </TouchableOpacity> */}
+          {photo ? (
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => setPhoto(null)}
+            >
+              <Text style={styles.editBtn}>Edit photo</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => setPhoto(defaultImage)}
+            >
+              <Text style={styles.editBtn}>Add photo</Text>
+            </TouchableOpacity>
+          )}
 
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -275,8 +280,17 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
   },
+  imgContainer: {
+    position: "relative",
+    marginBottom: 8,
+    height: 250,
+    backgroundColor: pallete.black,
+    borderRadius: 16,
+    overflow: "hidden",
+  },
   camera: {
     position: "relative",
+    marginBottom: 8,
     height: 250,
     backgroundColor: pallete.black,
     borderRadius: 16,
