@@ -38,6 +38,7 @@ export function CreatePostsScreen({ navigation }) {
   // }
 
   useEffect(() => {
+    // permission to get access to camera
     console.log("first render");
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -62,6 +63,24 @@ export function CreatePostsScreen({ navigation }) {
       setLocation(coords);
       console.log("coords", coords);
     })();
+
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setIsKeyboardOpen(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setIsKeyboardOpen(false);
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
   }, []);
 
   if (hasPermission === null) {
@@ -97,12 +116,18 @@ export function CreatePostsScreen({ navigation }) {
   // }, []);
 
   const nameHandler = (text) => setName(text);
-  const locationHandler = (text) => setLocationName(text);
+  const locationNameHandler = (text) => setLocationName(text);
 
   const resetPublishForm = () => {
     setName("");
     setLocationName("");
-    setPhoto("");
+    setPhoto(null);
+  };
+
+  const deletePost = () => {
+    setName("");
+    setLocationName("");
+    setPhoto(null);
   };
 
   const onPublish = () => {
@@ -136,46 +161,43 @@ export function CreatePostsScreen({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
-        >
-          <ScrollView>
-            <Camera
-              style={styles.camera}
-              type={type}
-              ref={(ref) => {
-                setCameraRef(ref);
-              }}
-            >
-              {photo && (
-                <View style={styles.photoWrapper}>
-                  <Image
-                    style={styles.photo}
-                    source={{ uri: photo }}
-                    alt="user last photo"
-                  />
-                </View>
-              )}
-
-              <TouchableOpacity
-                style={styles.cameraBtn}
-                activeOpacity={0.8}
-                onPress={takePhoto}
-              >
-                <Icon name="camera" size={25} color={pallete.gray} />
-              </TouchableOpacity>
-
-              <View style={styles.btnChangeCameraContainer}>
-                <TouchableOpacity
-                  style={styles.btnChangeCamera}
-                  onPress={toggleCameraType}
-                >
-                  <Icon name="refresh" size={25} color={pallete.gray} />
-                </TouchableOpacity>
+        <ScrollView>
+          <Camera
+            style={styles.camera}
+            type={type}
+            ref={(ref) => {
+              setCameraRef(ref);
+            }}
+          >
+            {photo && (
+              <View style={styles.photoWrapper}>
+                <Image
+                  style={styles.photo}
+                  source={{ uri: photo }}
+                  alt="user last photo"
+                />
               </View>
-            </Camera>
+            )}
 
-            {/* <View
+            <TouchableOpacity
+              style={styles.cameraBtn}
+              activeOpacity={0.8}
+              onPress={takePhoto}
+            >
+              <Icon name="camera" size={25} color={pallete.gray} />
+            </TouchableOpacity>
+
+            <View style={styles.btnChangeCameraContainer}>
+              <TouchableOpacity
+                style={styles.btnChangeCamera}
+                onPress={toggleCameraType}
+              >
+                <Icon name="refresh" size={25} color={pallete.gray} />
+              </TouchableOpacity>
+            </View>
+          </Camera>
+
+          {/* <View
               style={{
                 ...styles.imgWrapper,
                 width: width - 32,
@@ -198,21 +220,24 @@ export function CreatePostsScreen({ navigation }) {
               </TouchableOpacity>
             </View> */}
 
-            {loadedPhoto ? (
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={() => setLoadedPhoto(false)}
-              >
-                <Text style={styles.editBtn}>Edit photo</Text>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={() => setLoadedPhoto(true)}
-              >
-                <Text style={styles.editBtn}>Add photo</Text>
-              </TouchableOpacity>
-            )}
+          {loadedPhoto ? (
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => setLoadedPhoto(false)}
+            >
+              <Text style={styles.editBtn}>Edit photo</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => setLoadedPhoto(true)}
+            >
+              <Text style={styles.editBtn}>Add photo</Text>
+            </TouchableOpacity>
+          )}
+          <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+          >
             <TextInput
               style={inputNameStyle}
               require
@@ -237,7 +262,7 @@ export function CreatePostsScreen({ navigation }) {
               <TextInput
                 style={inputLocationStyle}
                 value={locationName}
-                onChangeText={locationHandler}
+                onChangeText={locationNameHandler}
                 placeholder="Location"
                 onFocus={() =>
                   setInputLocationStyle({
@@ -248,34 +273,31 @@ export function CreatePostsScreen({ navigation }) {
                 onBlur={() => setInputLocationStyle(styles.input)}
               />
             </View>
+          </KeyboardAvoidingView>
 
-            {/* <View style={{ display: isKeyboardOpen ? "none" : "flex" }}> */}
-            <TouchableOpacity
-              style={
-                !isPostData
-                  ? styles.btnPublishDisabled
-                  : {
-                      ...styles.btnPublishDisabled,
-                      backgroundColor: pallete.accent,
-                    }
-              }
-              disabled={!isPostData}
-              activeOpacity={0.8}
-              onPress={onPublish}
-            >
-              <Text style={styles.btnTitle}>Publish</Text>
-            </TouchableOpacity>
-            {/* </View> */}
-          </ScrollView>
-        </KeyboardAvoidingView>
+          {/* <View style={{ display: isKeyboardOpen ? "none" : "flex" }}> */}
+          <TouchableOpacity
+            style={
+              !isPostData
+                ? styles.btnPublishDisabled
+                : {
+                    ...styles.btnPublishDisabled,
+                    backgroundColor: pallete.accent,
+                  }
+            }
+            disabled={!isPostData}
+            activeOpacity={0.8}
+            onPress={onPublish}
+          >
+            <Text style={styles.btnTitle}>Publish</Text>
+          </TouchableOpacity>
+          {/* </View> */}
+        </ScrollView>
 
         <TouchableOpacity
           style={styles.deleteBtn}
           activeOpacity={0.8}
-          onPress={() => {
-            setLoadedPhoto(false);
-            Alert.alert("delete post");
-          }}
+          onPress={() => deletePost()}
         >
           <Icon name="trash" size={30} color={pallete.gray} />
         </TouchableOpacity>
