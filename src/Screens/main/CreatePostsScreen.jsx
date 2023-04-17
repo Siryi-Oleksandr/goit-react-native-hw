@@ -26,6 +26,7 @@ export function CreatePostsScreen({ navigation }) {
   const [locationName, setLocationName] = useState("");
   const [type, setType] = useState(CameraType.back);
   const [photo, setPhoto] = useState(null);
+  const [loadedPhoto, setLoadedPhoto] = useState(null);
   const [location, setLocation] = useState(null);
   const [inputNameStyle, setInputNameStyle] = useState(styles.input);
   const [inputLocationStyle, setInputLocationStyle] = useState(styles.input);
@@ -147,6 +148,13 @@ export function CreatePostsScreen({ navigation }) {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <ScrollView>
+          <View style={styles.imgContainer}>
+            <Image
+              style={styles.photo}
+              source={loadedPhoto}
+              alt="user last photo"
+            />
+          </View>
           <Camera
             style={styles.camera}
             type={type}
@@ -182,17 +190,17 @@ export function CreatePostsScreen({ navigation }) {
             </View>
           </Camera>
 
-          {photo ? (
+          {loadedPhoto ? (
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => setPhoto(null)}
+              onPress={() => setLoadedPhoto(null)}
             >
               <Text style={styles.editBtn}>Edit photo</Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => setPhoto(defaultImage)}
+              onPress={() => setLoadedPhoto(defaultImage)}
             >
               <Text style={styles.editBtn}>Add photo</Text>
             </TouchableOpacity>
@@ -284,7 +292,7 @@ const styles = StyleSheet.create({
     position: "relative",
     marginBottom: 8,
     height: 250,
-    backgroundColor: pallete.black,
+    backgroundColor: pallete.gray,
     borderRadius: 16,
     overflow: "hidden",
   },
