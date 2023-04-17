@@ -22,9 +22,10 @@ export function PostsScreen({ navigation, route }) {
       // For example, send the post to the server
       const { userPost } = route.params;
       setPosts((prevState) => [...prevState, userPost]);
-      console.log("userPosts ==>", posts);
     }
   }, [route.params?.userPost]);
+
+  console.log("userPosts 'PostsScreen' 2 with location ==>", posts);
 
   return (
     <View style={styles.container}>

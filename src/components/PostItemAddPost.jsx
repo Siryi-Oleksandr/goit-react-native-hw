@@ -13,7 +13,9 @@ import { pallete } from "../helpers/variables";
 // ! Main CODE
 
 export function PostItemAddPost({ postData, navigation }) {
-  const { photo, name, location } = postData;
+  const { photo, name, locationName, location } = postData;
+  console.log("post 3 location PostItem", location);
+
   return (
     <View style={styles.postWrapper}>
       <Image style={styles.img} source={{ uri: photo }} alt={name} />
@@ -31,10 +33,16 @@ export function PostItemAddPost({ postData, navigation }) {
         <TouchableOpacity
           style={styles.postValues}
           activeOpacity={0.6}
-          onPress={() => navigation.navigate("Map")}
+          onPress={() =>
+            navigation.navigate({
+              name: "Map",
+              params: { location },
+              merge: true,
+            })
+          }
         >
           <Icon name="map-marker" size={18} color={pallete.gray} />
-          <Text style={styles.postValuesText}>{location}</Text>
+          <Text style={styles.postValuesText}>{locationName}</Text>
         </TouchableOpacity>
       </View>
     </View>

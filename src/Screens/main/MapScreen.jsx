@@ -3,24 +3,9 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
-export function MapScreen() {
-  const [location, setLocation] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission to access location was denied");
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      const coords = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      };
-      setLocation(coords);
-    })();
-  }, []);
+export function MapScreen({ navigation, route }) {
+  const [location, setLocation] = useState(route.params?.location);
+  console.log("map location", location);
 
   return (
     <View style={styles.container}>
@@ -32,7 +17,7 @@ export function MapScreen() {
           longitudeDelta: 0.0421,
         }}
         showsUserLocation={true}
-        // onMapReady={() => console.log("😎")}
+        onMapReady={() => console.log("😎")}
       >
         {location && (
           <Marker

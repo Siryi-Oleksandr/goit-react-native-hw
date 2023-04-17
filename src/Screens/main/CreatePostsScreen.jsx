@@ -16,16 +16,18 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
+import * as Location from "expo-location";
 import { pallete } from "../../helpers/variables";
 
 export function CreatePostsScreen({ navigation }) {
-  // const [hasPermission, setHasPermission] = useState(null);
+  const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(CameraType.back);
   const [photo, setPhoto] = useState("");
   const [loadedPhoto, setLoadedPhoto] = useState(null);
   const [name, setName] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState(null);
+  const [locationName, setLocationName] = useState("");
   const [inputNameStyle, setInputNameStyle] = useState(styles.input);
   const [inputLocationStyle, setInputLocationStyle] = useState(styles.input);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
@@ -35,56 +37,76 @@ export function CreatePostsScreen({ navigation }) {
   //   return <Text>No access to camera</Text>;
   // }
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const { status } = await Camera.requestCameraPermissionsAsync();
-  //     // await MediaLibrary.requestPermissionsAsync();
+  useEffect(() => {
+    console.log("first render");
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      // await MediaLibrary.requestPermissionsAsync();
 
-  //     setHasPermission(status === "granted");
-  //   })();
-  // }, []);
+      setHasPermission(status === "granted");
+    })();
 
-  // if (hasPermission === null) {
-  //   return <Text>No access to camera</Text>;
-  // }
-  // if (hasPermission === false) {
-  //   return <Text>No access to camera</Text>;
-  // }
+    // permission to get location
+
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setLocation(coords);
+      console.log("coords", coords);
+    })();
+  }, []);
+
+  if (hasPermission === null) {
+    return <Text>Loading access to camera</Text>;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
 
   const { width, height } = Dimensions.get("window");
   const orientation = "portrait"; // TODO
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      () => {
-        setIsKeyboardOpen(true);
-      }
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setIsKeyboardOpen(false);
-      }
-    );
+  console.log("location 1 create str76", location);
 
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
+  // useEffect(() => {
+  //   const keyboardDidShowListener = Keyboard.addListener(
+  //     "keyboardDidShow",
+  //     () => {
+  //       setIsKeyboardOpen(true);
+  //     }
+  //   );
+  //   const keyboardDidHideListener = Keyboard.addListener(
+  //     "keyboardDidHide",
+  //     () => {
+  //       setIsKeyboardOpen(false);
+  //     }
+  //   );
+
+  //   return () => {
+  //     keyboardDidShowListener.remove();
+  //     keyboardDidHideListener.remove();
+  //   };
+  // }, []);
 
   const nameHandler = (text) => setName(text);
-  const locationHandler = (text) => setLocation(text);
+  const locationHandler = (text) => setLocationName(text);
 
   const resetPublishForm = () => {
     setName("");
-    setLocation("");
+    setLocationName("");
     setPhoto("");
   };
 
   const onPublish = () => {
-    const userPost = { name, location, photo };
+    const userPost = { name, photo, locationName, location };
     // Alert.alert("User post", `${name} + ${location}`);
     // navigation.navigate("Posts", { userPost });
     navigation.navigate({
@@ -100,7 +122,6 @@ export function CreatePostsScreen({ navigation }) {
   const takePhoto = async () => {
     if (cameraRef) {
       const { uri } = await cameraRef.takePictureAsync();
-      console.log("my uri", uri);
       setPhoto(uri);
       // await MediaLibrary.createAssetAsync(uri);
     }
@@ -215,7 +236,7 @@ export function CreatePostsScreen({ navigation }) {
               />
               <TextInput
                 style={inputLocationStyle}
-                value={location}
+                value={locationName}
                 onChangeText={locationHandler}
                 placeholder="Location"
                 onFocus={() =>
