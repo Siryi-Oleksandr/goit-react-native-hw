@@ -32,10 +32,11 @@ export function MapScreen() {
           longitudeDelta: 0.0421,
         }}
         showsUserLocation={true}
+        // onMapReady={() => console.log("😎")}
       >
         {location && (
           <Marker
-            title="I am here again"
+            title="Photo is made here"
             coordinate={location}
             description="Hello World"
           />

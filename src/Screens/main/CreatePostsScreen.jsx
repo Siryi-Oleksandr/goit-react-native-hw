@@ -149,12 +149,12 @@ export function CreatePostsScreen({ navigation }) {
                   style={styles.btnChangeCamera}
                   onPress={toggleCameraType}
                 >
-                  <Text style={styles.text}>Change Camera</Text>
+                  <Icon name="refresh" size={25} color={pallete.gray} />
                 </TouchableOpacity>
               </View>
             </Camera>
 
-            <View
+            {/* <View
               style={{
                 ...styles.imgWrapper,
                 width: width - 32,
@@ -175,7 +175,7 @@ export function CreatePostsScreen({ navigation }) {
               >
                 <Icon name="camera" size={25} color={pallete.gray} />
               </TouchableOpacity>
-            </View>
+            </View> */}
 
             {loadedPhoto ? (
               <TouchableOpacity
@@ -275,6 +275,9 @@ const styles = StyleSheet.create({
   camera: {
     position: "relative",
     height: 250,
+    backgroundColor: pallete.black,
+    borderRadius: 16,
+    overflow: "hidden",
   },
   photoWrapper: {
     position: "absolute",
@@ -284,6 +287,7 @@ const styles = StyleSheet.create({
     height: 150,
     borderWidth: 1,
     borderColor: pallete.accent,
+    borderRadius: 8,
   },
   photo: { width: "100%", height: "100%" },
   btnChangeCameraContainer: {
