@@ -39,28 +39,28 @@ export function CreatePostsScreen({ navigation }) {
   useEffect(() => {
     // permission to get access to camera
 
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      // await MediaLibrary.requestPermissionsAsync();
+    // (async () => {
+    //   const { status } = await Camera.requestCameraPermissionsAsync();
+    //   // await MediaLibrary.requestPermissionsAsync();
 
-      setHasPermission(status === "granted");
-    })();
+    //   setHasPermission(status === "granted");
+    // })();
 
     // permission to get location
 
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission to access location was denied");
-      }
+    // (async () => {
+    //   let { status } = await Location.requestForegroundPermissionsAsync();
+    //   if (status !== "granted") {
+    //     console.log("Permission to access location was denied");
+    //   }
 
-      let location = await Location.getCurrentPositionAsync({});
-      const coords = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      };
-      setLocation(coords);
-    })();
+    //   // let location = await Location.getCurrentPositionAsync({});
+    //   // const coords = {
+    //   //   latitude: location.coords.latitude,
+    //   //   longitude: location.coords.longitude,
+    //   // };
+    //   // setLocation(coords);
+    // })();
 
     // add keyBoard listener
 
@@ -83,12 +83,12 @@ export function CreatePostsScreen({ navigation }) {
     };
   }, []);
 
-  if (hasPermission === null) {
-    return <Text>Loading access to camera</Text>;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+  // if (hasPermission === null) {
+  //   return <Text>Loading access to camera</Text>;
+  // }
+  // if (hasPermission === false) {
+  //   return <Text>No access to camera</Text>;
+  // }
 
   const { width, height } = Dimensions.get("window");
   const orientation = "portrait"; // TODO
@@ -140,6 +140,13 @@ export function CreatePostsScreen({ navigation }) {
       const { uri } = await cameraRef.takePictureAsync();
       setPhoto(uri);
     }
+
+    let location = await Location.getCurrentPositionAsync({});
+    const coords = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    };
+    setLocation(coords);
   };
 
   function toggleCameraType() {
