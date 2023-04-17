@@ -110,10 +110,11 @@ export function CreatePostsScreen({ navigation }) {
     setName("");
     setLocationName("");
     setPhoto(null);
+    setLoadedPhoto(null);
   };
 
   const onPublish = () => {
-    const userPost = { name, photo, locationName, location };
+    const userPost = { name, photo, loadedPhoto, locationName, location };
 
     navigation.navigate({
       name: "Posts",
@@ -123,7 +124,7 @@ export function CreatePostsScreen({ navigation }) {
     deleteAndResetPost();
   };
 
-  const isPostData = photo && name;
+  const isPostData = photo || (loadedPhoto && name);
 
   const handleOpenCamera = () => {
     setIsCameraOpen(true);

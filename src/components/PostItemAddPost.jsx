@@ -13,11 +13,16 @@ import { pallete } from "../helpers/variables";
 // ! Main CODE
 
 export function PostItemAddPost({ postData, navigation }) {
-  const { photo, name, locationName, location } = postData;
+  const { photo, loadedPhoto = null, name, locationName, location } = postData;
 
   return (
     <View style={styles.postWrapper}>
-      <Image style={styles.img} source={{ uri: photo }} alt={name} />
+      {photo ? (
+        <Image style={styles.img} source={{ uri: photo }} alt={name} />
+      ) : (
+        <Image style={styles.img} source={loadedPhoto} alt={name} />
+      )}
+
       <Text style={styles.postTitle}>{name}</Text>
       <View style={styles.postInfo}>
         <TouchableOpacity
