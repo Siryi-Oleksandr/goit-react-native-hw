@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  FlatList,
-} from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import { View, Text, StyleSheet, Image, FlatList } from "react-native";
 import { pallete } from "../../helpers/variables";
 import { testDB } from "../../helpers/testDB";
-import { PostItemAddFeatures } from "../../components/PostItemAddFeatures";
 import { PostItemAddPost } from "../../components/PostItemAddPost";
 
 export function PostsScreen({ navigation, route }) {
@@ -24,8 +15,6 @@ export function PostsScreen({ navigation, route }) {
       setPosts((prevState) => [...prevState, userPost]);
     }
   }, [route.params?.userPost]);
-
-  console.log("userPosts 'PostsScreen' 2 with location ==>", posts);
 
   return (
     <View style={styles.container}>
@@ -48,16 +37,6 @@ export function PostsScreen({ navigation, route }) {
         )}
         keyExtractor={(_, idx) => idx.toString()}
       />
-
-      {/* <ScrollView>
-        {posts.map((data, index) => (
-          <PostItemAddPost
-            key={index}
-            postData={data}
-            navigation={navigation}
-          />
-        ))}
-      </ScrollView> */}
     </View>
   );
 }

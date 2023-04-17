@@ -14,7 +14,7 @@ import { pallete } from "../helpers/variables";
 
 export function PostItemAddPost({ postData, navigation }) {
   const { photo, name, locationName, location } = postData;
-  console.log("post 3 location PostItem", location);
+  console.log("1 item =", photo);
 
   return (
     <View style={styles.postWrapper}>
@@ -24,7 +24,13 @@ export function PostItemAddPost({ postData, navigation }) {
         <TouchableOpacity
           style={styles.postValues}
           activeOpacity={0.6}
-          onPress={() => navigation.navigate("Comments")}
+          onPress={() =>
+            navigation.navigate({
+              name: "Comments",
+              params: { photo, name },
+              merge: true,
+            })
+          }
         >
           <Icon name="comment" size={18} color={pallete.gray} />
           <Text style={styles.postValuesText}>10</Text>

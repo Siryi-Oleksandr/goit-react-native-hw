@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Camera, CameraType } from "expo-camera";
-import * as MediaLibrary from "expo-media-library";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {
   Dimensions,
@@ -13,21 +12,21 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
-  Alert,
   ScrollView,
 } from "react-native";
 import * as Location from "expo-location";
 import { pallete } from "../../helpers/variables";
 
+const defaultImage = require("../../images/nature-2.jpg");
+
 export function CreatePostsScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
-  const [type, setType] = useState(CameraType.back);
-  const [photo, setPhoto] = useState("");
-  const [loadedPhoto, setLoadedPhoto] = useState(null);
   const [name, setName] = useState("");
-  const [location, setLocation] = useState(null);
   const [locationName, setLocationName] = useState("");
+  const [type, setType] = useState(CameraType.back);
+  const [photo, setPhoto] = useState(null);
+  const [location, setLocation] = useState(null);
   const [inputNameStyle, setInputNameStyle] = useState(styles.input);
   const [inputLocationStyle, setInputLocationStyle] = useState(styles.input);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
@@ -39,7 +38,7 @@ export function CreatePostsScreen({ navigation }) {
 
   useEffect(() => {
     // permission to get access to camera
-    console.log("first render");
+
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       // await MediaLibrary.requestPermissionsAsync();
@@ -61,8 +60,9 @@ export function CreatePostsScreen({ navigation }) {
         longitude: location.coords.longitude,
       };
       setLocation(coords);
-      console.log("coords", coords);
     })();
+
+    // add keyBoard listener
 
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -93,8 +93,6 @@ export function CreatePostsScreen({ navigation }) {
   const { width, height } = Dimensions.get("window");
   const orientation = "portrait"; // TODO
 
-  console.log("location 1 create str76", location);
-
   // useEffect(() => {
   //   const keyboardDidShowListener = Keyboard.addListener(
   //     "keyboardDidShow",
@@ -118,13 +116,7 @@ export function CreatePostsScreen({ navigation }) {
   const nameHandler = (text) => setName(text);
   const locationNameHandler = (text) => setLocationName(text);
 
-  const resetPublishForm = () => {
-    setName("");
-    setLocationName("");
-    setPhoto(null);
-  };
-
-  const deletePost = () => {
+  const deleteAndResetPost = () => {
     setName("");
     setLocationName("");
     setPhoto(null);
@@ -132,14 +124,13 @@ export function CreatePostsScreen({ navigation }) {
 
   const onPublish = () => {
     const userPost = { name, photo, locationName, location };
-    // Alert.alert("User post", `${name} + ${location}`);
-    // navigation.navigate("Posts", { userPost });
+
     navigation.navigate({
       name: "Posts",
       params: { userPost },
       merge: true,
     });
-    resetPublishForm();
+    deleteAndResetPost();
   };
 
   const isPostData = photo && name;
@@ -148,7 +139,6 @@ export function CreatePostsScreen({ navigation }) {
     if (cameraRef) {
       const { uri } = await cameraRef.takePictureAsync();
       setPhoto(uri);
-      // await MediaLibrary.createAssetAsync(uri);
     }
   };
 
@@ -197,44 +187,17 @@ export function CreatePostsScreen({ navigation }) {
             </View>
           </Camera>
 
-          {/* <View
-              style={{
-                ...styles.imgWrapper,
-                width: width - 32,
-                minHeight: width * 0.5,
-              }}
-            >
-              {loadedPhoto ? (
-                <Image
-                  style={styles.img}
-                  source={require("../../images/nature-1.jpg")}
-                  alt="user post picture"
-                />
-              ) : null}
-              <TouchableOpacity
-                style={styles.cameraBtn}
-                activeOpacity={0.8}
-                onPress={() => setLoadedPhoto(true)}
-              >
-                <Icon name="camera" size={25} color={pallete.gray} />
-              </TouchableOpacity>
-            </View> */}
+          <TouchableOpacity activeOpacity={0.6} onPress={() => setPhoto(null)}>
+            <Text style={styles.editBtn}>Edit photo</Text>
+          </TouchableOpacity>
 
-          {loadedPhoto ? (
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => setLoadedPhoto(false)}
-            >
-              <Text style={styles.editBtn}>Edit photo</Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => setLoadedPhoto(true)}
-            >
-              <Text style={styles.editBtn}>Add photo</Text>
-            </TouchableOpacity>
-          )}
+          {/* <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={() => setPhoto(defaultImage)}
+          >
+            <Text style={styles.editBtn}>Add photo</Text>
+          </TouchableOpacity> */}
+
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
@@ -294,13 +257,15 @@ export function CreatePostsScreen({ navigation }) {
           {/* </View> */}
         </ScrollView>
 
-        <TouchableOpacity
-          style={styles.deleteBtn}
-          activeOpacity={0.8}
-          onPress={() => deletePost()}
-        >
-          <Icon name="trash" size={30} color={pallete.gray} />
-        </TouchableOpacity>
+        <View style={{ display: isKeyboardOpen ? "none" : "flex" }}>
+          <TouchableOpacity
+            style={styles.deleteBtn}
+            activeOpacity={0.8}
+            onPress={() => deleteAndResetPost()}
+          >
+            <Icon name="trash" size={30} color={pallete.gray} />
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );

@@ -13,17 +13,16 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { testDB } from "../../helpers/testDB";
 import { UserComment } from "../../components/UserComment";
 import { OwnComment } from "../../components/OwnComment";
 import { pallete } from "../../helpers/variables";
 
-const commentInfo = testDB[0];
-
-export function CommentsScreen() {
+export function CommentsScreen({ route }) {
   const [comment, setComment] = useState("");
 
-  const { img, title } = commentInfo;
+  const photo = route.params?.photo;
+  const name = route.params?.name;
+
   const commentHandler = (text) => setComment(text);
 
   const onSendComment = () => {
@@ -34,7 +33,7 @@ export function CommentsScreen() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView style={styles.container}>
-        <Image style={styles.img} source={img} alt={title} />
+        <Image style={styles.img} source={{ uri: photo }} alt={name} />
 
         <UserComment />
         <OwnComment />
@@ -73,7 +72,9 @@ const styles = StyleSheet.create({
     marginTop: 32,
     marginBottom: 32,
     width: "100%",
+    height: 250,
     borderRadius: 16,
+
     overflow: "hidden",
   },
   inputWrapper: {
