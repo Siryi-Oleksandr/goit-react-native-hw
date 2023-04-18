@@ -25,7 +25,7 @@ export default function App() {
     Lora: require("./src/fonts/Lora-VariableFont.ttf"),
   });
   const [orientation, setOrientation] = useState("portrait");
-  const router = useRoutes({});
+  const router = useRoutes(false);
 
   const getOrientation = useCallback(() => {
     const { width, height } = Dimensions.get("window");

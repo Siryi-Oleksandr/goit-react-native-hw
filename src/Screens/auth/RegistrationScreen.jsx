@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
   StyleSheet,
   View,
@@ -15,6 +16,7 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../../helpers/variables";
 import { useNavigation } from "@react-navigation/native";
+import { authSignUp } from "../../redux/auth/authOperations";
 
 const image = require("../../images/bg-img.png");
 
@@ -36,6 +38,8 @@ export function RegistrationScreen({
   const [securePassword, setSecurePassword] = useState(true);
 
   const navigation = useNavigation();
+
+  const dispatch = useDispatch();
 
   const orientation = "portrait"; // TODO
 
@@ -71,10 +75,9 @@ export function RegistrationScreen({
 
   const onRegister = () => {
     const userCredentials = { name, email, password };
-    Alert.alert("Credentials", `${name} + ${email} + ${password}`);
-    // navigation.navigate("Comment");
+    dispatch(authSignUp(userCredentials));
     resetRegisterForm();
-    navigation.navigate("Home");
+    // navigation.navigate("Home");
   };
 
   const toggleShowAvatar = () => {
