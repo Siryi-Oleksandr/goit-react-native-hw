@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
   StyleSheet,
   View,
@@ -13,6 +14,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../../helpers/variables";
+import { authLogIn } from "../../redux/auth/authOperations";
 
 const image = require("../../images/bg-img.png");
 
@@ -25,6 +27,8 @@ export function LoginScreen({ navigation }) {
   const [inputEmailStyle, setInputEmailStyle] = useState(styles.input);
   const [inputPasswordStyle, setInputPasswordStyle] = useState(styles.input);
   const [securePassword, setSecurePassword] = useState(true);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -56,8 +60,9 @@ export function LoginScreen({ navigation }) {
 
   const onLogin = () => {
     const userCredentials = { email, password };
-    Alert.alert("Credentials", `${email} + ${password}`);
+    dispatch(authLogIn(userCredentials));
     resetLoginForm();
+    // navigation.navigate("Home");
   };
 
   const toggleShowPassword = () => {
