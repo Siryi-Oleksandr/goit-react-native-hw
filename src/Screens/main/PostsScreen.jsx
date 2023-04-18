@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, FlatList } from "react-native";
 import { pallete } from "../../helpers/variables";
-import { testDB } from "../../helpers/testDB";
+import { auth } from "../../firebase/config";
 import { PostItemAddPost } from "../../components/PostItemAddPost";
+
+console.log("auth", auth);
 
 export function PostsScreen({ navigation, route }) {
   const [posts, setPosts] = useState([]);

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -10,6 +11,7 @@ import {
   View,
 } from "react-native";
 import { useRoutes } from "./router";
+import { store } from "./src/redux/store";
 
 // ! Main logic
 
@@ -52,16 +54,18 @@ export default function App() {
   }
 
   return (
-    <>
-      <TouchableWithoutFeedback
-        onLayout={onLayoutRootView}
-        onPress={Keyboard.dismiss}
-      >
-        <View style={styles.container}>
-          <NavigationContainer>{router}</NavigationContainer>
-        </View>
-      </TouchableWithoutFeedback>
-    </>
+    <Provider store={store}>
+      <>
+        <TouchableWithoutFeedback
+          onLayout={onLayoutRootView}
+          onPress={Keyboard.dismiss}
+        >
+          <View style={styles.container}>
+            <NavigationContainer>{router}</NavigationContainer>
+          </View>
+        </TouchableWithoutFeedback>
+      </>
+    </Provider>
   );
 }
 

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "115088471131",
+    "project_id": "react-native-hw-6",
+    "storage_bucket": "react-native-hw-6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115088471131:android:5ce8219e3e40af8e4bbb7e",
+        "android_client_info": {
+          "package_name": "my.company.socialApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115088471131-69a4gvqvokj43hiav78hfg34i4isdtdj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdzfYPL13Rc_FStC9abuyrrPeohD6yAqo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "115088471131-69a4gvqvokj43hiav78hfg34i4isdtdj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
