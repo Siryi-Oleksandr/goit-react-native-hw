@@ -22,6 +22,7 @@ export function CommentsScreen({ route }) {
 
   const photo = route.params?.photo;
   const name = route.params?.name;
+  const loadedPhoto = route.params?.loadedPhoto;
 
   const commentHandler = (text) => setComment(text);
 
@@ -33,7 +34,11 @@ export function CommentsScreen({ route }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView style={styles.container}>
-        <Image style={styles.img} source={{ uri: photo }} alt={name} />
+        {photo ? (
+          <Image style={styles.img} source={{ uri: photo }} alt={name} />
+        ) : (
+          <Image style={styles.img} source={loadedPhoto} alt={name} />
+        )}
 
         <UserComment />
         <OwnComment />

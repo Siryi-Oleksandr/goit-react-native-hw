@@ -115,16 +115,14 @@ export function CreatePostsScreen({ navigation }) {
 
   const onPublish = () => {
     const userPost = { name, photo, loadedPhoto, locationName, location };
-
     navigation.navigate({
       name: "Posts",
       params: { userPost },
       merge: true,
     });
     deleteAndResetPost();
+    setIsCameraOpen(false);
   };
-
-  const isPostData = photo || (loadedPhoto && name);
 
   const handleOpenCamera = () => {
     setIsCameraOpen(true);
@@ -132,7 +130,8 @@ export function CreatePostsScreen({ navigation }) {
 
   const downloadPhoto = () => {
     setIsCameraOpen(false);
-    setLoadedPhoto(defaultImage);
+    // setLoadedPhoto(defaultImage);
+    setLoadedPhoto(() => require("../../images/nature-3.jpg"));
   };
 
   const takePhoto = async () => {
@@ -149,11 +148,13 @@ export function CreatePostsScreen({ navigation }) {
     setLocation(coords);
   };
 
-  function toggleCameraType() {
+  const toggleCameraType = () => {
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
     );
-  }
+  };
+
+  const isPostData = (photo && name) || (loadedPhoto && name);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -199,7 +200,7 @@ export function CreatePostsScreen({ navigation }) {
               <Image
                 style={styles.photo}
                 source={loadedPhoto}
-                alt="user last photo"
+                alt="user loaded photo"
               />
               <TouchableOpacity
                 style={styles.cameraBtn}
@@ -219,11 +220,7 @@ export function CreatePostsScreen({ navigation }) {
               <Text style={styles.editBtn}>Edit photo</Text>
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity
-              activeOpacity={0.6}
-              // onPress={() => setLoadedPhoto(defaultImage)}
-              onPress={downloadPhoto}
-            >
+            <TouchableOpacity activeOpacity={0.6} onPress={downloadPhoto}>
               <Text style={styles.editBtn}>Download photo</Text>
             </TouchableOpacity>
           )}
@@ -322,7 +319,7 @@ const styles = StyleSheet.create({
     position: "relative",
     marginBottom: 8,
     height: 250,
-    backgroundColor: pallete.black,
+    backgroundColor: pallete.gray,
     borderRadius: 16,
     overflow: "hidden",
   },

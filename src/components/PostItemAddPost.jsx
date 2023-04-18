@@ -13,7 +13,13 @@ import { pallete } from "../helpers/variables";
 // ! Main CODE
 
 export function PostItemAddPost({ postData, navigation }) {
-  const { photo, loadedPhoto = null, name, locationName, location } = postData;
+  const {
+    photo = null,
+    loadedPhoto = null,
+    name,
+    locationName,
+    location,
+  } = postData;
 
   return (
     <View style={styles.postWrapper}>
@@ -31,7 +37,7 @@ export function PostItemAddPost({ postData, navigation }) {
           onPress={() =>
             navigation.navigate({
               name: "Comments",
-              params: { photo, name },
+              params: { photo, name, loadedPhoto },
               merge: true,
             })
           }
