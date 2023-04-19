@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { authSignUp } from "./authOperations";
+import { authLogIn, authSignUp } from "./authOperations";
 
 export const authSlice = createSlice({
   // Ім'я слайсу
@@ -9,6 +9,7 @@ export const authSlice = createSlice({
     userId: null,
     name: null,
     email: null,
+    isAuth: false,
   },
   // Об'єкт редюсерів
   extraReducers: {
@@ -16,7 +17,19 @@ export const authSlice = createSlice({
       return {
         ...state,
         userId: payload.uid,
+        name: payload.displayName,
         email: payload.email,
+        isAuth: true,
+      };
+    },
+
+    [authLogIn.fulfilled](state, { payload }) {
+      return {
+        ...state,
+        userId: payload.uid,
+        name: payload.displayName,
+        email: payload.email,
+        isAuth: true,
       };
     },
   },

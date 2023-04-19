@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../../firebase/config";
 
@@ -9,16 +10,11 @@ export const authSignUp = createAsyncThunk(
   "auth/signUp",
   async ({ name, email, password }, thunkAPI) => {
     try {
-      const { user } = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      console.log("user => fireBase ==>", user);
+      await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(auth.currentUser, { displayName: name });
 
       {
-        const { displayName, email, photoURL, uid } = user;
+        const { displayName, email, photoURL, uid } = auth.currentUser;
         return { displayName, email, photoURL, uid };
       }
     } catch (error) {
@@ -34,7 +30,10 @@ export const authLogIn = createAsyncThunk(
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
 
-      // console.log("user => fireBase ==>", user);
+      {
+        const { displayName, email, photoURL, uid } = user;
+        return { displayName, email, photoURL, uid };
+      }
     } catch (error) {
       console.log(error.message);
       return thunkAPI.rejectWithValue(error.message);
