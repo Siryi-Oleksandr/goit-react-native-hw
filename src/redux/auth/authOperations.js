@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
@@ -40,21 +41,30 @@ export const authLogIn = createAsyncThunk(
     }
   }
 );
-// ! ////////////////////////////////////////////////////////
-// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-// const auth = getAuth();
-// signInWithEmailAndPassword(auth, email, password)
-//   .then((userCredential) => {
-//     // Signed in
-//     const user = userCredential.user;
-//     // ...
-//   })
-//   .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//   });
-// ! /////////////////////////////////////////////////////////////
+export const authStateChangeUser = createAsyncThunk(
+  "auth/changeUser",
+  async ({ email, password }, thunkAPI) => {
+    try {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          const uid = user.uid;
+          setUser(user);
+          console.log("user change in", user);
+        } else {
+          // User is signed out
+          console.log("user change out", user);
+        }
+      });
+    } catch (error) {
+      console.log(error.message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 //  * POST @ /users/login
 //  * body: { email, password }
 //  */
