@@ -9,7 +9,6 @@ export const authSignUp = createAsyncThunk(
   "auth/signUp",
   async ({ name, email, password }, thunkAPI) => {
     try {
-      //   const auth = getAuth();
       const { user } = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -17,10 +16,11 @@ export const authSignUp = createAsyncThunk(
       );
 
       console.log("user => fireBase ==>", user);
-      //   {
-      //     const { displayName, email, photoURL, uid } = auth.currentUser;
-      //     return { displayName, email, photoURL, uid };
-      //   }
+
+      {
+        const { displayName, email, photoURL, uid } = user;
+        return { displayName, email, photoURL, uid };
+      }
     } catch (error) {
       console.log(error.message);
       return thunkAPI.rejectWithValue(error.message);
@@ -32,10 +32,9 @@ export const authLogIn = createAsyncThunk(
   "auth/logIn",
   async ({ email, password }, thunkAPI) => {
     try {
-      //   const auth = getAuth();
       const { user } = await signInWithEmailAndPassword(auth, email, password);
 
-      console.log("user => fireBase ==>", user);
+      // console.log("user => fireBase ==>", user);
     } catch (error) {
       console.log(error.message);
       return thunkAPI.rejectWithValue(error.message);

@@ -12,12 +12,16 @@ import {
 } from "react-native";
 import { useRoutes } from "./router";
 import { store } from "./src/redux/store";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./src/firebase/config";
+import { authSlice } from "./src/redux/auth/authSlice";
 
 // ! Main logic
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const [user, setUser] = useState(null);
   const [fontsLoaded] = useFonts({
     "Roboto-Regular": require("./src/fonts/Roboto-Regular.ttf"),
     "Roboto-Medium": require("./src/fonts/Roboto-Medium.ttf"),
@@ -25,7 +29,6 @@ export default function App() {
     Lora: require("./src/fonts/Lora-VariableFont.ttf"),
   });
   const [orientation, setOrientation] = useState("portrait");
-  const router = useRoutes(false);
 
   const getOrientation = useCallback(() => {
     const { width, height } = Dimensions.get("window");
@@ -52,6 +55,22 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
+
+  //!  Observe User state
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      const uid = user.uid;
+      setUser(user);
+      console.log("user change in", user);
+    } else {
+      // User is signed out
+      console.log("user change out", user);
+    }
+  });
+
+  const router = useRoutes(user);
 
   return (
     <Provider store={store}>
