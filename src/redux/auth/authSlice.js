@@ -78,7 +78,7 @@ export const authSlice = createSlice({
       state.isError = false;
       state.textError = null;
     },
-    [logOutUser.rejected](state, action) {
+    [authLogOut.rejected](state, action) {
       state.isError = true;
       state.textError = action.payload;
     },
