@@ -1,5 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { authLogIn, authSignUp } from "./authOperations";
+import { authLogIn, authLogOut, authSignUp } from "./authOperations";
+
+const handlePending = (state) => {
+  state.isAuth = false;
+  state.isError = false;
+  state.textError = null;
+  // state.user = {};
+};
+
+const handleRejected = (state, action) => {
+  state.isAuth = false;
+  state.isError = true;
+  state.textError = action.payload;
+  // state.user = {};
+};
 
 export const authSlice = createSlice({
   // Ім'я слайсу
@@ -32,8 +46,14 @@ export const authSlice = createSlice({
         isAuth: true,
       };
     },
+
+    [authLogOut.fulfilled](state) {
+      state.userId = null;
+      state.name = null;
+      state.email = null;
+      state.isAuth = false;
+    },
   },
 });
 
 export const authReducer = authSlice.reducer;
-export const { updateUserProfile } = authSlice.actions;

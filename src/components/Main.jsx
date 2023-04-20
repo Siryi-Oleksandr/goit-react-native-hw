@@ -18,8 +18,9 @@ import { authSlice } from "../../src/redux/auth/authSlice";
 SplashScreen.preventAutoHideAsync();
 
 export function Main() {
-  const [user, setUser] = useState(null);
-  const router = useRoutes(user);
+  // const [user, setUser] = useState(null);
+  const selectIsAuth = useSelector((state) => state.auth.isAuth);
+  const router = useRoutes(selectIsAuth);
   const state = useSelector((state) => state);
   const [orientation, setOrientation] = useState("portrait");
   const [fontsLoaded] = useFonts({
@@ -50,12 +51,10 @@ export function Main() {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid;
-      setUser(user);
-      console.log("user change in", user);
+      // const uid = user.uid;
+      // setUser(user);
     } else {
       // User is signed out
-      console.log("user change out", user);
     }
   });
 
