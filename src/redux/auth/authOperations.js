@@ -31,7 +31,6 @@ export const authLogIn = createAsyncThunk(
   async ({ email, password }, thunkAPI) => {
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
-      console.log("!!!after login USER Name", user);
 
       {
         const { displayName, email, photoURL, uid } = user;
@@ -59,20 +58,16 @@ export const authLogOut = createAsyncThunk(
 
 export const authStateChangeUser = createAsyncThunk(
   "auth/changeUser",
-  async ({ email, password }, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
-      onAuthStateChanged(auth, (user) => {
+      let isAuth = false;
+      await onAuthStateChanged(auth, (user) => {
         if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-          const uid = user.uid;
-          setUser(user);
-          console.log("user change in", user);
-        } else {
-          // User is signed out
-          console.log("user change out", user);
+          isAuth = true;
         }
       });
+
+      return isAuth;
     } catch (error) {
       console.log(error.message);
       return thunkAPI.rejectWithValue(error.message);

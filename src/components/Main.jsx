@@ -4,24 +4,23 @@ import {
   Dimensions,
   Keyboard,
   StyleSheet,
+  Text,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
 import { useRoutes } from "../../router";
-import { onAuthStateChanged } from "firebase/auth";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import { auth } from "../../src/firebase/config";
 import { authSlice } from "../../src/redux/auth/authSlice";
+import { authStateChangeUser } from "../redux/auth/authOperations";
 
 SplashScreen.preventAutoHideAsync();
 
 export function Main() {
-  // const [user, setUser] = useState(null);
   const selectIsAuth = useSelector((state) => state.auth.isAuth);
   const router = useRoutes(selectIsAuth);
-  const state = useSelector((state) => state);
   const [orientation, setOrientation] = useState("portrait");
   const [fontsLoaded] = useFonts({
     "Roboto-Regular": require("../../src/fonts/Roboto-Regular.ttf"),
@@ -29,6 +28,12 @@ export function Main() {
     "Roboto-Bold": require("../../src/fonts/Roboto-Bold.ttf"),
     Lora: require("../../src/fonts/Lora-VariableFont.ttf"),
   });
+  const dispatch = useDispatch();
+
+  // *** listen change User
+  useEffect(() => {
+    dispatch(authStateChangeUser());
+  }, [authStateChangeUser]);
 
   const getOrientation = useCallback(() => {
     const { width, height } = Dimensions.get("window");
@@ -46,18 +51,6 @@ export function Main() {
     return () => subscription?.remove();
   }, [getOrientation]);
 
-  //!  Observe User state
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      // const uid = user.uid;
-      // setUser(user);
-    } else {
-      // User is signed out
-    }
-  });
-
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
@@ -65,10 +58,8 @@ export function Main() {
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
-    return null;
+    return <Text>Haven't loaded fonts</Text>;
   }
-
-  console.log("my state ==>", state);
 
   return (
     <>
