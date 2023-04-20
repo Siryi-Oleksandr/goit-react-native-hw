@@ -1,13 +1,14 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Dimensions } from "react-native";
 import { useRoutes } from "../../router";
 import { NavigationContainer } from "@react-navigation/native";
 import { authStateChangeUser } from "../redux/auth/authOperations";
+import { useAuth } from "../hooks/useAuth";
 
 export function Main() {
-  const selectIsAuth = useSelector((state) => state.auth.isAuth);
-  const router = useRoutes(selectIsAuth);
+  const { isAuth } = useAuth();
+  const router = useRoutes(isAuth);
   const [orientation, setOrientation] = useState("portrait");
 
   const dispatch = useDispatch();

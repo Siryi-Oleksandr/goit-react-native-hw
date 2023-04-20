@@ -33,6 +33,7 @@ export const authSlice = createSlice({
     name: null,
     email: null,
     isAuth: false,
+    isRefresing: false,
     isError: false,
     textError: null,
   },
@@ -65,6 +66,10 @@ export const authSlice = createSlice({
     [authLogIn.rejected]: handleRejected,
 
     // *** LogOut User
+    [authLogOut.pending](state, action) {
+      state.isError = false;
+      state.textError = null;
+    },
     [authLogOut.fulfilled](state) {
       state.userId = null;
       state.name = null;
@@ -73,7 +78,12 @@ export const authSlice = createSlice({
       state.isError = false;
       state.textError = null;
     },
+    [logOutUser.rejected](state, action) {
+      state.isError = true;
+      state.textError = action.payload;
+    },
 
+    // *** change User
     [authStateChangeUser.fulfilled](state, { payload }) {
       return {
         ...state,
