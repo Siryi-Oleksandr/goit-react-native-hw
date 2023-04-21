@@ -16,8 +16,6 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import { pallete } from "../../helpers/variables";
-import { storage } from "../../firebase/config";
-import { nanoid } from "@reduxjs/toolkit";
 import {
   savePhotoInStorage,
   uploadPostToServer,
@@ -116,17 +114,19 @@ export function CreatePostsScreen({ navigation }) {
       likeCounter: 0,
       userId,
       dateDocument: Date.now(),
+      userName,
     };
 
     // * upload post to server
     const postRefId = await uploadPostToServer(userPost);
-    console.log("postRefId +++", postRefId);
 
-    navigation.navigate({
-      name: "Posts",
-      params: { userPost },
-      merge: true,
-    });
+    // navigation.navigate({
+    //   name: "Posts",
+    //   params: { userPost },
+    //   merge: true,
+    // });
+
+    navigation.navigate("Posts");
 
     deleteAndResetPost();
     setIsCameraOpen(false);
@@ -160,15 +160,6 @@ export function CreatePostsScreen({ navigation }) {
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
     );
-  };
-
-  const uploadPhotoToServer = async () => {
-    const response = await fetch(photo);
-    const file = await response.blob();
-
-    const uniquePostId = nanoid();
-
-    await storage().ref(`images/${uniquePostId}`);
   };
 
   const isPostData = (photo && name) || (loadedPhoto && name);

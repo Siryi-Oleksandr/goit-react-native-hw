@@ -1,19 +1,39 @@
 import React, { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
 import { View, Text, StyleSheet, Image, FlatList } from "react-native";
 import { pallete } from "../../helpers/variables";
 import { PostItemAddPost } from "../../components/PostItemAddPost";
+import { db } from "../../firebase/config";
 
 export function PostsScreen({ navigation, route }) {
   const [posts, setPosts] = useState([]);
 
+  const getAllPosts = async () => {
+    const spredPosts = [];
+    const querySnapshot = await getDocs(collection(db, "posts"));
+    console.dir(querySnapshot);
+    querySnapshot.forEach((doc) => {
+      console.log("one DOC.data --->", doc.data());
+      setPosts((prevState) => [...prevState, { ...doc.data(), id: doc.id }]);
+    });
+
+    // setPosts(
+    //   querySnapshot.forEach((doc) => ({
+    //     ...doc.data(),
+    //     id: doc.id,
+    //   }))
+    // );
+  };
+
   useEffect(() => {
-    if (route.params?.userPost) {
-      // Post updated, do something with `route.params.post`
-      // For example, send the post to the server
-      const { userPost } = route.params;
-      setPosts((prevState) => [...prevState, userPost]);
-    }
-  }, [route.params?.userPost]);
+    getAllPosts();
+    // if (route.params?.userPost) {
+    //   // Post updated, do something with `route.params.post`
+    //   // For example, send the post to the server
+    //   const { userPost } = route.params;
+    //   setPosts((prevState) => [...prevState, userPost]);
+    // }
+  }, []);
 
   return (
     <View style={styles.container}>
