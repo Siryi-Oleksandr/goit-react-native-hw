@@ -10,18 +10,18 @@ import {
 } from "../redux/auth/selectors";
 
 export const useAuth = () => {
-  const isUserName = useSelector(selectUserName);
-  const isUserEmail = useSelector(selectUserEmail);
-  const isUserId = useSelector(selectUserId);
+  const userName = useSelector(selectUserName);
+  const userEmail = useSelector(selectUserEmail);
+  const userId = useSelector(selectUserId);
   const isAuth = useSelector(selectIsAuth);
   const isError = useSelector(selectIsError);
   const isRefresing = useSelector(selectIsRefresing);
   const textError = useSelector(selectTextError);
 
   return {
-    isUserName,
-    isUserEmail,
-    isUserId,
+    userName,
+    userEmail,
+    userId,
     isAuth,
     isRefresing,
     isError,

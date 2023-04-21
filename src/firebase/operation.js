@@ -1,5 +1,6 @@
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "./config";
+import { collection, addDoc } from "firebase/firestore";
+import { storage, db } from "./config";
 import { nanoid } from "@reduxjs/toolkit";
 
 export const savePhotoInStorage = async (photo) => {
@@ -7,7 +8,7 @@ export const savePhotoInStorage = async (photo) => {
   const fileBlob = await response.blob();
   const uniquePhotoId = nanoid();
 
-  ref(storage, "images");
+  // ref(storage, "images");
   const storageRef = ref(storage, `images/${uniquePhotoId}_photo.jpg`);
 
   const metadata = {
@@ -21,4 +22,13 @@ export const savePhotoInStorage = async (photo) => {
   );
 
   return urlPhoto;
+};
+
+export const uploadPostToServer = async (userPost) => {
+  try {
+    const docRef = await addDoc(collection(db, "posts"), userPost);
+    return docRef.id;
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
 };

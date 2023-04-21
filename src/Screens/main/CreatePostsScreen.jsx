@@ -18,7 +18,11 @@ import * as Location from "expo-location";
 import { pallete } from "../../helpers/variables";
 import { storage } from "../../firebase/config";
 import { nanoid } from "@reduxjs/toolkit";
-import { savePhotoInStorage } from "../../firebase/operation";
+import {
+  savePhotoInStorage,
+  uploadPostToServer,
+} from "../../firebase/operation";
+import { useAuth } from "../../hooks/useAuth";
 
 const defaultImage = require("../../images/nature-2.jpg");
 
@@ -35,6 +39,7 @@ export function CreatePostsScreen({ navigation }) {
   const [inputLocationStyle, setInputLocationStyle] = useState(styles.input);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const { userName, userEmail, userId } = useAuth();
 
   useEffect(() => {
     // permission to get access to camera
@@ -86,26 +91,6 @@ export function CreatePostsScreen({ navigation }) {
   const { width, height } = Dimensions.get("window");
   const orientation = "portrait"; // TODO
 
-  // useEffect(() => {
-  //   const keyboardDidShowListener = Keyboard.addListener(
-  //     "keyboardDidShow",
-  //     () => {
-  //       setIsKeyboardOpen(true);
-  //     }
-  //   );
-  //   const keyboardDidHideListener = Keyboard.addListener(
-  //     "keyboardDidHide",
-  //     () => {
-  //       setIsKeyboardOpen(false);
-  //     }
-  //   );
-
-  //   return () => {
-  //     keyboardDidShowListener.remove();
-  //     keyboardDidHideListener.remove();
-  //   };
-  // }, []);
-
   const nameHandler = (text) => setName(text);
   const locationNameHandler = (text) => setLocationName(text);
 
@@ -116,10 +101,27 @@ export function CreatePostsScreen({ navigation }) {
     setLoadedPhoto(null);
   };
 
-  const onPublish = () => {
-    savePhotoInStorage(photo);
+  const onPublish = async () => {
+    const urlPhoto = await savePhotoInStorage(photo);
 
-    const userPost = { name, photo, loadedPhoto, locationName, location };
+    // * create post object with all data + urlPhoto with path to fireBase
+    const userPost = {
+      name,
+      photo,
+      loadedPhoto,
+      locationName,
+      location,
+      urlPhoto,
+      commentCounter: 0,
+      likeCounter: 0,
+      userId,
+      dateDocument: Date.now(),
+    };
+
+    // * upload post to server
+    const postRefId = await uploadPostToServer(userPost);
+    console.log("postRefId +++", postRefId);
+
     navigation.navigate({
       name: "Posts",
       params: { userPost },
