@@ -16,6 +16,9 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import { pallete } from "../../helpers/variables";
+import { storage } from "../../firebase/config";
+import { nanoid } from "@reduxjs/toolkit";
+import { savePhotoInStorage } from "../../firebase/operation";
 
 const defaultImage = require("../../images/nature-2.jpg");
 
@@ -114,12 +117,15 @@ export function CreatePostsScreen({ navigation }) {
   };
 
   const onPublish = () => {
+    savePhotoInStorage(photo);
+
     const userPost = { name, photo, loadedPhoto, locationName, location };
     navigation.navigate({
       name: "Posts",
       params: { userPost },
       merge: true,
     });
+
     deleteAndResetPost();
     setIsCameraOpen(false);
   };
@@ -152,6 +158,15 @@ export function CreatePostsScreen({ navigation }) {
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
     );
+  };
+
+  const uploadPhotoToServer = async () => {
+    const response = await fetch(photo);
+    const file = await response.blob();
+
+    const uniquePostId = nanoid();
+
+    await storage().ref(`images/${uniquePostId}`);
   };
 
   const isPostData = (photo && name) || (loadedPhoto && name);
