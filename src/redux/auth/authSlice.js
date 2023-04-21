@@ -1,10 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  authLogIn,
-  authLogOut,
-  authSignUp,
-  authStateChangeUser,
-} from "./authOperations";
+import { authLogIn, authLogOut, authSignUp } from "./authOperations";
 
 const handlePending = (state) => {
   state.isAuth = false;
@@ -24,19 +19,21 @@ const handleRejected = (state, action) => {
   state.email = null;
 };
 
+const state = {
+  userId: null,
+  name: null,
+  email: null,
+  isAuth: false,
+  isRefresing: false,
+  isError: false,
+  textError: null,
+};
+
 export const authSlice = createSlice({
   // Ім'я слайсу
   name: "auth",
   // Початковий стан редюсера слайсу
-  initialState: {
-    userId: null,
-    name: null,
-    email: null,
-    isAuth: false,
-    isRefresing: false,
-    isError: false,
-    textError: null,
-  },
+  initialState: state,
   // Об'єкт редюсерів
   extraReducers: {
     // *** SignUp User
@@ -70,13 +67,8 @@ export const authSlice = createSlice({
       state.isError = false;
       state.textError = null;
     },
-    [authLogOut.fulfilled](state) {
-      state.userId = null;
-      state.name = null;
-      state.email = null;
-      state.isAuth = false;
-      state.isError = false;
-      state.textError = null;
+    [authLogOut.fulfilled]() {
+      return state;
     },
     [authLogOut.rejected](state, action) {
       state.isError = true;
