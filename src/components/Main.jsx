@@ -5,6 +5,9 @@ import { useRoutes } from "../../router";
 import { NavigationContainer } from "@react-navigation/native";
 import { authStateChangeUser } from "../redux/auth/authOperations";
 import { useAuth } from "../hooks/useAuth";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/config";
+import { setStateChangeUser } from "../redux/auth/authSlice";
 
 export function Main() {
   const { isAuth } = useAuth();
@@ -15,8 +18,19 @@ export function Main() {
 
   // *** listen change User
   useEffect(() => {
-    dispatch(authStateChangeUser());
-  }, [authStateChangeUser]);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userStateChangeAuth = {
+          userId: user.uid,
+          name: user.displayName,
+          email: user.email,
+          isAuth: true,
+        };
+
+        dispatch(setStateChangeUser(userStateChangeAuth));
+      }
+    });
+  }, []);
 
   const getOrientation = useCallback(() => {
     const { width, height } = Dimensions.get("window");

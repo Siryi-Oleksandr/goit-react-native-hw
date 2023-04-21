@@ -82,15 +82,17 @@ export const authSlice = createSlice({
       state.isError = true;
       state.textError = action.payload;
     },
-
-    // *** change User
-    [authStateChangeUser.fulfilled](state, { payload }) {
+  },
+  // *** change User
+  reducers: {
+    setStateChangeUser: (state, { payload }) => {
       return {
         ...state,
-        isAuth: payload,
+        ...payload,
       };
     },
   },
 });
 
 export const authReducer = authSlice.reducer;
+export const { setStateChangeUser } = authSlice.actions;

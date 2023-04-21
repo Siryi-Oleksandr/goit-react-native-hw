@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -56,21 +55,26 @@ export const authLogOut = createAsyncThunk(
   }
 );
 
-export const authStateChangeUser = createAsyncThunk(
-  "auth/changeUser",
-  async (_, thunkAPI) => {
-    try {
-      let isAuth = false;
-      await onAuthStateChanged(auth, (user) => {
-        if (user) {
-          isAuth = true;
-        }
-      });
+// ? I lond time have been trying to do this operation )))
+// export const authStateChangeUser = () => {
+//   try {
+//     let isAuth = false;
+//     let userId;
+//     let name;
+//     let email;
+//     onAuthStateChanged(auth, (user) => {
+//       if (user) {
+//         // userId = user.uid;
+//         // name = user.displayName;
+//         // email = user.email;
+//         isAuth = true;
+//       }
+//     });
 
-      return isAuth;
-    } catch (error) {
-      console.log(error.message);
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+//     // return { isAuth, email, name, userId };
+//     return isAuth;
+//   } catch (error) {
+//     console.log(error.message);
+//     return thunkAPI.rejectWithValue(error.message);
+//   }
+// };
