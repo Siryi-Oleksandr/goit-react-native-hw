@@ -4,9 +4,11 @@ import { View, Text, StyleSheet, Image, FlatList } from "react-native";
 import { pallete } from "../../helpers/variables";
 import { PostItemAddPost } from "../../components/PostItemAddPost";
 import { db } from "../../firebase/config";
+import { useAuth } from "../../hooks/useAuth";
 
 export function PostsScreen({ navigation }) {
   const [posts, setPosts] = useState([]);
+  const { userName, userEmail } = useAuth();
 
   const getAllPosts = async () => {
     const spredPosts = [];
@@ -31,8 +33,8 @@ export function PostsScreen({ navigation }) {
           alt="user avatar"
         />
         <View>
-          <Text style={styles.userName}>Natali Romanova</Text>
-          <Text style={styles.userEmail}>example@mail.com</Text>
+          <Text style={styles.userName}>{userName}</Text>
+          <Text style={styles.userEmail}>{userEmail}</Text>
         </View>
       </View>
 
