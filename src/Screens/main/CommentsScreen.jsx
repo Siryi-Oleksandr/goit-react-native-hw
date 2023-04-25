@@ -16,29 +16,41 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { UserComment } from "../../components/UserComment";
 import { OwnComment } from "../../components/OwnComment";
 import { pallete } from "../../helpers/variables";
+import { useAuth } from "../../hooks/useAuth";
+import { collection, doc, addDoc } from "firebase/firestore";
+import { db } from "../../firebase/config";
 
 export function CommentsScreen({ route }) {
   const [comment, setComment] = useState("");
 
-  const photo = route.params?.photo;
-  const name = route.params?.name;
-  const loadedPhoto = route.params?.loadedPhoto;
+  const { id, name, urlPhoto } = route.params;
+  const { userName, userEmail, userId, isAuth } = useAuth();
 
   const commentHandler = (text) => setComment(text);
 
-  const onSendComment = () => {
-    Alert.alert(`Send comment "${comment}"`);
+  const onSendComment = async () => {
+    const commentObj = {
+      documentId: id,
+      userId,
+      comment,
+      datePublacation: Date.now(),
+    };
+
+    const docRef = doc(db, "posts", id);
+    await addDoc(collection(docRef, "comments"), commentObj);
+
     setComment("");
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView style={styles.container}>
-        {photo ? (
+        <Image style={styles.img} source={{ uri: urlPhoto }} alt={name} />
+        {/* {photo ? (
           <Image style={styles.img} source={{ uri: photo }} alt={name} />
         ) : (
           <Image style={styles.img} source={loadedPhoto} alt={name} />
-        )}
+        )} */}
 
         <UserComment />
         <OwnComment />

@@ -17,6 +17,8 @@ export function PostsScreen({ navigation }) {
     querySnapshot.forEach((doc) => {
       spredPosts.push({ ...doc.data(), id: doc.id });
     });
+
+    console.log("spredPosts", spredPosts);
     setPosts(spredPosts);
   };
 

@@ -118,7 +118,8 @@ export function CreatePostsScreen({ navigation }) {
     };
 
     // * upload post to server
-    const postRefId = await uploadPostToServer(userPost);
+    // const postRefId = await uploadPostToServer(userPost);
+    await uploadPostToServer(userPost);
 
     // navigation.navigate({
     //   name: "Posts",

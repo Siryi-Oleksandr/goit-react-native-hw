@@ -16,18 +16,21 @@ export function PostItemAddPost({ postData, navigation }) {
   const {
     photo = null,
     loadedPhoto = null,
+    urlPhoto,
     name,
     locationName,
     location,
+    id,
   } = postData;
 
   return (
     <View style={styles.postWrapper}>
-      {photo ? (
+      <Image style={styles.img} source={{ uri: urlPhoto }} alt={name} />
+      {/* {photo ? (
         <Image style={styles.img} source={{ uri: photo }} alt={name} />
       ) : (
         <Image style={styles.img} source={loadedPhoto} alt={name} />
-      )}
+      )} */}
 
       <Text style={styles.postTitle}>{name}</Text>
       <View style={styles.postInfo}>
@@ -37,7 +40,7 @@ export function PostItemAddPost({ postData, navigation }) {
           onPress={() =>
             navigation.navigate({
               name: "Comments",
-              params: { photo, name, loadedPhoto },
+              params: { photo, name, urlPhoto, id },
               merge: true,
             })
           }
