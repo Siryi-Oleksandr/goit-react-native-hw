@@ -18,7 +18,6 @@ export function PostsScreen({ navigation }) {
       spredPosts.push({ ...doc.data(), id: doc.id });
     });
 
-    console.log("spredPosts", spredPosts);
     setPosts(spredPosts);
   };
 
