@@ -23,11 +23,7 @@ export const getPosts = createAsyncThunk(
   "posts/getPosts",
   async (userId, thunkAPI) => {
     try {
-      const q = query(
-        collection(db, "posts"),
-        where("userId", "==", userId),
-        orderBy("dateDocument")
-      );
+      const q = query(collection(db, "posts"), where("userId", "==", userId));
 
       const querySnapshot = await getDocs(q);
 

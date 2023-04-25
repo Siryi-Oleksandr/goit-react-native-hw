@@ -1,29 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, FlatList } from "react-native";
 import { pallete } from "../../helpers/variables";
 import { PostItemAddPost } from "../../components/PostItemAddPost";
-import { db } from "../../firebase/config";
 import { useAuth } from "../../hooks/useAuth";
 import { usePosts } from "../../hooks/usePosts";
+import { useDispatch } from "react-redux";
+import { getPosts } from "../../redux/posts/postsOperations";
 
 export function PostsScreen({ navigation }) {
-  const [posts, setPosts] = useState([]);
-  const { userName, userEmail } = useAuth();
+  const { userName, userEmail, userId } = useAuth();
+  const { userPosts } = usePosts();
 
-  const getAllPosts = async () => {
-    const spredPosts = [];
-    const querySnapshot = await getDocs(collection(db, "posts"));
-
-    querySnapshot.forEach((doc) => {
-      spredPosts.push({ ...doc.data(), id: doc.id });
-    });
-
-    setPosts(spredPosts);
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getAllPosts();
+    dispatch(getPosts(userId));
   }, []);
 
   return (
@@ -41,11 +32,11 @@ export function PostsScreen({ navigation }) {
       </View>
 
       <FlatList
-        data={posts}
+        data={userPosts}
         renderItem={({ item }) => (
           <PostItemAddPost postData={item} navigation={navigation} />
         )}
-        keyExtractor={(_, idx) => idx.toString()}
+        keyExtractor={(item) => item.documentId}
       />
     </View>
   );
