@@ -5,10 +5,8 @@ import {
   ScrollView,
   Image,
   TextInput,
-  Alert,
   TouchableOpacity,
   Keyboard,
-  Text,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
@@ -17,27 +15,28 @@ import { UserComment } from "../../components/UserComment";
 import { OwnComment } from "../../components/OwnComment";
 import { pallete } from "../../helpers/variables";
 import { useAuth } from "../../hooks/useAuth";
-import { collection, doc, addDoc } from "firebase/firestore";
-import { db } from "../../firebase/config";
+import { useDispatch } from "react-redux";
+import { addComment } from "../../redux/posts/postsOperations";
 
 export function CommentsScreen({ route }) {
   const [comment, setComment] = useState("");
+  const { documentId, name, urlPhoto } = route.params;
+  const { userName, userId } = useAuth();
 
-  const { id, name, urlPhoto } = route.params;
-  const { userName, userEmail, userId, isAuth } = useAuth();
+  const dispatch = useDispatch();
 
   const commentHandler = (text) => setComment(text);
 
-  const onSendComment = async () => {
+  const onSendComment = () => {
     const commentObj = {
-      documentId: id,
+      documentId,
+      userName,
       userId,
       comment,
       datePublacation: Date.now(),
     };
 
-    const docRef = doc(db, "posts", id);
-    await addDoc(collection(docRef, "comments"), commentObj);
+    dispatch(addComment(commentObj));
 
     setComment("");
   };
@@ -46,11 +45,6 @@ export function CommentsScreen({ route }) {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView style={styles.container}>
         <Image style={styles.img} source={{ uri: urlPhoto }} alt={name} />
-        {/* {photo ? (
-          <Image style={styles.img} source={{ uri: photo }} alt={name} />
-        ) : (
-          <Image style={styles.img} source={loadedPhoto} alt={name} />
-        )} */}
 
         <UserComment />
         <OwnComment />
