@@ -24,11 +24,11 @@ export const savePhotoInStorage = async (photo) => {
   return urlPhoto;
 };
 
-export const uploadPostToServer = async (userPost) => {
-  try {
-    const docRef = await addDoc(collection(db, "posts"), userPost);
-    return docRef.id;
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-};
+// export const uploadPostToServer = async (userPost) => {
+//   try {
+//     const docRef = await addDoc(collection(db, "posts"), userPost);
+//     return docRef.id;
+//   } catch (e) {
+//     console.error("Error adding document: ", e);
+//   }
+// };

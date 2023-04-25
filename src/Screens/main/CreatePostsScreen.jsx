@@ -21,6 +21,8 @@ import {
   uploadPostToServer,
 } from "../../firebase/operation";
 import { useAuth } from "../../hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { addPost } from "../../redux/posts/postsOperations";
 
 const defaultImage = require("../../images/nature-2.jpg");
 
@@ -38,6 +40,7 @@ export function CreatePostsScreen({ navigation }) {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const { userName, userEmail, userId } = useAuth();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // permission to get access to camera
@@ -117,15 +120,11 @@ export function CreatePostsScreen({ navigation }) {
       userName,
     };
 
-    // * upload post to server
+    // * send post to server
     // const postRefId = await uploadPostToServer(userPost);
-    await uploadPostToServer(userPost);
+    // await uploadPostToServer(userPost);
 
-    // navigation.navigate({
-    //   name: "Posts",
-    //   params: { userPost },
-    //   merge: true,
-    // });
+    dispatch(addPost(userPost));
 
     navigation.navigate("Posts");
 

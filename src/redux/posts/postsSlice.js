@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { db, storage } from "../../firebase/config";
-import { addPost } from "./postsOperations";
+import { addPost, getPosts } from "./postsOperations";
 
 const handlePending = (state) => {
   state.isRefresing = true;
@@ -29,12 +28,21 @@ export const postsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(addPost.pending, (state) => handlePending(state))
-      .addCase(addPost.fulfilled, (state, action) => {
+      .addCase(addPost.fulfilled, (state, { payload }) => {
         state.isRefresing = false;
-        state.userPosts.push(action.payload);
+        state.userPosts.push(payload);
         state.comments = [];
       })
       .addCase(addPost.rejected, (state, action) =>
+        handleRejected(state, action)
+      )
+      .addCase(getPosts.pending, (state) => handlePending(state))
+      .addCase(getPosts.fulfilled, (state, { payload }) => {
+        state.isRefresing = false;
+        state.userPosts = payload;
+        state.comments = [];
+      })
+      .addCase(getPosts.rejected, (state, action) =>
         handleRejected(state, action)
       )
       .addDefaultCase((state) => state);

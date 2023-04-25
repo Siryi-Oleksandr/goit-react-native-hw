@@ -5,6 +5,7 @@ import { pallete } from "../../helpers/variables";
 import { PostItemAddPost } from "../../components/PostItemAddPost";
 import { db } from "../../firebase/config";
 import { useAuth } from "../../hooks/useAuth";
+import { usePosts } from "../../hooks/usePosts";
 
 export function PostsScreen({ navigation }) {
   const [posts, setPosts] = useState([]);
