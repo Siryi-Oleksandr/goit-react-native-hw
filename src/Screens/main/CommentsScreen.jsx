@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -9,6 +9,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  FlatList,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { UserComment } from "../../components/UserComment";
@@ -16,14 +17,20 @@ import { OwnComment } from "../../components/OwnComment";
 import { pallete } from "../../helpers/variables";
 import { useAuth } from "../../hooks/useAuth";
 import { useDispatch } from "react-redux";
-import { addComment } from "../../redux/posts/postsOperations";
+import { addComment, getComents } from "../../redux/posts/postsOperations";
+import { usePosts } from "../../hooks/usePosts";
 
 export function CommentsScreen({ route }) {
   const [comment, setComment] = useState("");
   const { documentId, name, urlPhoto } = route.params;
   const { userName, userId } = useAuth();
+  const { allComments } = usePosts();
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getComents(documentId));
+  }, []);
 
   const commentHandler = (text) => setComment(text);
 
@@ -37,17 +44,20 @@ export function CommentsScreen({ route }) {
     };
 
     dispatch(addComment(commentObj));
-
+    Keyboard.dismiss();
     setComment("");
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         <Image style={styles.img} source={{ uri: urlPhoto }} alt={name} />
 
-        <UserComment />
-        <OwnComment />
+        <FlatList
+          data={allComments}
+          renderItem={({ item }) => <OwnComment comments={item} />}
+          keyExtractor={(item) => item.datePublacation}
+        />
 
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -68,7 +78,7 @@ export function CommentsScreen({ route }) {
             </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
-      </ScrollView>
+      </View>
     </TouchableWithoutFeedback>
   );
 }

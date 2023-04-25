@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../../firebase/config";
 
+// * #1 authSignUp(name, email, password)
 export const authSignUp = createAsyncThunk(
   "auth/signUp",
   async ({ name, email, password }, thunkAPI) => {
@@ -25,6 +26,7 @@ export const authSignUp = createAsyncThunk(
   }
 );
 
+// * #2 authLogIn( email, password)
 export const authLogIn = createAsyncThunk(
   "auth/logIn",
   async ({ email, password }, thunkAPI) => {
@@ -42,6 +44,7 @@ export const authLogIn = createAsyncThunk(
   }
 );
 
+// * #3 authLogOut
 export const authLogOut = createAsyncThunk(
   "auth/logOut",
   async (_, thunkAPI) => {

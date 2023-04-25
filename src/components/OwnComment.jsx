@@ -5,16 +5,18 @@ import { pallete } from "../helpers/variables";
 
 const ownComment = testDB[0].comments[1];
 
-export function OwnComment() {
-  const { author, avatar, date, text } = ownComment;
+export function OwnComment({ comments }) {
+  const { comment, userName, datePublacation } = comments;
+  const { avatar } = ownComment; // TODO DELETE IT
+
   return (
     <View style={styles.commentInfoWrapper}>
       <View style={styles.avatarWrapper}>
-        <Image style={styles.avatar} source={avatar} alt={author} />
+        <Image style={styles.avatar} source={avatar} alt={userName} />
       </View>
       <View style={styles.commentWrapper}>
-        <Text>{text}</Text>
-        <Text style={styles.textDate}>{date}</Text>
+        <Text>{comment}</Text>
+        <Text style={styles.textDate}>{datePublacation}</Text>
       </View>
     </View>
   );

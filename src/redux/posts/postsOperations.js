@@ -54,7 +54,6 @@ export const addComment = createAsyncThunk(
   "posts/addComment",
   async (comment, thunkAPI) => {
     try {
-      console.log("comment", comment);
       const docRef = doc(db, "posts", comment.documentId);
       await addDoc(collection(docRef, "comments"), comment);
 
@@ -68,23 +67,23 @@ export const addComment = createAsyncThunk(
 
 // * #4 getComents(documentId)
 export const getComents = createAsyncThunk(
-  "posts/getPosts",
-  async (userId, thunkAPI) => {
+  "posts/getComents",
+  async (documentId, thunkAPI) => {
     try {
-      const q = query(collection(db, "posts"), where("userId", "==", userId));
+      const docRef = doc(db, "posts", documentId);
+      const q = query(collection(docRef, "comments"));
 
       const querySnapshot = await getDocs(q);
 
       const result = [];
       querySnapshot.forEach((doc) => {
-        const post = doc.data();
-        post.documentId = doc.id;
-        result.push(post);
+        const comment = doc.data();
+        result.push(comment);
       });
 
       return result;
     } catch (error) {
-      console.log("Error getting posts: ", error.message);
+      console.log("Error getting comments: ", error.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
