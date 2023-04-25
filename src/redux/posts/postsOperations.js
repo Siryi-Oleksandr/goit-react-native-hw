@@ -7,7 +7,7 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import { storage, db } from "../../firebase/config";
+import { db } from "../../firebase/config";
 
 // * #1 addPost
 export const addPost = createAsyncThunk(
