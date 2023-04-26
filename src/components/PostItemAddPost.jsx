@@ -9,6 +9,12 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../helpers/variables";
+import { useState } from "react";
+import { getNumberComents } from "../firebase/operation";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { usePosts } from "../hooks/usePosts";
+import { getComents } from "../redux/posts/postsOperations";
 
 // ! Main CODE
 
@@ -22,6 +28,12 @@ export function PostItemAddPost({ postData, navigation }) {
     location,
     documentId,
   } = postData;
+
+  const [allComments, setAllComments] = useState(0);
+
+  useEffect(() => {
+    getNumberComents(documentId).then((data) => setAllComments(data));
+  }, []);
 
   return (
     <View style={styles.postWrapper}>
@@ -41,7 +53,7 @@ export function PostItemAddPost({ postData, navigation }) {
           }
         >
           <Icon name="comment" size={18} color={pallete.gray} />
-          <Text style={styles.postValuesText}>10</Text>
+          <Text style={styles.postValuesText}>{allComments}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

@@ -1,5 +1,10 @@
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { collection, addDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  doc,
+  getCountFromServer,
+} from "firebase/firestore";
 import { storage, db } from "./config";
 import { nanoid } from "@reduxjs/toolkit";
 
@@ -24,11 +29,13 @@ export const savePhotoInStorage = async (photo) => {
   return urlPhoto;
 };
 
-// export const uploadPostToServer = async (userPost) => {
-//   try {
-//     const docRef = await addDoc(collection(db, "posts"), userPost);
-//     return docRef.id;
-//   } catch (e) {
-//     console.error("Error adding document: ", e);
-//   }
-// };
+export const getNumberComents = async (documentId) => {
+  try {
+    const docRef = doc(db, "posts", documentId);
+    const coll = collection(docRef, "comments");
+    const snapshot = await getCountFromServer(coll);
+    return snapshot.data().count;
+  } catch (error) {
+    console.log("Error count comments: ", error.message);
+  }
+};

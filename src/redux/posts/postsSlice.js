@@ -69,14 +69,6 @@ export const postsSlice = createSlice({
       .addCase(getComents.rejected, (state, action) =>
         handleRejected(state, action)
       )
-      .addCase(getNumberComents.pending, (state) => handlePending(state))
-      .addCase(getNumberComents.fulfilled, (state, { payload }) => {
-        state.isRefresing = false;
-        state.numberComments = payload;
-      })
-      .addCase(getNumberComents.rejected, (state, action) =>
-        handleRejected(state, action)
-      )
       .addDefaultCase((state) => state);
   },
 });

@@ -99,22 +99,22 @@ export const getComents = createAsyncThunk(
 );
 
 // * #5 getNumberComents(documentId)
-export const getNumberComents = createAsyncThunk(
-  "posts/getNumberComents",
-  async (documentId, thunkAPI) => {
-    try {
-      const docRef = doc(db, "posts", documentId);
-      const coll = collection(docRef, "comments");
-      const snapshot = await getCountFromServer(coll);
-      console.log("count: ", snapshot.data().count);
+// export const getNumberComents = createAsyncThunk(
+//   "posts/getNumberComents",
+//   async (documentId, thunkAPI) => {
+//     try {
+//       const docRef = doc(db, "posts", documentId);
+//       const coll = collection(docRef, "comments");
+//       const snapshot = await getCountFromServer(coll);
+//       console.log("count: ", snapshot.data().count);
 
-      return snapshot.data().count;
-    } catch (error) {
-      console.log("Error count comments: ", error.message);
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+//       return snapshot.data().count;
+//     } catch (error) {
+//       console.log("Error count comments: ", error.message);
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
 
 // const q = async () => {
 //   const coll = collection(db, "posts");
