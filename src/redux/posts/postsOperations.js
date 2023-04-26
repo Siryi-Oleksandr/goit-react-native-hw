@@ -41,12 +41,6 @@ export const getPosts = createAsyncThunk(
         const post = docum.data();
         post.documentId = docum.id;
 
-        // const docRef = doc(db, "posts", docum.id);
-        // const coll = collection(docRef, "comments");
-        // const snapshot = await getCountFromServer(coll);
-        // console.log("commentsCount: ", snapshot.data().count);
-        // post.commentCounter = snapshot.data().count;
-        // console.log("one post ==>", post);
         result.push(post);
       });
 

@@ -7,12 +7,17 @@ import {
   Image,
   ImageBackground,
   ScrollView,
+  FlatList,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../../helpers/variables";
-import { PostItem } from "../../components/PostItem";
-import { testDB } from "../../helpers/testDB";
 import { LogOut } from "../../components/LogOut";
+import { useAuth } from "../../hooks/useAuth";
+import { usePosts } from "../../hooks/usePosts";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getPosts } from "../../redux/posts/postsOperations";
+import { PostItemAddPost } from "../../components/PostItemAddPost";
 
 const image = require("../../images/bg-img.png");
 
@@ -21,6 +26,14 @@ const image = require("../../images/bg-img.png");
 export function ProfileScreen({ navigation }) {
   const [showAvatar, setShowAvatar] = useState(true);
   const [contentHeight, setContentHeight] = useState(0);
+  const { userName, userId } = useAuth();
+  const { userPosts } = usePosts();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPosts(userId));
+  }, []);
 
   const handleContentSizeChange = (contentWidth, height) => {
     setContentHeight(height);
@@ -83,11 +96,15 @@ export function ProfileScreen({ navigation }) {
                 marginBottom: orientation === "portrait" ? 33 : 10,
               }}
             >
-              Natali Romanova
+              {userName}
             </Text>
 
-            {testDB.map((data, index) => (
-              <PostItem key={index} postData={data} />
+            {userPosts.map((item) => (
+              <PostItemAddPost
+                key={item.documentId}
+                postData={item}
+                navigation={navigation}
+              />
             ))}
           </View>
         </ImageBackground>
