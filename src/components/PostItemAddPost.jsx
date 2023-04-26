@@ -1,20 +1,10 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../helpers/variables";
 import { useState } from "react";
 import { getNumberComents } from "../firebase/operation";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { usePosts } from "../hooks/usePosts";
-import { getComents } from "../redux/posts/postsOperations";
 
 // ! Main CODE
 

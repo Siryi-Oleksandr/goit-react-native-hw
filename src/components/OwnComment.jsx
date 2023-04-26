@@ -2,6 +2,7 @@ import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { testDB } from "../helpers/testDB";
 import { pallete } from "../helpers/variables";
+import { formateDate } from "../helpers/formateDate";
 
 const ownComment = testDB[0].comments[1];
 
@@ -16,7 +17,7 @@ export function OwnComment({ comments }) {
       </View>
       <View style={styles.commentWrapper}>
         <Text>{comment}</Text>
-        <Text style={styles.textDate}>{datePublacation}</Text>
+        <Text style={styles.textDate}>{formateDate(datePublacation)}</Text>
       </View>
     </View>
   );

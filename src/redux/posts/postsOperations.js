@@ -6,7 +6,6 @@ import {
   query,
   where,
   getDocs,
-  getCountFromServer,
 } from "firebase/firestore";
 import { db } from "../../firebase/config";
 

@@ -20,7 +20,6 @@ const handleRejected = (state, action) => {
 const state = {
   userPosts: [],
   comments: [],
-  numberComments: 0,
   curentPost: null,
   isRefresing: false,
   textError: null,

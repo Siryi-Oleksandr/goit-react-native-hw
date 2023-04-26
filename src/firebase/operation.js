@@ -1,10 +1,5 @@
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import {
-  collection,
-  addDoc,
-  doc,
-  getCountFromServer,
-} from "firebase/firestore";
+import { collection, doc, getCountFromServer } from "firebase/firestore";
 import { storage, db } from "./config";
 import { nanoid } from "@reduxjs/toolkit";
 

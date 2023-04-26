@@ -17,18 +17,14 @@ import { OwnComment } from "../../components/OwnComment";
 import { pallete } from "../../helpers/variables";
 import { useAuth } from "../../hooks/useAuth";
 import { useDispatch } from "react-redux";
-import {
-  addComment,
-  getComents,
-  getNumberComents,
-} from "../../redux/posts/postsOperations";
+import { addComment, getComents } from "../../redux/posts/postsOperations";
 import { usePosts } from "../../hooks/usePosts";
 
 export function CommentsScreen({ route }) {
   const [comment, setComment] = useState("");
   const { documentId, name, urlPhoto } = route.params;
   const { userName, userId } = useAuth();
-  const { allComments, numberComments } = usePosts();
+  const { allComments } = usePosts();
 
   const dispatch = useDispatch();
 
