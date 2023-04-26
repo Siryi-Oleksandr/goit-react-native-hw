@@ -3,44 +3,53 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { pallete } from "../helpers/variables";
 import { useState } from "react";
-import { getNumberComents } from "../firebase/operation";
+import { getNumberComents, getNumberLikes } from "../firebase/operation";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { toggleLike } from "../redux/posts/postsOperations";
+import { getLikes, toggleLike } from "../redux/posts/postsOperations";
 import { useAuth } from "../hooks/useAuth";
+import { usePosts } from "../hooks/usePosts";
+import { countPostLikes, findUserPostLike } from "../helpers/findUserPostLike";
 
 // ! Main CODE
 
 export function PostItemAddPost({ postData, navigation }) {
-  const {
-    // photo = null,
-    // loadedPhoto = null,
-    urlPhoto,
-    name,
-    locationName,
-    location,
-    documentId,
-    // like,
-  } = postData;
+  const { urlPhoto, name, locationName, location, documentId } = postData;
   const { userId } = useAuth();
+  const { likes } = usePosts();
 
   const [allComments, setAllComments] = useState(0);
+  const [numberLikes, setNumberLikes] = useState(0);
   const [like, setLike] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     getNumberComents(documentId).then((data) => setAllComments(data));
+    dispatch(getLikes(documentId));
   }, []);
+
+  useEffect(() => {
+    setLike(findUserPostLike(likes, userId, documentId));
+    getNumberLikes(documentId).then((data) => setNumberLikes(data));
+    // setNumberLikes(countPostLikes(likes, documentId));
+  }, [likes]);
 
   const onToggleLike = () => {
     const LikeObj = {
-      documentId,
       userId,
+      documentId,
       like: !like,
     };
 
     dispatch(toggleLike(LikeObj));
+    // TODO change next hard code to online refresh from fireBase
     setLike((prev) => !prev);
+    setNumberLikes((prev) => {
+      if (like) {
+        return (prev -= 1);
+      }
+      return (prev += 1);
+    });
   };
 
   return (
@@ -74,7 +83,7 @@ export function PostItemAddPost({ postData, navigation }) {
               <Icon name="thumbs-o-up" size={18} color={pallete.accent} />
             )}
 
-            <Text style={styles.postValuesText}>24</Text>
+            <Text style={styles.postValuesText}>{numberLikes}</Text>
           </TouchableOpacity>
         </View>
 

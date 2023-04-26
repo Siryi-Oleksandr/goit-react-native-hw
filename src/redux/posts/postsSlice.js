@@ -3,6 +3,7 @@ import {
   addComment,
   addPost,
   getComents,
+  getLikes,
   getNumberComents,
   getPosts,
   toggleLike,
@@ -72,9 +73,17 @@ export const postsSlice = createSlice({
       .addCase(toggleLike.pending, (state) => handlePending(state))
       .addCase(toggleLike.fulfilled, (state, { payload }) => {
         state.isRefresing = false;
-        state.likes.push(payload);
+        // state.likes.push(payload);
       })
       .addCase(toggleLike.rejected, (state, action) =>
+        handleRejected(state, action)
+      )
+      .addCase(getLikes.pending, (state) => handlePending(state))
+      .addCase(getLikes.fulfilled, (state, { payload }) => {
+        state.isRefresing = false;
+        state.likes.push(payload);
+      })
+      .addCase(getLikes.rejected, (state, action) =>
         handleRejected(state, action)
       )
       .addDefaultCase((state) => state);

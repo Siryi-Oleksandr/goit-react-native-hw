@@ -1,5 +1,11 @@
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { collection, doc, getCountFromServer } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getCountFromServer,
+  query,
+  where,
+} from "firebase/firestore";
 import { storage, db } from "./config";
 import { nanoid } from "@reduxjs/toolkit";
 
@@ -32,5 +38,18 @@ export const getNumberComents = async (documentId) => {
     return snapshot.data().count;
   } catch (error) {
     console.log("Error count comments: ", error.message);
+  }
+};
+
+export const getNumberLikes = async (documentId) => {
+  try {
+    const docRef = doc(db, "posts", documentId);
+
+    const q = query(collection(docRef, "likes"), where("like", "==", true));
+    const snapshot = await getCountFromServer(q);
+
+    return snapshot.data().count;
+  } catch (error) {
+    console.log("Error count likes: ", error.message);
   }
 };

@@ -106,9 +106,33 @@ export const toggleLike = createAsyncThunk(
       const docRef = doc(db, "posts", likeObj.documentId);
       await setDoc(doc(docRef, "likes", likeObj.userId), likeObj);
 
-      return likeObj;
+      // return likeObj;
     } catch (error) {
       console.log("Error add like or dislike: ", error.message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+// * #6 getLikes(documentId)
+export const getLikes = createAsyncThunk(
+  "posts/getLikes",
+  async (documentId, thunkAPI) => {
+    try {
+      const docRef = doc(db, "posts", documentId);
+      const q = query(collection(docRef, "likes"));
+
+      const querySnapshot = await getDocs(q);
+
+      let result = [];
+      querySnapshot.forEach((doc) => {
+        const like = doc.data();
+        result.push(like);
+      });
+
+      return result;
+    } catch (error) {
+      console.log("Error getting likes: ", error.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
