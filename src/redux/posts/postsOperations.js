@@ -6,6 +6,7 @@ import {
   query,
   where,
   getDocs,
+  setDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase/config";
 
@@ -97,26 +98,18 @@ export const getComents = createAsyncThunk(
   }
 );
 
-// * #5 getNumberComents(documentId)
-// export const getNumberComents = createAsyncThunk(
-//   "posts/getNumberComents",
-//   async (documentId, thunkAPI) => {
-//     try {
-//       const docRef = doc(db, "posts", documentId);
-//       const coll = collection(docRef, "comments");
-//       const snapshot = await getCountFromServer(coll);
-//       console.log("count: ", snapshot.data().count);
+// * #5 toggleLike(likeObj)
+export const toggleLike = createAsyncThunk(
+  "posts/toggleLike",
+  async (likeObj, thunkAPI) => {
+    try {
+      const docRef = doc(db, "posts", likeObj.documentId);
+      await setDoc(doc(docRef, "likes", likeObj.userId), likeObj);
 
-//       return snapshot.data().count;
-//     } catch (error) {
-//       console.log("Error count comments: ", error.message);
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
-
-// const q = async () => {
-//   const coll = collection(db, "posts");
-//   const snapshot = await getCountFromServer(coll);
-//   console.log("count: ", snapshot.data().count);
-// };
+      return likeObj;
+    } catch (error) {
+      console.log("Error add like or dislike: ", error.message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

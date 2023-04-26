@@ -5,6 +5,7 @@ import {
   getComents,
   getNumberComents,
   getPosts,
+  toggleLike,
 } from "./postsOperations";
 
 const handlePending = (state) => {
@@ -20,7 +21,7 @@ const handleRejected = (state, action) => {
 const state = {
   userPosts: [],
   comments: [],
-  curentPost: null,
+  likes: [],
   isRefresing: false,
   textError: null,
 };
@@ -66,6 +67,14 @@ export const postsSlice = createSlice({
         state.comments = payload;
       })
       .addCase(getComents.rejected, (state, action) =>
+        handleRejected(state, action)
+      )
+      .addCase(toggleLike.pending, (state) => handlePending(state))
+      .addCase(toggleLike.fulfilled, (state, { payload }) => {
+        state.isRefresing = false;
+        state.likes.push(payload);
+      })
+      .addCase(toggleLike.rejected, (state, action) =>
         handleRejected(state, action)
       )
       .addDefaultCase((state) => state);
