@@ -6,6 +6,7 @@ import {
   query,
   where,
   getDocs,
+  getCountFromServer,
 } from "firebase/firestore";
 import { db } from "../../firebase/config";
 
@@ -35,9 +36,17 @@ export const getPosts = createAsyncThunk(
       const querySnapshot = await getDocs(q);
 
       const result = [];
-      querySnapshot.forEach((doc) => {
-        const post = doc.data();
-        post.documentId = doc.id;
+
+      querySnapshot.forEach(async (docum) => {
+        const post = docum.data();
+        post.documentId = docum.id;
+
+        // const docRef = doc(db, "posts", docum.id);
+        // const coll = collection(docRef, "comments");
+        // const snapshot = await getCountFromServer(coll);
+        // console.log("commentsCount: ", snapshot.data().count);
+        // post.commentCounter = snapshot.data().count;
+        // console.log("one post ==>", post);
         result.push(post);
       });
 
@@ -59,7 +68,7 @@ export const addComment = createAsyncThunk(
 
       return comment;
     } catch (error) {
-      console.log("Error adding document: ", error.message);
+      console.log("Error adding comment: ", error.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -88,3 +97,27 @@ export const getComents = createAsyncThunk(
     }
   }
 );
+
+// * #5 getNumberComents(documentId)
+export const getNumberComents = createAsyncThunk(
+  "posts/getNumberComents",
+  async (documentId, thunkAPI) => {
+    try {
+      const docRef = doc(db, "posts", documentId);
+      const coll = collection(docRef, "comments");
+      const snapshot = await getCountFromServer(coll);
+      console.log("count: ", snapshot.data().count);
+
+      return snapshot.data().count;
+    } catch (error) {
+      console.log("Error count comments: ", error.message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+// const q = async () => {
+//   const coll = collection(db, "posts");
+//   const snapshot = await getCountFromServer(coll);
+//   console.log("count: ", snapshot.data().count);
+// };

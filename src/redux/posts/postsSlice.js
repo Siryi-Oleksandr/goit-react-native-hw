@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addComment, addPost, getComents, getPosts } from "./postsOperations";
+import {
+  addComment,
+  addPost,
+  getComents,
+  getNumberComents,
+  getPosts,
+} from "./postsOperations";
 
 const handlePending = (state) => {
   state.isRefresing = true;
@@ -14,6 +20,7 @@ const handleRejected = (state, action) => {
 const state = {
   userPosts: [],
   comments: [],
+  numberComments: 0,
   curentPost: null,
   isRefresing: false,
   textError: null,
@@ -60,6 +67,14 @@ export const postsSlice = createSlice({
         state.comments = payload;
       })
       .addCase(getComents.rejected, (state, action) =>
+        handleRejected(state, action)
+      )
+      .addCase(getNumberComents.pending, (state) => handlePending(state))
+      .addCase(getNumberComents.fulfilled, (state, { payload }) => {
+        state.isRefresing = false;
+        state.numberComments = payload;
+      })
+      .addCase(getNumberComents.rejected, (state, action) =>
         handleRejected(state, action)
       )
       .addDefaultCase((state) => state);
