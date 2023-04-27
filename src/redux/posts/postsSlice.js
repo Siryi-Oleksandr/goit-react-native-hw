@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addComment,
   addPost,
+  getAllPosts,
   getComents,
   getLikes,
   getPosts,
@@ -20,6 +21,7 @@ const handleRejected = (state, action) => {
 
 const state = {
   userPosts: [],
+  allPosts: [],
   comments: [],
   likes: [],
   isRefresing: false,
@@ -35,16 +37,22 @@ export const postsSlice = createSlice({
       .addCase(addPost.fulfilled, (state, { payload }) => {
         state.isRefresing = false;
         state.userPosts.push(payload);
-        // state.comments = [];
       })
       .addCase(addPost.rejected, (state, action) =>
+        handleRejected(state, action)
+      )
+      .addCase(getAllPosts.pending, (state) => handlePending(state))
+      .addCase(getAllPosts.fulfilled, (state, { payload }) => {
+        state.isRefresing = false;
+        state.allPosts = payload;
+      })
+      .addCase(getAllPosts.rejected, (state, action) =>
         handleRejected(state, action)
       )
       .addCase(getPosts.pending, (state) => handlePending(state))
       .addCase(getPosts.fulfilled, (state, { payload }) => {
         state.isRefresing = false;
         state.userPosts = payload;
-        // state.comments = [];
       })
       .addCase(getPosts.rejected, (state, action) =>
         handleRejected(state, action)
@@ -53,7 +61,6 @@ export const postsSlice = createSlice({
       .addCase(addComment.fulfilled, (state, { payload }) => {
         state.isRefresing = false;
         state.comments.push(payload);
-        // state.comments = [];
       })
       .addCase(addComment.rejected, (state, action) =>
         handleRejected(state, action)

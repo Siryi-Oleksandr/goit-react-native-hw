@@ -52,7 +52,30 @@ export const getPosts = createAsyncThunk(
   }
 );
 
-// * #3 addComment
+// * #3 getAllPosts()
+export const getAllPosts = createAsyncThunk(
+  "posts/getAllPosts",
+  async (_, thunkAPI) => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "posts"));
+
+      const result = [];
+      querySnapshot.forEach((docum) => {
+        const post = docum.data();
+        post.documentId = docum.id;
+
+        result.push(post);
+      });
+
+      return result;
+    } catch (error) {
+      console.log("Error getting all posts: ", error.message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+// * #4 addComment
 export const addComment = createAsyncThunk(
   "posts/addComment",
   async (comment, thunkAPI) => {
@@ -68,7 +91,7 @@ export const addComment = createAsyncThunk(
   }
 );
 
-// * #4 getComents(documentId)
+// * #5 getComents(documentId)
 export const getComents = createAsyncThunk(
   "posts/getComents",
   async (documentId, thunkAPI) => {
@@ -92,7 +115,7 @@ export const getComents = createAsyncThunk(
   }
 );
 
-// * #5 toggleLike(likeObj)
+// * #6 toggleLike(likeObj)
 export const toggleLike = createAsyncThunk(
   "posts/toggleLike",
   async (likeObj, thunkAPI) => {
@@ -108,7 +131,7 @@ export const toggleLike = createAsyncThunk(
   }
 );
 
-// * #6 getLikes(documentId)
+// * #7 getLikes(documentId)
 export const getLikes = createAsyncThunk(
   "posts/getLikes",
   async (documentId, thunkAPI) => {

@@ -5,16 +5,16 @@ import { PostItemAddPost } from "../../components/PostItemAddPost";
 import { useAuth } from "../../hooks/useAuth";
 import { usePosts } from "../../hooks/usePosts";
 import { useDispatch } from "react-redux";
-import { getPosts } from "../../redux/posts/postsOperations";
+import { getAllPosts, getPosts } from "../../redux/posts/postsOperations";
 
 export function PostsScreen({ navigation }) {
   const { userName, userEmail, userId } = useAuth();
-  const { userPosts } = usePosts();
+  const { allPosts } = usePosts();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPosts(userId));
+    dispatch(getAllPosts());
   }, []);
 
   return (
@@ -32,7 +32,7 @@ export function PostsScreen({ navigation }) {
       </View>
 
       <FlatList
-        data={userPosts}
+        data={allPosts}
         renderItem={({ item }) => (
           <PostItemAddPost postData={item} navigation={navigation} />
         )}
