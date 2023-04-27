@@ -65,7 +65,9 @@ export const postsSlice = createSlice({
       .addCase(addComment.rejected, (state, action) =>
         handleRejected(state, action)
       )
-      .addCase(getComents.pending, (state) => handlePending(state))
+      .addCase(getComents.pending, (state) => {
+        state.textError = null;
+      })
       .addCase(getComents.fulfilled, (state, { payload }) => {
         state.isRefresing = false;
         state.comments = payload;
@@ -73,7 +75,9 @@ export const postsSlice = createSlice({
       .addCase(getComents.rejected, (state, action) =>
         handleRejected(state, action)
       )
-      .addCase(toggleLike.pending, (state) => handlePending(state))
+      .addCase(toggleLike.pending, (state) => {
+        state.textError = null;
+      })
       .addCase(toggleLike.fulfilled, (state, { payload }) => {
         state.isRefresing = false;
         // state.likes.push(payload);
@@ -81,7 +85,9 @@ export const postsSlice = createSlice({
       .addCase(toggleLike.rejected, (state, action) =>
         handleRejected(state, action)
       )
-      .addCase(getLikes.pending, (state) => handlePending(state))
+      .addCase(getLikes.pending, (state) => {
+        state.textError = null;
+      })
       .addCase(getLikes.fulfilled, (state, { payload }) => {
         state.isRefresing = false;
         state.likes.push(payload);

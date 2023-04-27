@@ -66,6 +66,6 @@ export function Main() {
 
 const styles = StyleSheet.create({
   spinnerTextStyle: {
-    color: pallete.accent,
+    color: pallete.white,
   },
 });
