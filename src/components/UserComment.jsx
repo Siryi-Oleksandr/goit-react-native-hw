@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { testDB } from "../helpers/testDB";
 import { pallete } from "../helpers/variables";
 
-const userComment = testDB[0].comments[0];
+const userComment = testDB[0].comments[0]; // TODO only for testing
 
 export function UserComment() {
   const { author, avatar, date, text } = userComment;

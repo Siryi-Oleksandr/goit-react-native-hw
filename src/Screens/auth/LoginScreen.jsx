@@ -5,7 +5,6 @@ import {
   View,
   TextInput,
   Keyboard,
-  Alert,
   TouchableOpacity,
   Text,
   TouchableWithoutFeedback,

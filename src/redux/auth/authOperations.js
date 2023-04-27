@@ -58,26 +58,4 @@ export const authLogOut = createAsyncThunk(
   }
 );
 
-// ? I lond time have been trying to do this operation )))
-// export const authStateChangeUser = () => {
-//   try {
-//     let isAuth = false;
-//     let userId;
-//     let name;
-//     let email;
-//     onAuthStateChanged(auth, (user) => {
-//       if (user) {
-//         // userId = user.uid;
-//         // name = user.displayName;
-//         // email = user.email;
-//         isAuth = true;
-//       }
-//     });
 
-//     // return { isAuth, email, name, userId };
-//     return isAuth;
-//   } catch (error) {
-//     console.log(error.message);
-//     return thunkAPI.rejectWithValue(error.message);
-//   }
-// };

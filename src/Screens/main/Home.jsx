@@ -10,7 +10,7 @@ import { LogOut } from "../../components/LogOut";
 import { CustomGoBack } from "../../components/CustomGoBack";
 
 const Tabs = createBottomTabNavigator();
-const TAB_HEIGHT = 70; // висота панелі Bottom Tabs
+const TAB_HEIGHT = 70; // heigth pannel Bottom Tabs
 // const { height: windowHeight } = Dimensions.get("window");
 
 export const Home = ({ navigation: { goBack } }) => {
@@ -22,8 +22,6 @@ export const Home = ({ navigation: { goBack } }) => {
         tabBarHideOnKeyboard: true,
         tabBarActiveTintColor: pallete.accent,
         tabBarStyle: styles.tabBar,
-        // tabBarItemStyle: styles.tabBarItem,
-        // tabBarActiveBackgroundColor: pallete.accent,
       }}
     >
       <Tabs.Screen

@@ -39,7 +39,7 @@ export function CreatePostsScreen({ navigation }) {
   const [inputLocationStyle, setInputLocationStyle] = useState(styles.input);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
-  const { userName, userEmail, userId } = useAuth();
+  const { userName, userId } = useAuth();
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -4,7 +4,6 @@ import {
   addPost,
   getComents,
   getLikes,
-  getNumberComents,
   getPosts,
   toggleLike,
 } from "./postsOperations";
@@ -28,11 +27,8 @@ const state = {
 };
 
 export const postsSlice = createSlice({
-  // Ім'я слайсу
   name: "posts",
-  // Початковий стан редюсера слайсу
   initialState: state,
-  // Об'єкт редюсерів
   extraReducers: (builder) => {
     builder
       .addCase(addPost.pending, (state) => handlePending(state))

@@ -30,11 +30,8 @@ const state = {
 };
 
 export const authSlice = createSlice({
-  // Ім'я слайсу
   name: "auth",
-  // Початковий стан редюсера слайсу
   initialState: state,
-  // Об'єкт редюсерів
   extraReducers: (builder) => {
     builder
       .addCase(authSignUp.pending, (state) => handlePending(state))
@@ -76,47 +73,6 @@ export const authSlice = createSlice({
       })
       .addDefaultCase((state) => state);
   },
-  // ! /////////////////
-  // extraReducers: {
-  //   // *** SignUp User
-  //   [authSignUp.pending]: handlePending,
-  //   [authSignUp.fulfilled](state, { payload }) {
-  //     return {
-  //       ...state,
-  //       userId: payload.uid,
-  //       name: payload.displayName,
-  //       email: payload.email,
-  //       isAuth: true,
-  //     };
-  //   },
-  //   [authSignUp.rejected]: handleRejected,
-
-  //   // *** LogIn User
-  //   [authLogIn.pending]: handlePending,
-  //   [authLogIn.fulfilled](state, { payload }) {
-  //     return {
-  //       ...state,
-  //       userId: payload.uid,
-  //       name: payload.displayName,
-  //       email: payload.email,
-  //       isAuth: true,
-  //     };
-  //   },
-  //   [authLogIn.rejected]: handleRejected,
-
-  //   // *** LogOut User
-  //   [authLogOut.pending](state, action) {
-  //     state.isError = false;
-  //     state.textError = null;
-  //   },
-  //   [authLogOut.fulfilled]() {
-  //     return state;
-  //   },
-  //   [authLogOut.rejected](state, action) {
-  //     state.isError = true;
-  //     state.textError = action.payload;
-  //   },
-  // },
   // *** change User
   reducers: {
     setStateChangeUser: (state, { payload }) => {

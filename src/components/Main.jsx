@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { Dimensions } from "react-native";
 import { useRoutes } from "../../router";
 import { NavigationContainer } from "@react-navigation/native";
-import { authStateChangeUser } from "../redux/auth/authOperations";
 import { useAuth } from "../hooks/useAuth";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/config";

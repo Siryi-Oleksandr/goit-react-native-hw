@@ -5,7 +5,6 @@ import {
   View,
   TextInput,
   Keyboard,
-  Alert,
   TouchableOpacity,
   Text,
   Image,
@@ -22,11 +21,7 @@ const image = require("../../images/bg-img.png");
 
 // ! Main CODE
 
-export function RegistrationScreen({
-  route,
-  // navigation,
-  // orientation = "portrait",
-}) {
+export function RegistrationScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
