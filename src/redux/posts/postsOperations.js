@@ -9,6 +9,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase/config";
+import { showMessage } from "react-native-flash-message";
 
 // * #1 addPost
 export const addPost = createAsyncThunk(
@@ -21,6 +22,11 @@ export const addPost = createAsyncThunk(
       return post;
     } catch (error) {
       console.log("Error adding document: ", error.message);
+      showMessage({
+        message: "Error adding document",
+        description: error.message,
+        type: "danger",
+      });
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -47,6 +53,11 @@ export const getPosts = createAsyncThunk(
       return result;
     } catch (error) {
       console.log("Error getting posts: ", error.message);
+      showMessage({
+        message: "Error getting posts",
+        description: error.message,
+        type: "danger",
+      });
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -70,6 +81,11 @@ export const getAllPosts = createAsyncThunk(
       return result;
     } catch (error) {
       console.log("Error getting all posts: ", error.message);
+      showMessage({
+        message: "Error getting all posts",
+        description: error.message,
+        type: "danger",
+      });
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -86,6 +102,11 @@ export const addComment = createAsyncThunk(
       return comment;
     } catch (error) {
       console.log("Error adding comment: ", error.message);
+      showMessage({
+        message: "Error adding comment",
+        description: error.message,
+        type: "danger",
+      });
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -126,6 +147,11 @@ export const toggleLike = createAsyncThunk(
       // return likeObj;
     } catch (error) {
       console.log("Error add like or dislike: ", error.message);
+      showMessage({
+        message: "Error add like or dislike",
+        description: error.message,
+        type: "danger",
+      });
       return thunkAPI.rejectWithValue(error.message);
     }
   }

@@ -23,6 +23,7 @@ import {
 import { useAuth } from "../../hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { addPost } from "../../redux/posts/postsOperations";
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 const defaultImage = require("../../images/nature-2.jpg");
 
@@ -125,6 +126,11 @@ export function CreatePostsScreen({ navigation }) {
     // await uploadPostToServer(userPost);
 
     dispatch(addPost(userPost));
+
+    showMessage({
+      message: "Your post has been successfully added",
+      type: "success",
+    });
 
     navigation.navigate("Posts");
 

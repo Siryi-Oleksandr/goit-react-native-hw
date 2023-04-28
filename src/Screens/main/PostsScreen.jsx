@@ -5,7 +5,7 @@ import { PostItemAddPost } from "../../components/PostItemAddPost";
 import { useAuth } from "../../hooks/useAuth";
 import { usePosts } from "../../hooks/usePosts";
 import { useDispatch } from "react-redux";
-import { getAllPosts, getPosts } from "../../redux/posts/postsOperations";
+import { getAllPosts } from "../../redux/posts/postsOperations";
 
 export function PostsScreen({ navigation }) {
   const { userName, userEmail, userId } = useAuth();

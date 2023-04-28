@@ -5,6 +5,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import { showMessage } from "react-native-flash-message";
 import { auth } from "../../firebase/config";
 
 // * #1 authSignUp(name, email, password)
@@ -21,6 +22,11 @@ export const authSignUp = createAsyncThunk(
       }
     } catch (error) {
       console.log(error.message);
+      showMessage({
+        message: "Error Sign up",
+        description: error.message,
+        type: "danger",
+      });
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -39,6 +45,11 @@ export const authLogIn = createAsyncThunk(
       }
     } catch (error) {
       console.log(error.message);
+      showMessage({
+        message: "Error log in",
+        description: error.message,
+        type: "danger",
+      });
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -53,9 +64,12 @@ export const authLogOut = createAsyncThunk(
       return;
     } catch (error) {
       console.log(error.message);
+      showMessage({
+        message: "Error log out",
+        description: error.message,
+        type: "danger",
+      });
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
-
-
