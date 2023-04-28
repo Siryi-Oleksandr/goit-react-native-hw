@@ -16,14 +16,11 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import { pallete } from "../../helpers/variables";
-import {
-  savePhotoInStorage,
-  uploadPostToServer,
-} from "../../firebase/operation";
+import { savePhotoInStorage } from "../../firebase/operation";
 import { useAuth } from "../../hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { addPost } from "../../redux/posts/postsOperations";
-import { showMessage, hideMessage } from "react-native-flash-message";
+import { showMessage } from "react-native-flash-message";
 
 const defaultImage = require("../../images/nature-2.jpg");
 
@@ -122,9 +119,6 @@ export function CreatePostsScreen({ navigation }) {
     };
 
     // * send post to server
-    // const postRefId = await uploadPostToServer(userPost);
-    // await uploadPostToServer(userPost);
-
     dispatch(addPost(userPost));
 
     showMessage({
